@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities
+﻿using System;
+
+namespace Domain.Entities
 {
     public class Category
     {
@@ -7,5 +9,6 @@
         public string Slug { get; set; }
         public string Description { get; set; }
         public bool Visibility { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }
