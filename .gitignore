@@ -22,6 +22,7 @@
 *.suo
 *.user
 .vs/
+.idea/
 .git/
 [Bb]in/
 [Oo]bj/
