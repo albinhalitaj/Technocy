@@ -1,3 +1,7 @@
+using System;
+using Application;
+using AspNetCoreHero.ToastNotification;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +21,21 @@ namespace WebUI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddRouting(opt => opt.LowercaseUrls = true);
+            services.AddNotyf(opt =>
+            {
+                opt.DurationInSeconds = 5;
+                opt.Position = NotyfPosition.TopRight;
+                opt.IsDismissable = true;
+            });
+            services.AddApplication();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/admin/account/login";
+                    options.AccessDeniedPath = "/admin/dashboard/accessdenied";
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                });
             services.AddControllersWithViews();
         }
 
@@ -37,6 +56,7 @@ namespace WebUI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

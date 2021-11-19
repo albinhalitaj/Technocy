@@ -370,7 +370,9 @@
                      </div>
                   </div>
                   <div class="dropdown sa-toolbar__item">
-                     <button class="sa-toolbar-user" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-offset="0,1" aria-expanded="false"><span class="sa-toolbar-user__avatar sa-symbol sa-symbol--shape--rounded"><img src="images/customers/customer-4-64x64.jpg" width="64" height="64" alt=""/></span><span class="sa-toolbar-user__info"><span class="sa-toolbar-user__title">Albin Halitaj</span><span class="sa-toolbar-user__subtitle">Administrator</span></span></button>
+                     <button class="sa-toolbar-user" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-offset="0,1" aria-expanded="false"><span class="sa-toolbar-user__avatar sa-symbol sa-symbol--shape--rounded"><img src="images/customers/customer-4-64x64.jpg" width="64" height="64" alt=""/></span>
+                        <span class="sa-toolbar-user__info"><span class="sa-toolbar-user__title">@User.Identity.Name</span>
+                           <span class="sa-toolbar-user__subtitle">@User.Claims.ElementAt(3).Value</span></span></button>
                      <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
                         <li><a class="dropdown-item" href="#">Profili</a></li>
                         <li><a class="dropdown-item" href="app-inbox-list.html">Inbox</a></li>
@@ -378,7 +380,7 @@
                         <li>
                            <hr class="dropdown-divider"/>
                         </li>
-                        <li><a class="dropdown-item">Dil</a></li>
+                        <li><a asp-controller="Account" asp-action="LogOff" class="dropdown-item">Dil</a></li>
                      </ul>
                   </div>
                </div>
@@ -393,7 +395,10 @@
          </div>
          <div class="sa-app__toasts toast-container bottom-0 end-0"></div>
       </div>
-   <!-- sa-app / end --><!-- scripts --><script src="~/Admin/vendor/jquery/jquery.min.js"></script>
+   <!-- sa-app / end --><!-- scripts -->
+   <script src="~/Admin/vendor/jquery/jquery.min.js"></script>
+   <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+   <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
    <script src="~/Admin/vendor/feather-icons/feather.min.js"></script>
    <script src="~/Admin/vendor/simplebar/simplebar.min.js"></script>
    <script src="~/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -415,6 +420,7 @@
    <script src="~/Admin/js/demo-chart-js.js"></script>
    <script src="https://unpkg.com/filepond@@^4/dist/filepond.js"></script>
    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   @await Component.InvokeAsync("Notyf")
    @await RenderSectionAsync("Scripts", false)
    </body>
 </html>
