@@ -15,7 +15,8 @@ namespace Domain.Entities
         public string Slug { get; set; }
         public string Description { get; set; }
         public bool Visibility { get; set; }
-        public bool Status { get; set; }
+        public bool Status { get; set; } = true;
+        public int ProductsCount { get; set; }
         public string MetaTitle { get; set; }
         public string MetaDescription { get; set; }
         public DateTime CreatedAt { get; set; }

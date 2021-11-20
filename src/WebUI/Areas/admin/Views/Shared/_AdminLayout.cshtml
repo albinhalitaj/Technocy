@@ -4,7 +4,7 @@
       <meta charSet="UTF-8"/>
       <meta name="viewport" content="width=device-width, initial-scale=1"/>
       <meta name="format-detection" content="telephone=no"/>
-      <title>Electron - Admin Panel</title>
+      <title>@ViewData["Title"] - Admin Panel</title>
       <link rel="icon" type="image/png" href="~/Admin/images/favicon.png"/>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i"/>
       <link rel="stylesheet" href="~/Admin/vendor/bootstrap/css/bootstrap.ltr.css"/>
@@ -54,7 +54,7 @@
                         <div class="sa-nav__section-title"><span>Application</span></div>
                         <ul class="sa-nav__menu sa-nav__menu--root">
                            <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                              <a class="sa-nav__link">
+                              <a asp-controller="Dashboard" asp-action="Index" class="sa-nav__link">
                                  <span class="sa-nav__icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor">
                                        <path d="M8,13.1c-4.4,0-8,3.4-8-3C0,5.6,3.6,2,8,2s8,3.6,8,8.1C16,16.5,12.4,13.1,8,13.1zM8,4c-3.3,0-6,2.7-6,6c0,4,2.4,0.9,5,0.2C7,9.9,7.1,9.5,7.4,9.2l3-2.3c0.4-0.3,1-0.2,1.3,0.3c0.3,0.5,0.2,1.1-0.2,1.4l-2.2,1.7c2.5,0.9,4.8,3.6,4.8-0.2C14,6.7,11.3,4,8,4z"></path>
@@ -91,13 +91,13 @@
                                     </a>
                                  </li>
                                  <li class="sa-nav__menu-item">
-                                    <a class="sa-nav__link">
+                                    <a asp-controller="Categories" asp-action="Index" class="sa-nav__link">
                                        <span class="sa-nav__menu-item-padding"></span>
                                        <span class="sa-nav__title">Lista Kategorive</span>
                                     </a>
                                  </li>
                                  <li class="sa-nav__menu-item">
-                                    <a class="sa-nav__link">
+                                    <a asp-controller="Categories" asp-action="New" class="sa-nav__link">
                                        <span class="sa-nav__menu-item-padding"></span>
                                        <span class="sa-nav__title">Shto Kategori</span>
                                     </a>
@@ -370,7 +370,7 @@
                      </div>
                   </div>
                   <div class="dropdown sa-toolbar__item">
-                     <button class="sa-toolbar-user" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-offset="0,1" aria-expanded="false"><span class="sa-toolbar-user__avatar sa-symbol sa-symbol--shape--rounded"><img src="images/customers/customer-4-64x64.jpg" width="64" height="64" alt=""/></span>
+                     <button class="sa-toolbar-user" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-offset="0,1" aria-expanded="false"><span class="sa-toolbar-user__avatar sa-symbol sa-symbol--shape--rounded"><img src="~/Admin/images/customers/customer-4-64x64.jpg" width="64" height="64" alt=""/></span>
                         <span class="sa-toolbar-user__info"><span class="sa-toolbar-user__title">@User.Identity.Name</span>
                            <span class="sa-toolbar-user__subtitle">@User.Claims.ElementAt(3).Value</span></span></button>
                      <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
@@ -388,9 +388,9 @@
             </div>
             @RenderBody()
             <div class="sa-app__footer d-block d-md-flex">
-               <!-- copyright -->Stroyka Admin — eCommerce Dashboard Template © 2021
+               <!-- copyright -->
+               Technocy Admin — eCommerce © 2021
                <div class="m-auto"></div>
-               <div>Powered by HTML — Design by <a href="https://themeforest.net/user/kos9/portfolio">Kos</a></div>
             </div>
          </div>
          <div class="sa-app__toasts toast-container bottom-0 end-0"></div>
