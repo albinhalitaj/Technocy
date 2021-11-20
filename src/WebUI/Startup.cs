@@ -28,6 +28,7 @@ namespace WebUI
                 opt.Position = NotyfPosition.TopRight;
                 opt.IsDismissable = true;
             });
+            services.AddAutoMapper(typeof(Startup));
             services.AddApplication();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
