@@ -79,13 +79,13 @@
                               </a>
                               <ul class="sa-nav__menu sa-nav__menu--sub" data-sa-collapse-content="">
                                  <li class="sa-nav__menu-item">
-                                    <a class="sa-nav__link">
+                                    <a asp-controller="Products" asp-action="Index" class="sa-nav__link">
                                        <span class="sa-nav__menu-item-padding"></span>
                                        <span class="sa-nav__title">Lista Produkteve</span>
                                     </a>
                                  </li>
                                  <li class="sa-nav__menu-item">
-                                    <a class="sa-nav__link">
+                                    <a asp-controller="Products" asp-action="New" class="sa-nav__link">
                                        <span class="sa-nav__menu-item-padding"></span>
                                        <span class="sa-nav__title">Shto Produkt</span>
                                     </a>
@@ -420,6 +420,7 @@
    <script src="~/Admin/js/demo-chart-js.js"></script>
    <script src="https://unpkg.com/filepond@@^4/dist/filepond.js"></script>
    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script src="//cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
    @await Component.InvokeAsync("Notyf")
    @await RenderSectionAsync("Scripts", false)
    </body>

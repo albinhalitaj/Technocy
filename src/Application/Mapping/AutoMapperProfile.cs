@@ -10,6 +10,9 @@ namespace Application.Mapping
         {
             CreateMap<InsertCategoryModel, Category>()
                 .ReverseMap();
+
+            CreateMap<InsertProductModel, Product>()
+                .ReverseMap();
         }
     }
 }
