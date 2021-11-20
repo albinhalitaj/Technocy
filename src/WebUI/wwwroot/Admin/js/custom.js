@@ -79,7 +79,7 @@
                 drawCallback: function() {
                     $(this.api().table().container()).find('.pagination').addClass('pagination-sm');
                 },
-                language: {
+                "language": {
                     "emptyTable": "Nuk ka asnjë të dhënë në tabele",
                     "info": "Duke treguar _START_ deri _END_ prej _TOTAL_ reshtave",
                     "infoEmpty": "Duke treguar 0 deri 0 prej 0 reshtave",
@@ -111,33 +111,7 @@
         });
     })();
 
-    $(document).ready(function (){
-        $('#dataTable').DataTable({
-            "searching": true,
-            "language": {
-                "emptyTable": "Nuk ka asnjë të dhënë në tabele",
-                "info": "Duke treguar _START_ deri _END_ prej _TOTAL_ reshtave",
-                "infoEmpty": "Duke treguar 0 deri 0 prej 0 reshtave",
-                "infoFiltered": "(të filtruara nga gjithësej _MAX_  reshtave)",
-                "infoThousands": ",",
-                "lengthMenu": "Shiko _MENU_ reshta",
-                "loadingRecords": "Duke punuar...",
-                "processing": "Duke procesuar...",
-                "search": "Kërkoni:",
-                "zeroRecords": "Asnjë e dhënë nuk u gjet",
-                "paginate": {
-                    "first": "E para",
-                    "last": "E Fundit",
-                    "next": "Tjetra",
-                    "previous": "E Kaluara"
-                },
-                "aria": {
-                    "sortAscending": ": aktivizo për të sortuar kolumnin me vlera në ngritje",
-                    "sortDescending": ": aktivizo për të sortuar kolumnin me vlera në zbritje"
-                }
-            }
-        })
-    })
+    
 
     /*
     // Analytics chart

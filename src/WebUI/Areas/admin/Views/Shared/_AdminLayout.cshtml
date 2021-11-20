@@ -4,7 +4,7 @@
       <meta charSet="UTF-8"/>
       <meta name="viewport" content="width=device-width, initial-scale=1"/>
       <meta name="format-detection" content="telephone=no"/>
-      <title>Electron - Admin Panel</title>
+      <title>@ViewData["Title"] - Admin Panel</title>
       <link rel="icon" type="image/png" href="~/Admin/images/favicon.png"/>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i"/>
       <link rel="stylesheet" href="~/Admin/vendor/bootstrap/css/bootstrap.ltr.css"/>
@@ -370,7 +370,7 @@
                      </div>
                   </div>
                   <div class="dropdown sa-toolbar__item">
-                     <button class="sa-toolbar-user" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-offset="0,1" aria-expanded="false"><span class="sa-toolbar-user__avatar sa-symbol sa-symbol--shape--rounded"><img src="images/customers/customer-4-64x64.jpg" width="64" height="64" alt=""/></span>
+                     <button class="sa-toolbar-user" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-offset="0,1" aria-expanded="false"><span class="sa-toolbar-user__avatar sa-symbol sa-symbol--shape--rounded"><img src="~/Admin/images/customers/customer-4-64x64.jpg" width="64" height="64" alt=""/></span>
                         <span class="sa-toolbar-user__info"><span class="sa-toolbar-user__title">@User.Identity.Name</span>
                            <span class="sa-toolbar-user__subtitle">@User.Claims.ElementAt(3).Value</span></span></button>
                      <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
@@ -388,9 +388,9 @@
             </div>
             @RenderBody()
             <div class="sa-app__footer d-block d-md-flex">
-               <!-- copyright -->Stroyka Admin — eCommerce Dashboard Template © 2021
+               <!-- copyright -->
+               Technocy Admin — eCommerce © 2021
                <div class="m-auto"></div>
-               <div>Powered by HTML — Design by <a href="https://themeforest.net/user/kos9/portfolio">Kos</a></div>
             </div>
          </div>
          <div class="sa-app__toasts toast-container bottom-0 end-0"></div>
