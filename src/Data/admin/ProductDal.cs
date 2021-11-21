@@ -130,5 +130,29 @@ namespace Data.admin
                 .Count(res => res == 1);
             return rowsAffected == productCategories.Count();
         }
+
+        public IEnumerable<Product> FilterProducts
+            (decimal startingPrice,decimal endingPrice,bool visibility,IEnumerable<string> cats)
+        {
+            const string sql = "usp_FilterProducts";
+            using var con = _dataAccessLayer.AppConn();
+            var result = string.Join(",", cats);
+            var values = new
+            {
+                startingPrice,
+                endingPrice,
+                visibility,
+                categories = result
+            };
+            var products = con.Query<Product>(sql,values,commandType: CommandType.StoredProcedure).ToList();
+            var mappedProducts = new List<Product>();
+            foreach (var product in products)
+            {
+                product.ProductCategories = GetProductCategories(product.ProductId).ToList();
+                product.ProductGalleries = GetProductGalleries(product.ProductId).ToList();
+                mappedProducts.Add(product);
+            }
+            return mappedProducts;
+        }
     }
 }

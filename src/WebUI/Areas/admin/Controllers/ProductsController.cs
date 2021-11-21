@@ -67,9 +67,28 @@ namespace WebUI.Areas.admin.Controllers
             return View(model);
         }
 
-        public IActionResult Filtro()
+        public IActionResult Filtro(string startingPrice,string endingPrice,bool visibility,string[] categories)
         {
-            return RedirectToAction(nameof(Index));
+            ProductFilterModel model = null;
+            if (!string.IsNullOrEmpty(startingPrice) && !string.IsNullOrEmpty(endingPrice))
+            {
+                model = new ProductFilterModel
+                {
+                    StartingPrice = decimal.Parse(startingPrice),
+                    EndingPrice = decimal.Parse(endingPrice),
+                    Categories = categories,
+                    Visibility = visibility
+                };
+            }
+            
+            var filteredProducts = _productManager.Filtro(model);
+            var productsModel = new ProductListViewModel
+            {
+                Categories = _categoryManager.GetCategories(),
+                Products = filteredProducts
+            };
+
+            return View("Index", productsModel);
         }
     }
 }

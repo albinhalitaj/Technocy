@@ -12,7 +12,9 @@ namespace Application.Mapping
                 .ReverseMap();
 
             CreateMap<InsertProductModel, Product>()
-                .ReverseMap();
+                .ForMember(x=>x.ProductCategories,
+                    x=>x.Ignore());
+            CreateMap<Product, InsertProductModel>();
         }
     }
 }

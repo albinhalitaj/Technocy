@@ -12,11 +12,23 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Areas\admin\Data" />
+      <ProjectReference Include="..\Application\Application.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Application\Application.csproj" />
+      <Compile Remove="Areas\admin\Data\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Areas\admin\Data\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Areas\admin\Data\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Areas\admin\Data\**" />
     </ItemGroup>
 
 </Project>

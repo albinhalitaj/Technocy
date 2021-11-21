@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Helpers;
@@ -29,9 +28,9 @@ namespace Application.admin
         public bool Add(InsertProductModel model, IEnumerable<string> categories,string webRootPath)
         {
             var product = _mapper.Map<Product>(model);
+            
             product.Status = true;
             product.InsertDate = DateTime.Now;
-            
             
             var id = _productManager.Insert(product);
 
@@ -71,6 +70,11 @@ namespace Application.admin
                 return result;
             }
             return false;
+        }
+
+        public IEnumerable<Product> Filtro(ProductFilterModel model)
+        {
+            return _productManager.FilterProducts(model.StartingPrice, model.EndingPrice, model.Visibility,model.Categories);
         }
 
         public IEnumerable<Product> GetProducts() => _productManager.GetProducts();

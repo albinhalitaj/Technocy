@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
@@ -64,7 +65,15 @@ namespace Data.admin
         {
             using var con = _dataAccessLayer.AppConn();
             const string sql = "usp_DeleteCategory";
-            var result = con.ExecuteAsync(sql, new {id}, commandType: CommandType.StoredProcedure).Result;
+            int result;
+            try
+            {
+                result = con.ExecuteAsync(sql, new {id}, commandType: CommandType.StoredProcedure).Result;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
             return result == 1;
         }
 
