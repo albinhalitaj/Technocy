@@ -67,6 +67,19 @@ namespace WebUI.Areas.admin.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            if (id <= 0)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var product = _productManager.FirstOrDefault(id);
+            
+            return View(product);
+        }
+
         public IActionResult Filtro(string startingPrice,string endingPrice,bool visibility,string[] categories)
         {
             ProductFilterModel model = null;
@@ -89,6 +102,17 @@ namespace WebUI.Areas.admin.Controllers
             };
 
             return View("Index", productsModel);
+        }
+
+        [Route("/admin/products/delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            var result = false;
+            if (id > 0)
+            {
+                result = _productManager.Remove(id, _webHostEnvironment.WebRootPath);
+            }
+            return Json(result);
         }
     }
 }

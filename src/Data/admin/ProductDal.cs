@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using Dapper;
 using Data.DataAccess;
@@ -65,7 +66,7 @@ namespace Data.admin
             return mappedProducts;
         }
 
-        private IEnumerable<ProductCategory> GetProductCategories(int productId)
+        public IEnumerable<ProductCategory> GetProductCategories(int productId)
         {
             const string sql = "usp_GetProductCategories";
             using var con = _dataAccessLayer.AppConn();
@@ -79,7 +80,7 @@ namespace Data.admin
             return productCategories;
         }
 
-        private IEnumerable<ProductGallery> GetProductGalleries(int productId)
+        public IEnumerable<ProductGallery> GetProductGalleries(int productId)
         {
             const string productGallerysql = "usp_GetProductGallery"; 
             using var con = _dataAccessLayer.AppConn();
@@ -131,6 +132,14 @@ namespace Data.admin
             return rowsAffected == productCategories.Count();
         }
 
+        public Product GetProduct(int productId)
+        {
+            const string sql = "usp_GetProduct";
+            using var con = _dataAccessLayer.AppConn();
+            var product = con.QueryFirstAsync<Product>(sql, new {productId}, commandType: CommandType.StoredProcedure).Result;
+            return product;
+        }
+
         public IEnumerable<Product> FilterProducts
             (decimal startingPrice,decimal endingPrice,bool visibility,IEnumerable<string> cats)
         {
@@ -153,6 +162,46 @@ namespace Data.admin
                 mappedProducts.Add(product);
             }
             return mappedProducts;
+        }
+
+        public bool DeleteProduct(int productId)
+        {
+            const string sqlDeleteProduct = "usp_DeleteProduct";
+            using var con = _dataAccessLayer.AppConn();
+            bool result;
+            try
+            {
+                var productRowsAffected = con.ExecuteAsync(sqlDeleteProduct,
+                        new {productId}, commandType: CommandType.StoredProcedure)
+                    .Result;
+
+                result = productRowsAffected == 1;
+            }
+            catch (Exception)
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
+        public bool DeleteProductCategories(int productId)
+        {
+            const string sql = "usp_DeleteProductCategories";
+            using var con = _dataAccessLayer.AppConn();
+            var rowsAffected = con.ExecuteAsync(sql, new {productId}, commandType: CommandType.StoredProcedure)
+                .Result;
+            return rowsAffected == 1;
+        }
+
+        public bool DeleteProductGalleries(int productId)
+        {
+            const string sql = "usp_DeleteProductGalleries";
+            using var con = _dataAccessLayer.AppConn();
+            var rowsAffected = con.ExecuteAsync(sql, new {productId}, commandType: CommandType.StoredProcedure)
+                .Result;
+
+            return rowsAffected > 0;
         }
     }
 }
