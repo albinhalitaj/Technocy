@@ -79,8 +79,6 @@ namespace Application.admin
         {
             var product = _productManager.GetProduct(productId);
             var productModel = _mapper.Map<InsertProductModel>(product);
-
-            productModel.Categories = _categoryManager.GetCategories();
             
             var productCategories = _productManager.GetProductCategories(productId).ToList();
             var temp = new List<string>();
@@ -89,10 +87,13 @@ namespace Application.admin
                 temp.AddRange(productCategories
                         .Select(productCategory => productCategory.CategoryId.ToString()));
             }
-
-            productModel.ProductCategories = temp;
+            
             var productGalleries = _productManager.GetProductGalleries(productId);
+            if (product == null) return productModel;
+            productModel.ProductCategories = temp;
+            productModel.Categories = _categoryManager.GetCategories();
             productModel.ProductGalleries = productGalleries;
+
             return productModel;
         }
 
@@ -121,7 +122,10 @@ namespace Application.admin
         {
             var productGalleries = _productManager.GetProductGalleries(productId);
             var status = false;
-            if (!productGalleries.Any()) return status;
+            if (productGalleries.Count() == 1)
+            {
+                return status;
+            }
             foreach (var productGallery  in productGalleries)
             {
                 if (productGallery.Name != name) continue;
@@ -133,5 +137,7 @@ namespace Application.admin
             }
             return status;
         }
+
+        public string GetProductSku(string sku) => _productManager.GetProductSku(sku);
     }
 }

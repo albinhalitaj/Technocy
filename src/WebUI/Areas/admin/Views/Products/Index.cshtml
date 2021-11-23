@@ -161,7 +161,7 @@
                                     <li>
                                        <hr class="dropdown-divider"/>
                                     </li>
-                                    <li><a class="dropdown-item text-danger" onclick="showPopUp('@product.ProductId')">Fshi</a></li>
+                                    <li><a class="dropdown-item text-danger" onclick="showPopUp('@User.Claims.ElementAt(1).Value','@product.ProductId')">Fshi</a></li>
                                  </ul>
                               </div>
                            </td>
@@ -177,7 +177,8 @@
 
 
 <script type="text/javascript">
-function showPopUp(productId) {
+function showPopUp(username,productId) {
+         console.log(username,productId);
         window.Swal.fire({
             title: 'A jeni i sigurtë?',
             text: "Nuk mund ta ktheni këtë hap!",
@@ -188,35 +189,76 @@ function showPopUp(productId) {
             confirmButtonText: 'Po, fshije!',
             cancelButtonText: 'Anulo'
         }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    type: "POST",
-                    url: "/admin/products/delete/" + productId,
-                    data: productId,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (data) {
-                        if (data === true) {
-                            window.Swal.fire(
-                                'U Fshi!',
-                                'Produkti është fshirë me sukses.',
-                                'success'
-                            ).then((result) => {
-                                if (result.isConfirmed) {
-                                    location.reload();
-                                }
-                            });
-                        }
-                        if (data === false){
-                            window.Swal.fire({
-                                  icon: 'error',
-                                  title: 'Oops...',
-                                  text: 'Ky produkt nuk mundë të fshihet',
-                                  footer: '<a href="">Pse është ky gabim?</a>'
-                                })
-                        }
-                    },
-                })
+           if (result.isConfirmed) {
+               Swal.fire({
+                  title: 'Shkruani fjalekalimin',
+                  input: 'password',
+                  inputAttributes: {
+                    autocapitalize: 'off'
+                  },
+                  showCancelButton: true,
+                  confirmButtonText: 'Fshij',
+                  showLoaderOnConfirm: true,
+                  allowOutsideClick: () => !Swal.isLoading()
+               }).then((result) => {
+                  if(result.isConfirmed){
+                        $.ajax({
+                           type: 'POST',
+                           url: '/admin/products/confirmpass/' + username + "/" + result.value,
+                           data: {
+                              username,
+                              pass: result.value
+                           },
+                           contentType: "application/json; charset=utf-8",
+                           dataType: "json",
+                           success: function (response){
+                              if (response === false){
+                                 window.Swal.fire({
+                                     icon: 'error',
+                                     title: 'Oops...',
+                                     text: 'Fjalekalimi eshte gabim',
+                                     footer: '<a href="">Kontakto administratorin?</a>'
+                                   })   
+                              } else {
+                                 $.ajax({
+                                      type: "POST",
+                                      url: "/admin/products/delete/" + productId,
+                                      data: productId,
+                                      contentType: "application/json; charset=utf-8",
+                                      dataType: "json",
+                                      success: function (data) {
+                                         console.log(data)
+                                          if (data) {
+                                              window.Swal.fire(
+                                                  'U Fshi!',
+                                                  'Produkti është fshirë me sukses.',
+                                                  'success'
+                                              ).then((result) => {
+                                                  if (result.isConfirmed) {
+                                                      location.reload();
+                                                  }
+                                              });
+                                          }
+                                          if (!data){
+                                              window.Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Oops...',
+                                                    text: 'Ky produkt nuk mundë të fshihet',
+                                                    footer: '<a href="">Pse është ky gabim?</a>'
+                                                  })
+                                          }
+                                      },
+                                  }) 
+                              }
+                             
+                           },
+                           error: function (err){
+                              console.error(err)   
+                           }
+                        })
+                     }  
+                  }
+               )
            }
         })
     }

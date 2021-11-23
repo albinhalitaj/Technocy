@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Application.admin;
+using Application.Validators;
 using AutoMapper;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +11,10 @@ namespace Application.Models
 {
     public class InsertProductModel
     {
+        public InsertProductModel()
+        {
+            Categories = new List<Category>();
+        }
         [Required(ErrorMessage = "Kjo fushë është e obligueshme")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Kjo fushë është e obligueshme")]
@@ -21,6 +27,7 @@ namespace Application.Models
         [Required(ErrorMessage = "Kjo fushë është e obligueshme")]
         public int Stock { get; set; }
         [Required(ErrorMessage = "Kjo fushë është e obligueshme")]
+        [ProductSkuValidator(ErrorMessage = "test")]
         public string SKU { get; set; }
         [Required(ErrorMessage = "Kjo fushë është e obligueshme")]
         [DataType(DataType.Currency)]

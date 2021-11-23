@@ -135,7 +135,9 @@ namespace Data.admin
         {
             const string sql = "usp_GetProduct";
             using var con = _dataAccessLayer.AppConn();
-            var product = con.QueryFirstAsync<Product>(sql, new {productId}, commandType: CommandType.StoredProcedure).Result;
+            var product = con.QueryAsync<Product>(sql, new {productId}, commandType: CommandType.StoredProcedure)
+                .Result
+                .FirstOrDefault();
             return product;
         }
 
@@ -209,6 +211,15 @@ namespace Data.admin
             using var con = _dataAccessLayer.AppConn();
             var rowsAffected = con.ExecuteAsync(sql, new {url}, commandType: CommandType.StoredProcedure).Result;
             return rowsAffected > 0;
+        }
+
+        public string GetProductSku(string sku)
+        {
+            const string sql = "usp_GetProductSku";
+            using var con = _dataAccessLayer.AppConn();
+            var exists = con.Query<string>
+                (sql, new {sku}, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            return exists;
         }
     }
 }

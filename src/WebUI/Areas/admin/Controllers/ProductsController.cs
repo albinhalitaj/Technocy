@@ -18,15 +18,19 @@ namespace WebUI.Areas.admin.Controllers
         private readonly CategoryManager _categoryManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly INotyfService _notyf;
+        private readonly AccountManager _accountManager;
 
         public ProductsController(ProductManager productManager,
-            CategoryManager categoryManager,IWebHostEnvironment webHostEnvironment,
-            INotyfService notyf)
+            CategoryManager categoryManager,
+            IWebHostEnvironment webHostEnvironment,
+            INotyfService notyf,
+            AccountManager accountManager)
         {
             _productManager = productManager;
             _categoryManager = categoryManager;
             _webHostEnvironment = webHostEnvironment;
             _notyf = notyf;
+            _accountManager = accountManager;
         }
         
         // GET
@@ -64,6 +68,7 @@ namespace WebUI.Areas.admin.Controllers
                 }
                 _notyf.Error("Diqka shkoi gabim! Ju lutem provoni përseri",5);
             }
+            model.Categories = _categoryManager.GetCategories();
             return View(model);
         }
 
@@ -76,6 +81,11 @@ namespace WebUI.Areas.admin.Controllers
             }
 
             var product = _productManager.FirstOrDefault(id);
+
+            if (product == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             
             return View(product);
         }
@@ -119,8 +129,39 @@ namespace WebUI.Areas.admin.Controllers
         [HttpPost]
         public IActionResult DeleteImage(int id, string name)
         {
+            if (id <= 0 && string.IsNullOrEmpty(name))
+            {
+                return RedirectToAction(nameof(Edit), new {id});
+            }
             var result = _productManager.RemoveProductImages(name, id, _webHostEnvironment.WebRootPath);
-            return Json(true);
+            var model = new DeleteImageResult();
+            if (result)
+            {
+                model.Success = result;
+                return Json(model); 
+            }
+            model.Success = false;
+            model.Error = "Produkti duhet te kete se paku nje foto";
+            return Json(model);
+        }
+
+        [HttpPost]
+        [Route("/admin/products/confirmpass/{username}/{pass}")]
+        public IActionResult ConfirmPass(string username,string pass)
+        {
+            if (pass == null || username == null)
+            {
+                return null;
+            }
+
+            var result = _accountManager.Login(username,pass);
+            return result == null ? Json(false) : Json(true);
+        }
+
+        private class DeleteImageResult
+        {
+            public bool Success { get; set; }
+            public string Error { get; set; }
         }
     }
 }

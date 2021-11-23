@@ -57,7 +57,7 @@
                          </div>
                          <div>
                             <label for="form-product/short-description" class="form-label">Short description</label>
-                            <textarea asp-for="Summary" id="form-product/short-description" class="form-control" rows="2"></textarea>
+                            <textarea asp-for="Summary" id="form-product/short-description" class="form-control" rows="5"></textarea>
                             <span asp-validation-for="Summary" class="text-danger"></span>
                          </div>
                        </div>
@@ -162,7 +162,7 @@
                           </div>
                           <div>
                              <label for="form-product/seo-description" class="form-label">Përshkrimi Meta</label>
-                             <textarea asp-for="MetaDescription" id="form-product/seo-description" class="form-control" rows="2"></textarea>
+                             <textarea asp-for="MetaDescription" id="form-product/seo-description" class="form-control" rows="5"></textarea>
                              <span asp-validation-for="MetaDescription" class="text-danger"></span>
                           </div>
                        </div>
@@ -265,8 +265,8 @@
                              contentType: "application/json; charset=utf-8",
                              dataType: "json",
                              success: function (data) {
-                                console.log(data)
-                                 if (data === true) {
+                                console.log(data);
+                                 if (data.Success) {
                                      window.Swal.fire(
                                          'U Fshi!',
                                          'Fotoja është fshirë me sukses.',
@@ -277,11 +277,11 @@
                                          }
                                      });
                                  }
-                                 if (data === false){
+                                 if (!data.Success){
                                      window.Swal.fire({
                                            icon: 'error',
                                            title: 'Oops...',
-                                           text: 'Kjo foto nuk mundë të fshihet',
+                                           text: `${data.error}`,
                                            footer: '<a href="">Pse është ky gabim?</a>'
                                          })
                                  }
