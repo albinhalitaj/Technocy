@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
 using Dapper;
 using Data.DataAccess;
@@ -201,6 +200,14 @@ namespace Data.admin
             var rowsAffected = con.ExecuteAsync(sql, new {productId}, commandType: CommandType.StoredProcedure)
                 .Result;
 
+            return rowsAffected > 0;
+        }
+
+        public bool DeleteProductImage(string url)
+        {
+            const string sql = "usp_DeleteProductImage";
+            using var con = _dataAccessLayer.AppConn();
+            var rowsAffected = con.ExecuteAsync(sql, new {url}, commandType: CommandType.StoredProcedure).Result;
             return rowsAffected > 0;
         }
     }

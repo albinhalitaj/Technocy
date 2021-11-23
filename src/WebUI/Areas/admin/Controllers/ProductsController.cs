@@ -114,5 +114,13 @@ namespace WebUI.Areas.admin.Controllers
             }
             return Json(result);
         }
+
+        [Route("/admin/products/deleteimage/{id}/{name}")]
+        [HttpPost]
+        public IActionResult DeleteImage(int id, string name)
+        {
+            var result = _productManager.RemoveProductImages(name, id, _webHostEnvironment.WebRootPath);
+            return Json(true);
+        }
     }
 }

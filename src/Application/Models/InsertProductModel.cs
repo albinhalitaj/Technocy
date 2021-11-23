@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Domain.Entities;
@@ -32,5 +33,6 @@ namespace Application.Models
         public IEnumerable<Category> Categories { get; set; }
         [Required(ErrorMessage = "Ju lutem caktoni së paku një kategori")]
         public IEnumerable<string> ProductCategories { get; set; }
+        public IEnumerable<ProductGallery> ProductGalleries { get; set; }
     }
 }

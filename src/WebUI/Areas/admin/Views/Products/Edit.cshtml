@@ -105,8 +105,41 @@
                           </div>
                        </div>
                        <div class="mt-n5">
-                          <div class="sa-divider"></div>
-                          <div class="sa-divider"></div>
+                          <div class="table-responsive">
+                             <table class="sa-table">
+                                <thead>
+                                   <tr>
+                                      <th class="w-min">Foto</th>
+                                      <th class="min-w-10x">Alt text</th>
+                                      <th class="w-min">Order</th>
+                                      <th class="w-min"></th>
+                                   </tr>
+                                </thead>
+                                <tbody>
+                                @{
+                                   var index = 0;
+                                }
+                                @foreach (var image in Model.ProductGalleries)
+                                {
+                                   <tr>
+                                      <td>
+                                         <div class="sa-symbol sa-symbol--shape--rounded sa-symbol--size--lg"><img src="@image.URL" style="object-fit: contain" width="40" height="40" alt=""/></div>
+                                      </td>
+                                      <td><input type="text" class="form-control form-control-sm"/></td>
+                                      <td><input type="number" class="form-control form-control-sm w-4x" value="@index"/></td>
+                                      <td>
+                                         <a onclick="deleteImg('@image.Name','@image.ProductId')" class="btn btn-sa-muted btn-sm mx-n3" type="button" aria-label="Delete image" data-bs-toggle="tooltip" data-bs-placement="right" title="Delete image">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                                               <path d="M10.8,10.8L10.8,10.8c-0.4,0.4-1,0.4-1.4,0L6,7.4l-3.4,3.4c-0.4,0.4-1,0.4-1.4,0l0,0c-0.4-0.4-0.4-1,0-1.4L4.6,6L1.2,2.6 c-0.4-0.4-0.4-1,0-1.4l0,0c0.4-0.4,1-0.4,1.4,0L6,4.6l3.4-3.4c0.4-0.4,1-0.4,1.4,0l0,0c0.4,0.4,0.4,1,0,1.4L7.4,6l3.4,3.4 C11.2,9.8,11.2,10.4,10.8,10.8z"></path>
+                                            </svg>
+                                         </a>
+                                      </td>
+                                   </tr>
+                                   index++;
+                                }
+                                </tbody>
+                             </table>
+                          </div>
                           <div class="px-5 py-4 my-2">
                              <div class="custom-file">
                                 <label for="formFile-1" class="form-label">Default file input example</label>
@@ -201,11 +234,64 @@
              FilePondPluginImageTransform,
              FilePondPluginImageExifOrientation,
              );
+        
         FilePond.create(input, {
                     storeAsFile: true,
                     allowImageCrop: true
                 });
+        
       });
+   </script>
+   <script>
+      function deleteImg(name,productId) {
+         window.Swal.fire({
+                     title: 'A jeni i sigurtë?',
+                     text: "Nuk mund ta ktheni këtë hap!",
+                     icon: 'warning',
+                     showCancelButton: true,
+                     confirmButtonColor: '#3085d6',
+                     cancelButtonColor: '#d33',
+                     confirmButtonText: 'Po, fshije!',
+                     cancelButtonText: 'Anulo'
+                 }).then((result) => {
+                     if (result.isConfirmed) {
+                         $.ajax({
+                             type: "POST",
+                             url: "/admin/products/deleteimage/" + productId + "/" + name,
+                             data: {
+                              productId: productId,
+                              name: name   
+                             },
+                             contentType: "application/json; charset=utf-8",
+                             dataType: "json",
+                             success: function (data) {
+                                console.log(data)
+                                 if (data === true) {
+                                     window.Swal.fire(
+                                         'U Fshi!',
+                                         'Fotoja është fshirë me sukses.',
+                                         'success'
+                                     ).then((result) => {
+                                         if (result.isConfirmed) {
+                                             location.reload();
+                                         }
+                                     });
+                                 }
+                                 if (data === false){
+                                     window.Swal.fire({
+                                           icon: 'error',
+                                           title: 'Oops...',
+                                           text: 'Kjo foto nuk mundë të fshihet',
+                                           footer: '<a href="">Pse është ky gabim?</a>'
+                                         })
+                                 }
+                             },
+                         })
+                    }
+                 })
+      }
+      
+      
    </script>
 }
 

@@ -17,5 +17,25 @@ namespace Application.Helpers
 
             return "/" + path;
         }
+
+        public bool Delete(string url, string webRootPath)
+        {
+            var status = false;
+            var uploadsFolder = Path.Combine(webRootPath, url);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), uploadsFolder);
+            try
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                    status = true;
+                }
+            }
+            catch (Exception)
+            {
+                status = false;
+            }
+            return status;
+        }
     }
 }

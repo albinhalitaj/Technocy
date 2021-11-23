@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Helpers;
@@ -9,7 +8,6 @@ using AutoMapper;
 using Data.admin;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 
 namespace Application.admin
 {
@@ -60,28 +58,22 @@ namespace Application.admin
             const string folder = "Admin/images/products/";
             
             var productGallery = new List<ProductGallery>();
-            if (files.Count > 0)
+            if (files.Count <= 0) return false;
+            foreach (var file in files)
             {
-                foreach (var file in files)
+                var gallery = new ProductGallery
                 {
-                    var gallery = new ProductGallery
-                    {
-                        ProductId = productId,
-                        Name = file.FileName,
-                        URL = await _fileManager.Upload(folder, file, webRootPath)
-                    };
-                    productGallery.Add(gallery);
-                }
-                var result = _productManager.InsertProductGallery(productGallery);
-                return result;
+                    ProductId = productId,
+                    Name = file.FileName,
+                    URL = await _fileManager.Upload(folder, file, webRootPath)
+                };
+                productGallery.Add(gallery);
             }
-            return false;
+            var result = _productManager.InsertProductGallery(productGallery);
+            return result;
         }
 
-        public IEnumerable<Product> Filtro(ProductFilterModel model)
-        {
-            return _productManager.FilterProducts(model.StartingPrice, model.EndingPrice, model.Visibility,model.Categories);
-        }
+        public IEnumerable<Product> Filtro(ProductFilterModel model) => _productManager.FilterProducts(model.StartingPrice, model.EndingPrice, model.Visibility,model.Categories);
 
         public InsertProductModel FirstOrDefault(int productId)
         {
@@ -100,6 +92,7 @@ namespace Application.admin
 
             productModel.ProductCategories = temp;
             var productGalleries = _productManager.GetProductGalleries(productId);
+            productModel.ProductGalleries = productGalleries;
             return productModel;
         }
 
@@ -111,16 +104,10 @@ namespace Application.admin
 
             if (productGalleries.Any())
             {
-            
                 foreach (var productGallery in productGalleries)
                 {
                     var url = productGallery.URL.Remove(0, 1);
-                    var uploadsFolder = Path.Combine(webRootPath, url);
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), uploadsFolder);
-                    if (File.Exists(path))
-                    {
-                        File.Delete(path);
-                    }
+                    _fileManager.Delete(url, webRootPath);
                 }
             }
             _productManager.DeleteProductGalleries(productId);
@@ -128,6 +115,23 @@ namespace Application.admin
             var result = _productManager.DeleteProduct(productId);
 
             return deleteProductCategories && result;
+        }
+
+        public bool RemoveProductImages(string name,int productId,string webRootPath)
+        {
+            var productGalleries = _productManager.GetProductGalleries(productId);
+            var status = false;
+            if (!productGalleries.Any()) return status;
+            foreach (var productGallery  in productGalleries)
+            {
+                if (productGallery.Name != name) continue;
+                var url = productGallery.URL.Remove(0, 1);
+                _fileManager.Delete(url, webRootPath);
+                _productManager.DeleteProductImage(productGallery.URL);
+                status = true;
+                break;
+            }
+            return status;
         }
     }
 }
