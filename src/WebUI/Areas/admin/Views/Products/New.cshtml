@@ -193,16 +193,11 @@
         
         
         FilePond.registerPlugin(
-             FilePondPluginFileEncode,
              FilePondPluginImagePreview,
              FilePondPluginFileValidateSize,
-             FilePondPluginImageCrop,
-             FilePondPluginImageTransform,
-             FilePondPluginImageExifOrientation,
              );
         FilePond.create(input, {
                     storeAsFile: true,
-                    allowImageCrop: true
                 });
       });
    </script>
