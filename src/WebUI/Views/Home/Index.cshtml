@@ -76,7 +76,9 @@
                                     {
                                         var zbritjaEu = product.OldPrice - product.Price;
                                         var discount = (zbritjaEu / product.OldPrice) * 100;
-                                        <span class="price-dec">-@discount.ToString("#.0")%</span>
+                                        <span class="price-dec" style="position: absolute;top: 0;left: 0;margin-left: 10px;margin-top: 10px">
+                                            -@Math.Round(discount)%
+                                        </span>
                                     }
                                     <div class="product-action-3">
                                         <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-arrows"></i></a>
@@ -85,7 +87,7 @@
                                     </div>
                                 </div>
                                 <div class="product-content-2 max-h-5x">
-                                    <h4><a href="product-details.html">@product.Name</a></h4>
+                                    <h4><a href="product-details.html">@(product.Name[..30])...</a></h4>
                                     <span>Përfshirë TVSH-në</span>
                                     <div class="pro-price-2 mt-50">
                                         <span>@product.Price.ToString("#.00")€</span>
