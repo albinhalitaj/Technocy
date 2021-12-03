@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.admin;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebUI.Models;
@@ -11,21 +12,24 @@ namespace WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly CategoryManager _categoryManager;
+        private readonly ProductManager _productManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(CategoryManager categoryManager,ProductManager productManager)
         {
-            _logger = logger;
+            _categoryManager = categoryManager;
+            _productManager = productManager;
         }
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            ViewBag.Categories = _categoryManager.GetCategories();
+            var products = _productManager.GetProducts();
+            var model = new HomeViewModel
+            {
+                Products = products
+            };
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

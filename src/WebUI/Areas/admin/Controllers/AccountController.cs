@@ -25,6 +25,9 @@ namespace WebUI.Areas.admin.Controllers
         }
         
         [HttpGet]
+        [Route("/admin")]
+        [Route("/admin/account")]
+        [Route("/admin/account/login")]
         public IActionResult Login(string returnUrl)
         {
             if (User.Identity is {IsAuthenticated: true})

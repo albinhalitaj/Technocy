@@ -1,48 +1,468 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿<!doctype html>
+<html class="no-js" lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - WebUI</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css"/>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Daxone - eCommerce Bootstrap 5 Template</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/Client/assets/images/favicon.png">
+
+    <!-- CSS
+	============================================ -->
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Client/assets/css/vendor/bootstrap.min.css">
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" href="~/Client/assets/css/vendor/line-awesome.css">
+    <link rel="stylesheet" href="~/Client/assets/css/vendor/themify.css">
+    <!-- othres CSS -->
+    <link rel="stylesheet" href="~/Client/assets/css/plugins/animate.css">
+    <link rel="stylesheet" href="~/Client/assets/css/plugins/owl-carousel.css">
+    <link rel="stylesheet" href="~/Client/assets/css/plugins/slick.css">
+    <link rel="stylesheet" href="~/Client/assets/css/plugins/magnific-popup.css">
+    <link rel="stylesheet" href="~/Client/assets/css/plugins/jquery-ui.css">
+    <link rel="stylesheet" href="~/Client/assets/css/style.css">
+
 </head>
+
 <body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebUI</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
-                </ul>
+    <div class="main-wrapper">
+        <header class="header-area header-padding-4">
+            <div class="main-header-wrap">
+                <div class="header-top pt-15 pb-15 bg-black-3">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="welcome">
+                                    <p>Mirësevini në dyqanin tonë</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="setting-wrap-2">
+                                    <div class="setting-content2-left">
+                                        <a href="#">EUR </a>
+                                    </div>
+                                    <div class="setting-content2-right">
+                                        <a href="my-account.html">Llogaria ime</a>
+                                        <a href="wishlist.html">Lista e dëshirave</a>
+                                        <a href="login-register.html">Kyqu</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-middle border-top-2 pt-30 pb-30 bg-black-3">
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+                            <div class="col-lg-2">
+                                <div class="logo">
+                                    <a href="index.html"><img src="~/Client/assets/images/logo/logo-2.png" alt="logo"></a>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="header-contact-search-wrap">
+                                    <div class="header-contact">
+                                        <ul>
+                                            <li><i class="la la-phone"></i> +383 49 200 236</li>
+                                            <li><i class="la la-comments-o"></i> <a href="#">contact@technocy.com</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="search-style-3">
+                                        <form>
+                                            <div class="form-search-3">
+                                                <input id="search" class="input-text" value="" placeholder="Kërkoni këtu" type="search">
+                                                <button>
+                                                    <i class="la la-search"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 position-relative">
+                                <div class="cart-wrap cart-wrap-3">
+                                    <button class="cart-active">
+                                        <i class="la la-shopping-cart"></i> <br>
+                                        <span class="mini-cart-price-3">$400.00</span>
+                                        <span class="count-style-3">01</span>
+                                    </button>
+                                    <div class="shopping-cart-content">
+                                        <div class="shopping-cart-top">
+                                            <h4>Your Cart</h4>
+                                            <a class="cart-close" href="#"><i class="la la-close"></i></a>
+                                        </div>
+                                        <ul>
+                                            <li class="single-shopping-cart">
+                                                <div class="shopping-cart-img">
+                                                    <a href="#"><img alt="" src="~/Client/assets/images/cart/cart-1.jpg"></a>
+                                                    <div class="item-close">
+                                                        <a href="#"><i class="sli sli-close"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="shopping-cart-title">
+                                                    <h4><a href="#">Golden Easy Spot Chair.</a></h4>
+                                                    <span>$99.00</span>
+                                                </div>
+                                                <div class="shopping-cart-delete">
+                                                    <a href="#"><i class="la la-trash"></i></a>
+                                                </div>
+                                            </li>
+                                            <li class="single-shopping-cart">
+                                                <div class="shopping-cart-img">
+                                                    <a href="#"><img alt="" src="~/Client/assets/images/cart/cart-2.jpg"></a>
+                                                    <div class="item-close">
+                                                        <a href="#"><i class="sli sli-close"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="shopping-cart-title">
+                                                    <h4><a href="#">Golden Easy Spot Chair.</a></h4>
+                                                    <span>$99.00</span>
+                                                </div>
+                                                <div class="shopping-cart-delete">
+                                                    <a href="#"><i class="la la-trash"></i></a>
+                                                </div>
+                                            </li>
+                                            <li class="single-shopping-cart">
+                                                <div class="shopping-cart-img">
+                                                    <a href="#"><img alt="" src="~/Client/assets/images/cart/cart-3.jpg"></a>
+                                                    <div class="item-close">
+                                                        <a href="#"><i class="sli sli-close"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="shopping-cart-title">
+                                                    <h4><a href="#">Golden Easy Spot Chair.</a></h4>
+                                                    <span>$99.00</span>
+                                                </div>
+                                                <div class="shopping-cart-delete">
+                                                    <a href="#"><i class="la la-trash"></i></a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="shopping-cart-bottom">
+                                            <div class="shopping-cart-total">
+                                                <h4>Subtotal <span class="shop-total">$290.00</span></h4>
+                                            </div>
+                                            <div class="shopping-cart-btn btn-hover default-btn text-center">
+                                                <a class="black-color" href="checkout.html">Continue to Chackout</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="header-bottom sticky-bar">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 d-flex justify-content-center">
+                                <div class="main-menu menu-common-style menu-lh-4 menu-margin-5 menu-font-2">
+                                    <nav>
+                                        <ul>
+                                            @foreach (var category in ViewBag.Categories)
+                                            {
+                                                <li class="angle-shape"><a href="index.html">@category.Name</a></li>
+                                            }
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-small-mobile">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-6">
+                            <div class="mobile-logo">
+                                <a href="index.html">
+                                    <img alt="" src="~/Client/assets/images/logo/logo-1.png">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="header-right-wrap">
+                                <div class="cart-wrap common-style">
+                                    <button class="cart-active">
+                                        <i class="la la-shopping-cart"></i>
+                                        <span class="count-style">2 Produkte</span>
+                                    </button>
+                                    <div class="shopping-cart-content">
+                                        <div class="shopping-cart-top">
+                                            <h4>Your Cart</h4>
+                                            <a class="cart-close" href="#"><i class="la la-close"></i></a>
+                                        </div>
+                                        <ul>
+                                            <li class="single-shopping-cart">
+                                                <div class="shopping-cart-img">
+                                                    <a href="#"><img alt="" src="~/Client/assets/images/cart/cart-1.jpg"></a>
+                                                    <div class="item-close">
+                                                        <a href="#"><i class="sli sli-close"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="shopping-cart-title">
+                                                    <h4><a href="#">Golden Easy Spot Chair.</a></h4>
+                                                    <span>$99.00</span>
+                                                </div>
+                                                <div class="shopping-cart-delete">
+                                                    <a href="#"><i class="la la-trash"></i></a>
+                                                </div>
+                                            </li>
+                                            <li class="single-shopping-cart">
+                                                <div class="shopping-cart-img">
+                                                    <a href="#"><img alt="" src="~/Client/assets/images/cart/cart-2.jpg"></a>
+                                                    <div class="item-close">
+                                                        <a href="#"><i class="sli sli-close"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="shopping-cart-title">
+                                                    <h4><a href="#">Golden Easy Spot Chair.</a></h4>
+                                                    <span>$99.00</span>
+                                                </div>
+                                                <div class="shopping-cart-delete">
+                                                    <a href="#"><i class="la la-trash"></i></a>
+                                                </div>
+                                            </li>
+                                            <li class="single-shopping-cart">
+                                                <div class="shopping-cart-img">
+                                                    <a href="#"><img alt="" src="~/Client/assets/images/cart/cart-3.jpg"></a>
+                                                    <div class="item-close">
+                                                        <a href="#"><i class="sli sli-close"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="shopping-cart-title">
+                                                    <h4><a href="#">Golden Easy Spot Chair.</a></h4>
+                                                    <span>$99.00</span>
+                                                </div>
+                                                <div class="shopping-cart-delete">
+                                                    <a href="#"><i class="la la-trash"></i></a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="shopping-cart-bottom">
+                                            <div class="shopping-cart-total">
+                                                <h4>Subtotal <span class="shop-total">$290.00</span></h4>
+                                            </div>
+                                            <div class="shopping-cart-btn btn-hover default-btn text-center">
+                                                <a class="black-color" href="checkout.html">Continue to Chackout</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mobile-off-canvas">
+                                    <a class="mobile-aside-button" href="#"><i class="la la-navicon la-2x"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="mobile-off-canvas-active">
+            <a class="mobile-aside-close"><i class="la la-close"></i></a>
+            <div class="header-mobile-aside-wrap">
+                <div class="mobile-search">
+                    <form class="search-form" action="#">
+                        <input type="text" placeholder="Kërkoni produkte...">
+                        <button class="button-search"><i class="la la-search"></i></button>
+                    </form>
+                </div>
+                <div class="mobile-menu-wrap">
+                    <!-- mobile menu start -->
+                    <div class="mobile-navigation">
+                        <!-- mobile menu navigation start -->
+                        <nav>
+                            <ul class="mobile-menu">
+                                @foreach (var category in ViewBag.Categories)
+                                {
+                                    <li class="menu-item-has-children"><a href="index.html">@category.Name</a></li>
+                                }
+                            </ul>
+                        </nav>
+                        <!-- mobile menu navigation end -->
+                    </div>
+                    <!-- mobile menu end -->
+                </div>
+                <div class="mobile-curr-lang-wrap">
+                    <div class="single-mobile-curr-lang">
+                        <a class="mobile-language-active" href="#">Gjuha <i class="la la-angle-down"></i></a>
+                        <div class="lang-curr-dropdown lang-dropdown-active">
+                            <ul>
+                                <li><a href="#">Shqip (SQ)</a></li>
+                                <li><a href="#">English (US)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="single-mobile-curr-lang">
+                        <a class="mobile-currency-active" href="#">Monedha <i class="la la-angle-down"></i></a>
+                        <div class="lang-curr-dropdown curr-dropdown-active">
+                            <ul>
+                                <li><a href="#">EUR</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="single-mobile-curr-lang">
+                        <a class="mobile-account-active" href="#">Llogaria ime <i class="la la-angle-down"></i></a>
+                        <div class="lang-curr-dropdown account-dropdown-active">
+                            <ul>
+                                <li><a href="#">Kyqu</a></li>
+                                <li><a href="#">Regjistrohu</a></li>
+                                <li><a href="#">Llogaria ime</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mobile-social-wrap">
+                    <a class="facebook" href="#"><i class="ti-facebook"></i></a>
+                    <a class="twitter" href="#"><i class="ti-twitter-alt"></i></a>
+                    <a class="pinterest" href="#"><i class="ti-pinterest"></i></a>
+                    <a class="instagram" href="#"><i class="ti-instagram"></i></a>
+                    <a class="google" href="#"><i class="ti-google"></i></a>
+                </div>
             </div>
         </div>
-    </nav>
-</header>
-<div class="container">
-    <main role="main" class="pb-3">
+        
         @RenderBody()
-    </main>
-</div>
-
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2021 - WebUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        
+        <footer class="footer-area bg-black-3 pt-100 section-padding-4">
+            <div class="container-fluid">
+                <div class="footer-top pb-60">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12 col-sm-6">
+                            <div class="footer-widget footer-contact-wrap-2 mb-40">
+                                <a href="#"><img src="~/Client/assets/images/logo/logo-2.png" alt="logo"></a>
+                                <div class="footer-contact-content-2">
+                                    <h5>Contact Information:</h5>
+                                    <div class="footer-info-hm5">
+                                        <span>Phone</span>
+                                        <p>+880-123 445 555</p>
+                                    </div>
+                                    <div class="footer-info-hm5">
+                                        <span>Mail</span>
+                                        <p><a href="#">domain@mail.com</a></p>
+                                    </div>
+                                    <div class="footer-social-hm5">
+                                        <span>Follow US</span>
+                                        <ul>
+                                            <li><a href="#">Facebok</a></li>
+                                            <li><a href="#">Twitter</a></li>
+                                            <li><a href="#">Linkedin</a></li>
+                                            <li><a href="#">Instagram</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-12 col-sm-6">
+                            <div class="footer-widget mb-40 ml-55 mrg-md-footer">
+                                <div class="footer-title-4">
+                                    <h3>Shop Info</h3>
+                                </div>
+                                <div class="footer-list-4">
+                                    <ul>
+                                        <li><a href="wishlist.html">Wishlist</a></li>
+                                        <li><a href="checkout.html">Checkout</a></li>
+                                        <li><a href="cart.html">Cart</a></li>
+                                        <li><a href="checkout.html">Shopping Detail</a></li>
+                                        <li><a href="#">Pricing</a></li>
+                                        <li><a href="#">EMI</a></li>
+                                        <li><a href="#">Home Delevary</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-12 col-sm-6">
+                            <div class="footer-widget mb-40 ml-200">
+                                <div class="footer-title-4">
+                                    <h3>Support</h3>
+                                </div>
+                                <div class="footer-list-4">
+                                    <ul>
+                                        <li><a href="#">Customer Suport</a></li>
+                                        <li><a href="#">Shipping Policy</a></li>
+                                        <li><a href="#">Returns</a></li>
+                                        <li><a href="#">Order Status</a></li>
+                                        <li><a href="contact.html">Contact info</a></li>
+                                        <li><a href="#">Product Support</a></li>
+                                        <li><a href="#">Vendor Support</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-12 col-sm-6">
+                            <div class="footer-widget mb-40 f-right">
+                                <div class="footer-title-4">
+                                    <h3>About</h3>
+                                </div>
+                                <div class="footer-list-4">
+                                    <ul>
+                                        <li><a href="#">Daxone Corporation</a></li>
+                                        <li><a href="#">Careers</a></li>
+                                        <li><a href="#">Provacy Policy</a></li>
+                                        <li><a href="#">Term of use</a></li>
+                                        <li><a href="#">Why choose us</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom pt-20 pb-20 border-top-3">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="copyright-5">
+                                <p>Copyright © <a href="#">Daxone</a>. All Right Reserved</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="footer-payment footer-payment2">
+                                <a href="#"><img src="~/Client/assets/images/icon-img/payment-method.png" alt="logo"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
-</footer>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+    <!-- JS
+============================================ -->
+
+    <!-- Modernizer JS -->
+    <script src="~/Client/assets/js/vendor/modernizr-3.11.7.min.js"></script>
+    <!-- Modernizer JS -->
+    <script src="~/Client/assets/js/vendor/jquery-3.6.0.min.js"></script>
+    <!-- Popper JS -->
+    <script src="~/Client/assets/js/vendor/popper.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="~/Client/assets/js/vendor/bootstrap.min.js"></script>
+
+    <!-- Slick Slider JS -->
+    <script src="~/Client/assets/js/plugins/countdown.js"></script>
+    <script src="~/Client/assets/js/plugins/counterup.js"></script>
+    <script src="~/Client/assets/js/plugins/images-loaded.js"></script>
+    <script src="~/Client/assets/js/plugins/isotope.js"></script>
+    <script src="~/Client/assets/js/plugins/instafeed.js"></script>
+    <script src="~/Client/assets/js/plugins/jquery-ui.js"></script>
+    <script src="~/Client/assets/js/plugins/jquery-ui-touch-punch.js"></script>
+    <script src="~/Client/assets/js/plugins/magnific-popup.js"></script>
+    <script src="~/Client/assets/js/plugins/owl-carousel.js"></script>
+    <script src="~/Client/assets/js/plugins/scrollup.js"></script>
+    <script src="~/Client/assets/js/plugins/waypoints.js"></script>
+    <script src="~/Client/assets/js/plugins/slick.js"></script>
+    <script src="~/Client/assets/js/plugins/wow.js"></script>
+    <script src="~/Client/assets/js/plugins/textillate.js"></script>
+    <script src="~/Client/assets/js/plugins/elevatezoom.js"></script>
+    <script src="~/Client/assets/js/plugins/sticky-sidebar.js"></script>
+    <script src="~/Client/assets/js/plugins/smoothscroll.js"></script>
+    <!-- Main JS -->
+    <script src="~/Client/assets/js/main.js"></script>
 </body>
 </html>
