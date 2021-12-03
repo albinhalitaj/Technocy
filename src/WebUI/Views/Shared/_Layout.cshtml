@@ -9,15 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/x-icon" href="~/Client/assets/images/favicon.png">
 
-    <!-- CSS
-	============================================ -->
-
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/Client/assets/css/vendor/bootstrap.min.css">
-    <!-- Icon Font CSS -->
     <link rel="stylesheet" href="~/Client/assets/css/vendor/line-awesome.css">
     <link rel="stylesheet" href="~/Client/assets/css/vendor/themify.css">
-    <!-- othres CSS -->
     <link rel="stylesheet" href="~/Client/assets/css/plugins/animate.css">
     <link rel="stylesheet" href="~/Client/assets/css/plugins/owl-carousel.css">
     <link rel="stylesheet" href="~/Client/assets/css/plugins/slick.css">
@@ -45,9 +39,15 @@
                                         <a href="#">EUR </a>
                                     </div>
                                     <div class="setting-content2-right">
-                                        <a href="my-account.html">Llogaria ime</a>
-                                        <a href="wishlist.html">Lista e dëshirave</a>
-                                        <a href="login-register.html">Kyqu</a>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a href="my-account.html">Llogaria ime</a>
+                                            <a href="wishlist.html">Lista e dëshirave</a>    
+                                        }
+                                        else
+                                        {
+                                            <a href="login-register.html">Kyqu</a>
+                                        }
                                     </div>
                                 </div>
                             </div>
