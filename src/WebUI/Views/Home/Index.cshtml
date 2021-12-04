@@ -53,14 +53,11 @@
 <div class="product-area pb-70">
     <div class="container">
         <div class="product-tab-list-3 nav">
-            <a class="active" href="#product-5" data-bs-toggle="tab">
+            <a class="active" href="#product-1" data-bs-toggle="tab">
                 <h5>Më të reja </h5>
             </a>
             <a href="#product-6" data-bs-toggle="tab">
                 <h5>Zbritje </h5>
-            </a>
-            <a href="#product-7" data-bs-toggle="tab">
-                <h5>Më të shiturat</h5>
             </a>
             <a href="#product-7" data-bs-toggle="tab">
                 <h5>Promovime</h5>
@@ -107,362 +104,78 @@
             </div>
             <div id="product-6" class="tab-pane">
                 <div class="row">
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-8.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
+                    @foreach (var product in Model.DiscountProducts)
+                    {
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12" style="max-height: 450px;">
+                            <div class="product-wrap product-border-2 pro-hover-shadow mb-40">
+                                <div class="product-img mb-15">
+                                    <a href="product-details.html"><img src="@product.ProductGalleries.FirstOrDefault().URL" style="width: 200px;height: 240px;object-fit: contain;padding-left: 50px"  alt="product"></a>
+                                    @if (product.OldPrice > 0)
+                                    {
+                                        var zbritjaEu = product.OldPrice - product.Price;
+                                        var discount = (zbritjaEu / product.OldPrice) * 100;
+                                        <span class="price-dec" style="position: absolute;top: 0;left: 0;margin-left: 10px;margin-top: 10px">
+                                            -@Math.Round(discount)%
+                                        </span>
+                                    }
+                                    <div class="product-action-3">
+                                        <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-arrows"></i></a>
+                                        <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
+                                        <a title="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$280.00</span>
+                                <div class="product-content-2 max-h-5x">
+                                    <h4><a href="product-details.html">@(product.Name[..30])...</a></h4>
+                                    <span>Përfshirë TVSH-në</span>
+                                    <div class="pro-price-2 mt-50">
+                                        <span>@product.Price.ToString("#.00")€</span>
+                                        @if (product.OldPrice > 0)
+                                        {
+                                            <span class="old-price">@product.OldPrice.ToString("#.00")€</span>
+                                        }
                                     </div>
                                 </div>
-                            </div>
+                            </div> 
                         </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-7.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$290.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-6.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$215.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-5.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$225.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-4.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$235.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-3.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$245.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-2.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$255.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-1.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$267.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
             <div id="product-7" class="tab-pane">
                 <div class="row">
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-5.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
+                    @foreach (var product in Model.ProductPromotions)
+                    {
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12" style="max-height: 450px;">
+                            <div class="product-wrap product-border-2 pro-hover-shadow mb-40">
+                                <div class="product-img mb-15">
+                                    <a href="product-details.html"><img src="@product.ProductGalleries.FirstOrDefault().URL" style="width: 200px;height: 240px;object-fit: contain;padding-left: 50px"  alt="product"></a>
+                                    @if (product.OldPrice > 0)
+                                    {
+                                        var zbritjaEu = product.OldPrice - product.Price;
+                                        var discount = (zbritjaEu / product.OldPrice) * 100;
+                                        <span class="price-dec" style="position: absolute;top: 0;left: 0;margin-left: 10px;margin-top: 10px">
+                                            -@Math.Round(discount)%
+                                        </span>
+                                    }
+                                    <div class="product-action-3">
+                                        <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-arrows"></i></a>
+                                        <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
+                                        <a title="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$210.00</span>
+                                <div class="product-content-2 max-h-5x">
+                                    <h4><a href="product-details.html">@(product.Name[..30])...</a></h4>
+                                    <span>Përfshirë TVSH-në</span>
+                                    <div class="pro-price-2 mt-50">
+                                        <span>@product.Price.ToString("#.00")€</span>
+                                        @if (product.OldPrice > 0)
+                                        {
+                                            <span class="old-price">@product.OldPrice.ToString("#.00")€</span>
+                                        }
                                     </div>
                                 </div>
-                            </div>
+                            </div> 
                         </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-4.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$234.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-2.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$243.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-1.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$267.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-3.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$270.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-7.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$230.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-8.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$290.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                        <div class="product-wrap product-border-3 product-img-zoom mb-30">
-                            <div class="product-img">
-                                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm5-6.jpg" alt="product"></a>
-                                <div class="product-action-4">
-                                    <div class="product-action-4-style">
-                                        <a data-bs-tooltip="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                        <a data-bs-tooltip="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a data-bs-tooltip="Compare" href="#"><i class="la la-random"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content product-content-padding">
-                                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                                <div class="price-addtocart">
-                                    <div class="product-price">
-                                        <span>$240.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>

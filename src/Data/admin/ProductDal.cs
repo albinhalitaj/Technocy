@@ -5,6 +5,7 @@ using System.Linq;
 using Dapper;
 using Data.DataAccess;
 using Domain.Entities;
+using Domain.Enums;
 
 namespace Data.admin
 {
@@ -49,10 +50,15 @@ namespace Data.admin
             return id;
         }
 
-        public IEnumerable<Product> GetProducts()
+        public IEnumerable<Product> GetProducts(ProductTypes type)
         {
             using var con = _dataAccessLayer.AppConn();
-            const string sql = "usp_GetProducts";
+            var sql = type switch
+            {
+                ProductTypes.Products => "usp_GetProducts",
+                ProductTypes.DiscountProducts => "usp_GetDiscountProducts",
+                _ => "usp_GetProductPromotions"
+            };
             var products = con.QueryAsync<Product>(sql, commandType: CommandType.StoredProcedure)
                 .Result;
             var mappedProducts = new List<Product>();
@@ -64,6 +70,7 @@ namespace Data.admin
             }
             return mappedProducts;
         }
+
 
         public IEnumerable<ProductCategory> GetProductCategories(int productId)
         {

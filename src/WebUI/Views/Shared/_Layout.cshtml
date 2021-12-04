@@ -46,7 +46,7 @@
                                         }
                                         else
                                         {
-                                            <a href="login-register.html">Kyqu</a>
+                                            <a asp-controller="Account" asp-action="Index">Kyqu</a>
                                         }
                                     </div>
                                 </div>
@@ -59,7 +59,9 @@
                         <div class="row align-items-center">
                             <div class="col-lg-2">
                                 <div class="logo">
-                                    <a href="index.html"><object data="~/Client/assets/images/logo.svg" width="155" height="34"></object></a>
+                                    <a asp-controller="Home" asp-action="Index">
+                                        <img src="~/Client/assets/images/logo.png" width="155" height="34" alt="logo"/>
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-lg-9">
@@ -165,7 +167,7 @@
                                         <ul>
                                             @foreach (var category in ViewBag.Categories)
                                             {
-                                                <li class="angle-shape"><a href="index.html">@category.Name</a></li>
+                                                <li class="angle-shape"><a asp-controller="Produktet" asp-action="FilterProductsByCategories" asp-route-categoryId="@category.CategoryId">@category.Name</a></li>
                                             }
                                         </ul>
                                     </nav>

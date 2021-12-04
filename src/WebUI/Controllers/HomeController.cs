@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Application.admin;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using WebUI.Models;
 
 namespace WebUI.Controllers
@@ -23,11 +19,12 @@ namespace WebUI.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Categories = _categoryManager.GetCategories();
-            var products = _productManager.GetProducts();
+            ViewBag.Categories = _categoryManager.GetCategories().Where(x=>x.Visibility);
             var model = new HomeViewModel
             {
-                Products = products
+                Products = _productManager.GetProducts(),
+                ProductPromotions = _productManager.GetProductPromotions(),
+                DiscountProducts = _productManager.GetDiscountProducts()
             };
             return View(model);
         }

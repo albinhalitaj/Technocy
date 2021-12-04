@@ -2,6 +2,7 @@
 using Application.admin;
 using Application.Helpers;
 using Data.admin;
+using Data.client;
 using Data.DataAccess;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,6 +21,8 @@ namespace Application
             services.AddSingleton<CategoryManager>();
             services.AddSingleton<ProductDal>();
             services.AddSingleton<ProductManager>();
+            services.AddSingleton<ProductsDal>();
+            services.AddSingleton<client.ProductManager>();
         }
     }
 }

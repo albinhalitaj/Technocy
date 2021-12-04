@@ -7,6 +7,7 @@ using Application.Models;
 using AutoMapper;
 using Data.admin;
 using Domain.Entities;
+using Domain.Enums;
 using Microsoft.AspNetCore.Http;
 
 namespace Application.admin
@@ -97,7 +98,10 @@ namespace Application.admin
             return productModel;
         }
 
-        public IEnumerable<Product> GetProducts() => _productManager.GetProducts();
+        public IEnumerable<Product> GetProducts() => _productManager.GetProducts(ProductTypes.Products);
+
+        public IEnumerable<Product> GetProductPromotions() => _productManager.GetProducts(ProductTypes.ProductPromotions);
+        public IEnumerable<Product> GetDiscountProducts() => _productManager.GetProducts(ProductTypes.DiscountProducts);
 
         public bool Remove(int productId,string webRootPath)
         {
