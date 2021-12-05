@@ -8,10 +8,10 @@
         <div class="row align-items-center">
             <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="slider-content-6">
-                    <h1 class="wow fadeInUp">DyBO Phone</h1>
+                    <h1 class="wow fadeInUp">iPhone 13</h1>
                     <p class="wow fadeInUp">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
                     <div class="slider-btn-6 default-btn btn-hover">
-                        <a class="wow fadeInUp white-color" href="product-details.html">BUY NOW</a>
+                        <a class="wow fadeInUp white-color" href="product-details.html">Blej Tani</a>
                     </div>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                 <div class="slider-sin-img-hm6">
                     <img class="tilter" src="~/Client/assets/images/slider/hm5-single-1.png" alt="">
                     <div class="slider-price">
-                        <h4>$1999</h4>
+                        <h4>999€</h4>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                 <h5>Zbritje </h5>
             </a>
             <a href="#product-7" data-bs-toggle="tab">
-                <h5>Promovime</h5>
+                <h5>Risi</h5>
             </a>
         </div>
         <div class="tab-content jump">
@@ -79,6 +79,11 @@
                                         <span class="price-dec" style="position: absolute;top: 0;left: 0;margin-left: 10px;margin-top: 10px">
                                             -@Math.Round(discount)%
                                         </span>
+                                    }
+                                    @if (product.ProductCategories.Count(x => x.Category.Name == "Risi") == 1)
+                                    {
+                                        <img style="position: absolute;top: 0;right: 0;margin-right: 10px;width: 50px;height: 50px"
+                                             src="Client/assets/images/new-icon.svg" alt="Produkt i sapo ardhur"/>
                                     }
                                     <div class="product-action-3">
                                         <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-arrows"></i></a>
@@ -142,7 +147,7 @@
             </div>
             <div id="product-7" class="tab-pane">
                 <div class="row">
-                    @foreach (var product in Model.ProductPromotions)
+                    @foreach (var product in Model.ProductsNew)
                     {
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12" style="max-height: 450px;">
                             <div class="product-wrap product-border-2 pro-hover-shadow mb-40">
@@ -155,6 +160,11 @@
                                         <span class="price-dec" style="position: absolute;top: 0;left: 0;margin-left: 10px;margin-top: 10px">
                                             -@Math.Round(discount)%
                                         </span>
+                                    }
+                                    @if (product.ProductCategories.Count(x => x.Category.Name == "Risi") == 1)
+                                    {
+                                        <img style="position: absolute;top: 0;right: 0;margin-right: 10px;width: 50px;height: 50px"
+                                             src="Client/assets/images/new-icon.svg" alt="Produkt i sapo ardhur"/>
                                     }
                                     <div class="product-action-3">
                                         <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-arrows"></i></a>

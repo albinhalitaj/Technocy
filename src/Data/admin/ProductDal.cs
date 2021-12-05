@@ -50,6 +50,32 @@ namespace Data.admin
             return id;
         }
 
+        public bool Update(Product product)
+        {
+            using var con = _dataAccessLayer.AppConn();
+            const string sql = "usp_UpdateProduct";
+            var values = new
+            {
+                id = product.ProductId,
+                name = product.Name,
+                slug = product.Slug,
+                summary = product.Summary,
+                description = product.Description,
+                visibility = product.Visibility,
+                stock = product.Stock,
+                sku = product.SKU,
+                price = product.Price,
+                oldPrice = product.OldPrice,
+                status = product.Status,
+                metaTitle = product.MetaTitle,
+                metaDescription = product.MetaDescription,
+                lastUpdatedDate = product.LastUpdatedDate
+            };
+            var result = con.ExecuteAsync(sql, values, commandType: CommandType.StoredProcedure).Result;
+
+            return result == 1;
+        }
+
         public IEnumerable<Product> GetProducts(ProductTypes type)
         {
             using var con = _dataAccessLayer.AppConn();
@@ -57,7 +83,7 @@ namespace Data.admin
             {
                 ProductTypes.Products => "usp_GetProducts",
                 ProductTypes.DiscountProducts => "usp_GetDiscountProducts",
-                _ => "usp_GetProductPromotions"
+                _ => "usp_GetProductNew"
             };
             var products = con.QueryAsync<Product>(sql, commandType: CommandType.StoredProcedure)
                 .Result;

@@ -1,4 +1,5 @@
-﻿using Application.admin;
+﻿using System.Linq;
+using Application.admin;
 using Application.Models;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
@@ -85,6 +86,25 @@ namespace WebUI.Areas.admin.Controllers
             }
             
             return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(EditProductModel model,int id)
+        {
+            if (!ModelState.IsValid && id <= 0)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            model.ProductId = id;
+            var result = _productManager.Edit(model,model.ProductCategories, _webHostEnvironment.WebRootPath);
+            if (result)
+            {
+                _notyf.Custom("Produkti u modifikua me sukses!", 5, "#FFBC53", "fa fa-check");
+                return RedirectToAction(nameof(Index)); 
+            }
+            _notyf.Error("Diqka shkoi gabim! Ju lutem provoni përseri",5); 
+            return View(nameof(Index));
         }
 
         public IActionResult Filtro(string startingPrice,string endingPrice,bool visibility,string[] categories)

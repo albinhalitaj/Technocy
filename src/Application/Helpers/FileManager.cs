@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
@@ -23,17 +24,26 @@ namespace Application.Helpers
             var status = false;
             var uploadsFolder = Path.Combine(webRootPath, url);
             var path = Path.Combine(Directory.GetCurrentDirectory(), uploadsFolder);
+            using var fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
             try
             {
+                fs.Dispose();
+
                 if (File.Exists(path))
                 {
                     File.Delete(path);
                     status = true;
                 }
+
+                fs.Flush();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 status = false;
+            }
+            finally
+            {
+                fs.Close();
             }
             return status;
         }

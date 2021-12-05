@@ -15,6 +15,11 @@ namespace Application.Mapping
                 .ForMember(x=>x.ProductCategories,
                     x=>x.Ignore());
             CreateMap<Product, InsertProductModel>();
+
+            CreateMap<EditProductModel, Product>()
+                .ForMember(x=>x.ProductCategories,
+                    x=>x.Ignore())
+                .ReverseMap();
         }
     }
 }

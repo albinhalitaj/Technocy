@@ -54,6 +54,34 @@ namespace Application.admin
             return res && status;
         }
 
+        public bool Edit(EditProductModel model, IEnumerable<string> categories,string webRootPath)
+        {
+            var product = _mapper.Map<Product>(model);
+
+            product.Status = product.Stock > 0;
+            product.LastUpdatedDate = DateTime.Now;
+
+            _productManager.DeleteProductCategories(model.ProductId);
+            var res = _productManager.Update(product);
+            var status = true;
+            if (!res) return res && status;
+            foreach (var category in categories)
+            {
+                product.ProductCategories.Add(new ProductCategory
+                {
+                    ProductId = product.ProductId,
+                    CategoryId = int.Parse(category)
+                });
+            }
+            _productManager.InsertProductCategories(product.ProductCategories);
+            if (model.ProductGallery != null && model.ProductGallery.Any())
+            {
+                status = Upload(model.ProductGallery, product.ProductId, webRootPath).Result;
+            }
+
+            return res && status;
+        }
+
         private async Task<bool> Upload(IFormFileCollection files, int productId, string webRootPath)
         {
             const string folder = "Admin/images/products/";
@@ -74,12 +102,13 @@ namespace Application.admin
             return result;
         }
 
-        public IEnumerable<Product> Filtro(ProductFilterModel model) => _productManager.FilterProducts(model.StartingPrice, model.EndingPrice, model.Visibility,model.Categories);
+        public IEnumerable<Product> Filtro(ProductFilterModel model) =>
+            _productManager.FilterProducts(model.StartingPrice, model.EndingPrice, model.Visibility,model.Categories);
 
-        public InsertProductModel FirstOrDefault(int productId)
+        public EditProductModel FirstOrDefault(int productId)
         {
             var product = _productManager.GetProduct(productId);
-            var productModel = _mapper.Map<InsertProductModel>(product);
+            var productModel = _mapper.Map<EditProductModel>(product);
             
             var productCategories = _productManager.GetProductCategories(productId).ToList();
             var temp = new List<string>();
@@ -100,7 +129,7 @@ namespace Application.admin
 
         public IEnumerable<Product> GetProducts() => _productManager.GetProducts(ProductTypes.Products);
 
-        public IEnumerable<Product> GetProductPromotions() => _productManager.GetProducts(ProductTypes.ProductPromotions);
+        public IEnumerable<Product> GetProductNew() => _productManager.GetProducts(ProductTypes.ProductPromotions);
         public IEnumerable<Product> GetDiscountProducts() => _productManager.GetProducts(ProductTypes.DiscountProducts);
 
         public bool Remove(int productId,string webRootPath)

@@ -23,7 +23,7 @@ namespace WebUI.Controllers
             var model = new HomeViewModel
             {
                 Products = _productManager.GetProducts(),
-                ProductPromotions = _productManager.GetProductPromotions(),
+                ProductsNew = _productManager.GetProductNew(),
                 DiscountProducts = _productManager.GetDiscountProducts()
             };
             return View(model);
