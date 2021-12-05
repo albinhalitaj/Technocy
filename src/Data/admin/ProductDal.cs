@@ -174,12 +174,21 @@ namespace Data.admin
             return product;
         }
 
+        private class FilterModel
+        {
+            public decimal StartingPrice { get; set; }
+            public decimal EndingPrice { get; set; }
+            public bool Visibility { get; set; }
+            public string Categories { get; set; }
+        }
+
         public IEnumerable<Product> FilterProducts
             (decimal startingPrice,decimal endingPrice,bool visibility,IEnumerable<string> cats)
         {
             const string sql = "usp_FilterProducts";
             using var con = _dataAccessLayer.AppConn();
             var result = string.Join(",", cats);
+
             var values = new
             {
                 startingPrice,
@@ -187,6 +196,7 @@ namespace Data.admin
                 visibility,
                 categories = result
             };
+            
             var products = con.Query<Product>(sql,values,commandType: CommandType.StoredProcedure).ToList();
             var mappedProducts = new List<Product>();
             foreach (var product in products)
