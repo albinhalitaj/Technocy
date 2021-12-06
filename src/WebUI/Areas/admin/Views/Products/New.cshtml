@@ -1,0 +1,204 @@
+﻿@model Application.Models.InsertProductModel
+
+@{
+    ViewBag.Title = "Produkt i ri";
+    Layout = "_AdminLayout";
+}
+
+<div id="top" class="sa-app__body">
+   <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
+      <div class="container">
+         <form asp-controller="Products" asp-action="New" enctype="multipart/form-data">
+           <div class="py-5">
+              <div class="row g-4 align-items-center">
+                 <div class="col">
+                    <nav class="mb-2" aria-label="breadcrumb">
+                       <ol class="breadcrumb breadcrumb-sa-simple">
+                          <li class=""><a asp-controller="Dashboard" asp-action="Index">Ballina  /</a></li>
+                          <li class=""><a asp-controller="Products" asp-action="Index">Produktet</a></li>
+                       </ol>
+                    </nav>
+                    <h1 class="h3 m-0">Shto Produkt</h1>
+                 </div>
+                 <div class="col-auto d-flex">
+                    <a asp-controller="Products" asp-action="Index" class="btn btn-secondary me-3">Anulo</a>
+                    <button type="submit" class="btn btn-primary">Ruaj</button>
+                 </div>
+              </div>
+           </div>
+           <div class="sa-entity-layout" data-sa-container-query="{&quot;920&quot;:&quot;sa-entity-layout--size--md&quot;,&quot;1100&quot;:&quot;sa-entity-layout--size--lg&quot;}">
+              <div class="sa-entity-layout__body">
+                 <div class="sa-entity-layout__main">
+                    <div class="card">
+                       <div class="card-body p-5">
+                          <div class="mb-5">
+                             <h2 class="mb-0 fs-exact-18">Informatat themelore</h2>
+                          </div>
+                          <div class="mb-4">
+                             <label for="form-product/name" class="form-label">Emertimi</label>
+                             <input asp-for="Name" class="form-control" id="form-product/name"/>
+                             <span asp-validation-for="Name" class="text-danger"></span>
+                          </div>
+                          <div class="mb-4">
+                             <label for="form-product/slug" class="form-label">Slug</label>
+                             <div class="input-group input-group--sa-slug">
+                                <span class="input-group-text" id="form-product/slug-addon">https://technocy.com/kategoria/</span>
+                                <input asp-for="Slug" class="form-control" id="form-product/slug" aria-describedby="form-product/slug-addon form-product/slug-help"/>
+                             </div>
+                             <div id="form-product/slug-help" class="form-text">Identifikues unik i produktit i lexueshëm nga njeriu. Jo më shumë se 255 karaktere.</div>
+                             <span asp-validation-for="Slug" class="text-danger"></span>
+                          </div>
+                         <div class="mb-4">
+                            <label for="form-product/description" class="form-label">Description</label>
+                            <textarea asp-for="Description" id="editor1" rows="10" cols="80">
+                           </textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                         </div>
+                         <div>
+                            <label for="form-product/short-description" class="form-label">Short description</label>
+                            <textarea asp-for="Summary" id="form-product/short-description" class="form-control" rows="5"></textarea>
+                            <span asp-validation-for="Summary" class="text-danger"></span>
+                         </div>
+                       </div>
+                    </div>
+                    <div class="card mt-5">
+                       <div class="card-body p-5">
+                          <div class="mb-5">
+                             <h2 class="mb-0 fs-exact-18">Çmimet</h2>
+                          </div>
+                          <div class="row g-4">
+                             <div class="col">
+                                <label for="form-product/price" class="form-label">Çmimi</label>
+                                <input asp-for="Price" class="form-control" id="form-product/price"/>
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                             </div>
+                             <div class="col">
+                                <label for="form-product/old-price" class="form-label">Çmimi vjetër</label>
+                                <input asp-for="OldPrice" class="form-control" id="form-product/old-price"/>
+                                <span asp-validation-for="OldPrice" class="text-danger"></span>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                    <div class="card mt-5">
+                       <div class="card-body p-5">
+                          <div class="mb-5">
+                             <h2 class="mb-0 fs-exact-18">Inventari</h2>
+                          </div>
+                          <div class="mb-4">
+                             <label for="form-product/sku" class="form-label">SKU</label>
+                             <input asp-for="SKU" class="form-control" id="form-product/sku"/>
+                             <span asp-validation-for="SKU" class="text-danger"></span>
+                          </div>
+                          <div>
+                             <label for="form-product/quantity" class="form-label">Sasia e stokut</label>
+                             <input asp-for="Stock" min="0" class="form-control" id="form-product/quantity"/>
+                             <span asp-validation-for="Stock" class="text-danger"></span>
+                          </div>
+                       </div>
+                    </div>
+                    <div class="card mt-5">
+                       <div class="card-body p-5">
+                          <div class="mb-5">
+                             <h2 class="mb-0 fs-exact-18">Imazhet</h2>
+                          </div>
+                       </div>
+                       <div class="mt-n5">
+                          <div class="sa-divider"></div>
+                          <div class="sa-divider"></div>
+                          <div class="px-5 py-4 my-2">
+                             <div class="custom-file">
+                                <label for="formFile-1" class="form-label">Ngarkoni imazhet e produktit</label>
+                                <input asp-for="ProductGallery" class="my-pond" id="formFile-1" multiple />
+                                <span asp-validation-for="ProductGallery" class="text-danger"></span>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                    <div class="card mt-5">
+                       <div class="card-body p-5">
+                          <div class="mb-5">
+                             <h2 class="mb-0 fs-exact-18">Optimizimi i motorit të kërkimit</h2>
+                             <div class="mt-3 text-muted">Jepni informacione që do të ndihmojnë në përmirësimin e fragmentit dhe për ta sjellë produktin tuaj në krye të motorëve të kërkimit.</div>
+                          </div>
+                          <div class="mb-4">
+                             <label for="form-product/seo-title" class="form-label">Titulli faqes</label>
+                             <input asp-for="MetaTitle" class="form-control" id="form-product/seo-title"/>
+                             <span asp-validation-for="MetaTitle" class="text-danger"></span>
+                          </div>
+                          <div>
+                             <label for="form-product/seo-description" class="form-label">Përshkrimi Meta</label>
+                             <textarea asp-for="MetaDescription" id="form-product/seo-description" class="form-control" rows="5"></textarea>
+                             <span asp-validation-for="MetaDescription" class="text-danger"></span>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="sa-entity-layout__sidebar">
+                    <div class="card w-100">
+                       <div class="card-body p-5">
+                          <div class="mb-5">
+                             <h2 class="mb-0 fs-exact-18">Dukshmëria</h2>
+                          </div>
+                          <div class="mb-4">
+                               <label class="form-check">
+                                  <input name="Visibility" value="true" type="radio" class="form-check-input" checked/>
+                                  <span class="form-check-label">Publikuar</span>
+                               </label>
+                               <label class="form-check mb-0">
+                                  <input name="Visibility" value="false" type="radio" class="form-check-input" />
+                                  <span class="form-check-label">I fshehur</span>
+                               </label> 
+                               <span asp-validation-for="Visibility" class="text-danger"></span>
+                            </div>
+                       </div>
+                    </div>
+                    <div class="card w-100 mt-5">
+                       <div class="card-body p-5">
+                          <div class="mb-5">
+                             <h2 class="mb-0 fs-exact-18">Kategoritë</h2>
+                          </div>
+                          <select asp-for="ProductCategories" class="sa-select2 form-select" multiple="">
+                             @foreach (var category in Model.Categories)
+                             {
+                                <option value="@category.CategoryId" >@category.Name</option>
+                             }
+                          </select>
+                          <span asp-validation-for="ProductCategories" class="text-danger"></span>
+                          <div class="mt-4 mb-n2"><a asp-controller="Categories" asp-action="New">Shto kategori të re</a></div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </div> 
+         </form>
+      </div>
+   </div>
+</div>
+
+@section Scripts
+{
+   <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script>
+      <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script>
+      <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script>
+   <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+   <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>
+   <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+      <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+   <script>
+      $(document).ready(function() {
+        CKEDITOR.replace( 'editor1' );
+        
+        const input = document.querySelector('input[type="file"]')
+        
+        
+        FilePond.registerPlugin(
+             FilePondPluginImagePreview,
+             FilePondPluginFileValidateSize,
+             );
+        FilePond.create(input, {
+                    storeAsFile: true,
+                });
+      });
+   </script>
+}

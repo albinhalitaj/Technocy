@@ -5,7 +5,7 @@ namespace Application.Models
     public class InsertCategoryModel
     {
         [Required(ErrorMessage = "Kjo fushë është e obligueshme")]
-        [MinLength(5,ErrorMessage = "Ju lutem shënoni më shumë se 5 karaktere")]
+        [MinLength(4,ErrorMessage = "Ju lutem shënoni më shumë se 4 karaktere")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Kjo fushë është e obligueshme")]
         [MaxLength(255,ErrorMessage = "Kjo fushë nuk mund të ketë më shumë se 255 karaktere")]

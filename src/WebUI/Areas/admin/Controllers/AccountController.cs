@@ -25,6 +25,9 @@ namespace WebUI.Areas.admin.Controllers
         }
         
         [HttpGet]
+        [Route("/admin")]
+        [Route("/admin/account")]
+        [Route("/admin/account/login")]
         public IActionResult Login(string returnUrl)
         {
             if (User.Identity is {IsAuthenticated: true})
@@ -47,6 +50,7 @@ namespace WebUI.Areas.admin.Controllers
                         var claims = new List<Claim>
                         {
                             new (ClaimTypes.Name, string.Concat(employee.Name, " ", employee.Surname)),
+                            new ("Username",employee.Username),
                             new ("Id", Convert.ToString(employee.EmployeeId)),
                             new (ClaimTypes.Email, employee.Email),
                             new (ClaimTypes.Role, employee.Role.Name)

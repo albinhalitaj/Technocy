@@ -1,6 +1,7 @@
 using System;
 using Application;
 using AspNetCoreHero.ToastNotification;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,7 +29,9 @@ namespace WebUI
                 opt.Position = NotyfPosition.TopRight;
                 opt.IsDismissable = true;
             });
+            
             services.AddAutoMapper(typeof(Startup));
+            
             services.AddApplication();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
@@ -70,6 +73,12 @@ namespace WebUI
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "products",
+                    pattern: "produktet/{categorySlug}",
+                    defaults: new { controller = "Produktet", action = "FilterProductsByCategories" }
+                );
             });
         }
     }

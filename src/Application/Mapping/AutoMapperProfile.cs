@@ -10,6 +10,16 @@ namespace Application.Mapping
         {
             CreateMap<InsertCategoryModel, Category>()
                 .ReverseMap();
+
+            CreateMap<InsertProductModel, Product>()
+                .ForMember(x=>x.ProductCategories,
+                    x=>x.Ignore());
+            CreateMap<Product, InsertProductModel>();
+
+            CreateMap<EditProductModel, Product>()
+                .ForMember(x=>x.ProductCategories,
+                    x=>x.Ignore())
+                .ReverseMap();
         }
     }
 }
