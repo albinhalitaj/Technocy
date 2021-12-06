@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net.Mime;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
@@ -12,9 +13,12 @@ namespace Application.Helpers
         {
             path += Guid.NewGuid() + "_" + image.FileName;
 
-            string serverFolder = Path.Combine(webrootPath, path);
+            var serverFolder = Path.Combine(webrootPath, path);
 
-            await image.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+            await using (var stream = File.Create(serverFolder))
+            {
+                await image.CopyToAsync(stream);
+            }
 
             return "/" + path;
         }
@@ -24,26 +28,19 @@ namespace Application.Helpers
             var status = false;
             var uploadsFolder = Path.Combine(webRootPath, url);
             var path = Path.Combine(Directory.GetCurrentDirectory(), uploadsFolder);
-            using var fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+            var file = new FileInfo(path);
             try
             {
-                fs.Dispose();
-
                 if (File.Exists(path))
                 {
                     File.Delete(path);
-                    status = true;
+                    file.Delete();
+                    status = !File.Exists(path);
                 }
-
-                fs.Flush();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 status = false;
-            }
-            finally
-            {
-                fs.Close();
             }
             return status;
         }

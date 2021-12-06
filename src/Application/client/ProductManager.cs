@@ -13,8 +13,8 @@ namespace Application.client
             _productsDal = productsDal;
         }
 
-        public IEnumerable<Product> GetProductsByCategory(int categoryId) =>
-            _productsDal.GetProductsByCategory(categoryId);
+        public IEnumerable<Product> GetProductsByCategory(string slug) =>
+            _productsDal.GetProductsByCategory(slug);
 
         public IEnumerable<Product> GetProductsByPrice(decimal startingPrice, decimal endingPrice) =>
             _productsDal.GetProductsByPrice(startingPrice, endingPrice);

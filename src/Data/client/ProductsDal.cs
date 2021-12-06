@@ -19,11 +19,11 @@ namespace Data.client
             _productDal = productDal;
         }
 
-        public IEnumerable<Product> GetProductsByCategory(int categoryId)
+        public IEnumerable<Product> GetProductsByCategory(string slug)
         {
             const string sql = "usp_GetProductsByCategory";
             using var con = _dataAccessLayer.AppConn();
-            var products = con.Query<Product>(sql, new {categoryId}, commandType: CommandType.StoredProcedure);
+            var products = con.Query<Product>(sql, new {slug}, commandType: CommandType.StoredProcedure);
             foreach (var product in products)
             {
                 product.ProductGalleries = _productDal.GetProductGalleries(product.ProductId).ToList();

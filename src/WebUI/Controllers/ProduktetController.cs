@@ -37,9 +37,9 @@ namespace WebUI.Controllers
         }
 
         [HttpGet]
-        public IActionResult FilterProductsByCategories(int categoryId)
+        public IActionResult FilterProductsByCategories(string categorySlug)
         {
-            var products = _clientProductManager.GetProductsByCategory(categoryId);
+            var products = _clientProductManager.GetProductsByCategory(categorySlug);
             ViewBag.Categories = Categories;
             ViewBag.TotalProdukte = TotalProdukte;
             ViewBag.Produktet = products.Count();

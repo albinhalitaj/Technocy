@@ -116,7 +116,7 @@
                             <ul id="faq">
                                 @foreach (var category in ViewBag.Categories)
                                 {
-                                    <li> <a asp-action="FilterProductsByCategories" asp-route-categoryId="@category.CategoryId">@category.Name</a></li>
+                                    <li> <a href="/produktet/@category.Slug">@category.Name</a></li>
                                 }
                             </ul>
                         </div>

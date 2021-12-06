@@ -73,6 +73,12 @@ namespace WebUI
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "products",
+                    pattern: "produktet/{categorySlug}",
+                    defaults: new { controller = "Produktet", action = "FilterProductsByCategories" }
+                );
             });
         }
     }

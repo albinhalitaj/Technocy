@@ -167,7 +167,7 @@
                                         <ul>
                                             @foreach (var category in ViewBag.Categories)
                                             {
-                                                <li class="angle-shape"><a asp-controller="Produktet" asp-action="FilterProductsByCategories" asp-route-categoryId="@category.CategoryId">@category.Name</a></li>
+                                                <li class="angle-shape"><a href="/produktet/@category.Slug">@category.Name</a></li>
                                             }
                                         </ul>
                                     </nav>
