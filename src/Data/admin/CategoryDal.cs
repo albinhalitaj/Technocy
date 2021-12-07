@@ -94,7 +94,7 @@ namespace Data.admin
                 lastUpdatedDate = category.LastUpdatedAt
             };
             var result = con.ExecuteAsync(sql, values, commandType: CommandType.StoredProcedure).Result;
-            return result == -1;
+            return result == 1;
         }
 
         private int GetCategoryProductsCount(int id)
