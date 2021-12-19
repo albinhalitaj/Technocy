@@ -174,6 +174,19 @@ namespace Data.admin
             return product;
         }
 
+        public Product GetProductBySlug(string slug)
+        {
+            const string sql = "usp_GetProductBySlug";
+            using var con = _dataAccessLayer.AppConn();
+            var product = con.QueryAsync<Product>(sql, new {slug}, commandType: CommandType.StoredProcedure)
+                .Result
+                .FirstOrDefault();
+            if (product == null) return product;
+            product.ProductGalleries = GetProductGalleries(product.ProductId).ToList();
+            product.ProductCategories = GetProductCategories(product.ProductId).ToList();
+            return product;
+        }
+
         private class FilterModel
         {
             public decimal StartingPrice { get; set; }

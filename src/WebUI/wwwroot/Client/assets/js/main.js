@@ -842,7 +842,7 @@
     /*--------------------------
         Product Zoom
 	---------------------------- */
-    /*$(".zoompro").elevateZoom({
+   /* $(".zoompro").elevateZoom({
         gallery: "gallery",
         galleryActiveClass: "active",
         zoomWindowWidth: 300,

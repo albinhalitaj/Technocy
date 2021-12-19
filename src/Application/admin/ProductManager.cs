@@ -127,6 +127,8 @@ namespace Application.admin
             return productModel;
         }
 
+        public Product GetProductBySlug(string slug) => _productManager.GetProductBySlug(slug);
+
         public IEnumerable<Product> GetProducts() => _productManager.GetProducts(ProductTypes.Products);
 
         public IEnumerable<Product> GetProductNew() => _productManager.GetProducts(ProductTypes.ProductPromotions);

@@ -37,6 +37,7 @@ namespace WebUI.Controllers
         }
 
         [HttpGet]
+        [Route("/produktet/{categorySlug}")]
         public IActionResult FilterProductsByCategories(string categorySlug)
         {
             var products = _clientProductManager.GetProductsByCategory(categorySlug);
@@ -65,6 +66,20 @@ namespace WebUI.Controllers
             ViewBag.TotalProdukte = TotalProdukte;
             ViewBag.Produktet = products.Count();
             return View("Index",products);
+        }
+
+        
+        [HttpGet]
+        [Route("/product/{slug}")]
+        public IActionResult Product(string slug)
+        {
+            ViewBag.Categories = Categories;
+            var product = _productManager.GetProductBySlug(slug);
+            if (product == null)
+            {
+                return RedirectToAction("Index","Home");
+            }
+            return View("ProductDetails",product);
         }
     }
 }

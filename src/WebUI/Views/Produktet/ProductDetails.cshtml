@@ -1,0 +1,378 @@
+﻿@model Domain.Entities.Product
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+    decimal discount = 0;
+    if (Model.OldPrice > 0)
+    {
+        var zbritjaEu = Model.OldPrice - Model.Price;
+        discount = (zbritjaEu / Model.OldPrice) * 100;
+    } 
+}
+
+<div class="product-details-area pt-90 pb-90">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="product-details-img">
+                <div class="zoompro-border zoompro-span">
+                    <img class="zoompro" src="@Model.ProductGalleries.FirstOrDefault().URL" style="object-fit: contain;width: 500px;height: 500px" alt="" />
+                    @if (discount > 0)
+                    {
+                        <span>-@Math.Round(discount)%</span>
+                    }
+                </div>
+                <div id="gallery" class="mt-70 product-dec-slider">
+                    @foreach (var image in Model.ProductGalleries)
+                    {
+                        <a data-image="@image.URL" style="width: 70px !important;" data-zoom-image="@image.URL">
+                            <img class="small-img" style="object-fit: contain;width: 70px;height: 70px" src="@image.URL" alt="">
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="product-details-content pro-details-content-modify">
+                @foreach (var category in Model.ProductCategories)
+                {
+                    <span>@category.Category.Name / </span>
+                }
+                <h2>@Model.Name</h2>
+                <div class="product-ratting-review">
+                    <div class="product-ratting">
+                        <i class="la la-star"></i>
+                        <i class="la la-star"></i>
+                        <i class="la la-star"></i>
+                        <i class="la la-star"></i>
+                        <i class="la la-star-half-o"></i>
+                    </div>
+                    <div class="product-review">
+                        <span>40+ Reviews</span>
+                    </div>
+                </div>
+                <div class="pro-details-color-wrap">
+                    <span>Color:</span>
+                    <div class="pro-details-color-content">
+                        <ul>
+                            <li class="green"></li>
+                            <li class="yellow"></li>
+                            <li class="red"></li>
+                            <li class="blue"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pro-details-size">
+                    <span>Size:</span>
+                    <div class="pro-details-size-content">
+                        <ul>
+                            <li><a href="#">s</a></li>
+                            <li><a href="#">m</a></li>
+                            <li><a href="#">xl</a></li>
+                            <li><a href="#">xxl</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pro-details-price-wrap">
+                    <div class="product-price">
+                        <span>@Model.Price.ToString("#,##0.00")€</span>
+                        @if (Model.OldPrice > 0)
+                        {
+                            <span class="old">@Model.OldPrice.ToString("#.00")€</span>
+                        }
+                    </div>
+                    @if (discount > 0)
+                    {
+                        <div class="dec-rang"><span>- @Math.Round(discount)%</span></div>
+                    }
+                </div>
+                <div class="pro-details-quality">
+                    <div class="cart-plus-minus">
+                        <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
+                    </div>
+                </div>
+                <div class="pro-details-compare-wishlist">
+                    <div class="pro-details-compare">
+                        <a title="Add To Compare" href="#"><i class="la la-retweet"></i> Krahaso</a>
+                    </div>
+                    <div class="pro-details-wishlist">
+                        <a title="Add To Wishlist" href="#"><i class="la la-heart-o"></i> Shto në listën e dëshirave</a>
+                    </div>
+                </div>
+                <div class="pro-details-buy-now btn-hover btn-hover-radious">
+                    <a href="#">Shto në shportë</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="description-review-wrapper pb-90">
+<div class="container">
+    <div class="row">
+        <div class="ms-auto me-auto col-lg-10">
+            <div class="dec-review-topbar nav mb-40">
+                <a data-bs-toggle="tab" href="#des-details1">Përshkrimi</a>
+                <a class="active" data-bs-toggle="tab" href="#des-details2">Detajet</a>
+                <a data-bs-toggle="tab" href="#des-details3">Vlerësimet</a>
+            </div>
+            <div class="tab-content dec-review-bottom">
+                <div id="des-details1" class="tab-pane">
+                    <div class="description-wrap">
+                        <p>@Model.Summary</p>
+                    </div>
+                </div>
+                <div id="des-details2" class="tab-pane active">
+                    <div class="specification-wrap table-responsive">
+                        @Html.Raw(Model.Description)
+                    </div>
+                </div>
+                <div id="des-details3" class="tab-pane">
+                    <div class="dec-review-wrap mb-50">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-4 col-md-5">
+                                <div class="dec-review-img-wrap">
+                                    <div class="dec-review-img">
+                                        <img src="~/Client/assets/images/product-details/review-1.png" alt="review">
+                                    </div>
+                                    <div class="dec-client-name">
+                                        <h4>Jonathon Doe</h4>
+                                        <div class="dec-client-rating">
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star-half-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-8 col-md-7">
+                                <div class="dec-review-content">
+                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                                    <div class="review-content-bottom">
+                                        <div class="review-like">
+                                            <span><i class="la la-heart-o"></i> 24 Likes</span>
+                                        </div>
+                                        <div class="review-date">
+                                            <span>25 Jun 2019</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dec-review-wrap mb-50">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-4 col-md-5">
+                                <div class="dec-review-img-wrap">
+                                    <div class="dec-review-img">
+                                        <img src="~/Client/assets/images/product-details/review-2.png" alt="review">
+                                    </div>
+                                    <div class="dec-client-name">
+                                        <h4>Jonathon Doe</h4>
+                                        <div class="dec-client-rating">
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star-half-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-8 col-md-7">
+                                <div class="dec-review-content">
+                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                                    <div class="review-content-bottom">
+                                        <div class="review-like">
+                                            <span><i class="la la-heart-o"></i> 24 Likes</span>
+                                        </div>
+                                        <div class="review-date">
+                                            <span>25 Jun 2019</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dec-review-wrap">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-4 col-md-5">
+                                <div class="dec-review-img-wrap">
+                                    <div class="dec-review-img">
+                                        <img src="~/Client/assets/images/product-details/review-3.png" alt="review">
+                                    </div>
+                                    <div class="dec-client-name">
+                                        <h4>Jonathon Doe</h4>
+                                        <div class="dec-client-rating">
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star-half-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-8 col-md-7">
+                                <div class="dec-review-content">
+                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                                    <div class="review-content-bottom">
+                                        <div class="review-like">
+                                            <span><i class="la la-heart-o"></i> 24 Likes</span>
+                                        </div>
+                                        <div class="review-date">
+                                            <span>25 Jun 2019</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="product-area pb-85">
+<div class="container">
+    <div class="section-title-6 mb-50 text-center">
+        <h2>Produkte Të Ngjashme</h2>
+    </div>
+    <div class="product-slider-active owl-carousel">
+        <div class="product-wrap">
+            <div class="product-img mb-15">
+                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm1-5.jpg" alt="product"></a>
+                <div class="product-action">
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-plus"></i></a>
+                    <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
+                    <a title="Compare" href="#"><i class="la la-retweet"></i></a>
+                </div>
+            </div>
+            <div class="product-content">
+                <span>Chair</span>
+                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
+                <div class="price-addtocart">
+                    <div class="product-price">
+                        <span>$210.00</span>
+                    </div>
+                    <div class="product-addtocart">
+                        <a title="Add To Cart" href="#">+ Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-wrap">
+            <div class="product-img mb-15">
+                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm1-6.jpg" alt="product"></a>
+                <div class="product-action">
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-plus"></i></a>
+                    <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
+                    <a title="Compare" href="#"><i class="la la-retweet"></i></a>
+                </div>
+            </div>
+            <div class="product-content">
+                <span>Chair</span>
+                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
+                <div class="price-addtocart">
+                    <div class="product-price">
+                        <span>$210.00</span>
+                        <span class="old">$230.00</span>
+                    </div>
+                    <div class="product-addtocart">
+                        <a title="Add To Cart" href="#">+ Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-wrap">
+            <div class="product-img mb-15">
+                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm1-7.jpg" alt="product"></a>
+                <div class="product-action">
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-plus"></i></a>
+                    <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
+                    <a title="Compare" href="#"><i class="la la-retweet"></i></a>
+                </div>
+            </div>
+            <div class="product-content">
+                <span>Chair</span>
+                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
+                <div class="price-addtocart">
+                    <div class="product-price">
+                        <span>$250.00</span>
+                    </div>
+                    <div class="product-addtocart">
+                        <a title="Add To Cart" href="#">+ Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-wrap">
+            <div class="product-img mb-15">
+                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm1-8.jpg" alt="product"></a>
+                <div class="product-action">
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-plus"></i></a>
+                    <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
+                    <a title="Compare" href="#"><i class="la la-retweet"></i></a>
+                </div>
+            </div>
+            <div class="product-content">
+                <span>Chair</span>
+                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
+                <div class="price-addtocart">
+                    <div class="product-price">
+                        <span>$320.00</span>
+                        <span class="old">$120.00</span>
+                    </div>
+                    <div class="product-addtocart">
+                        <a title="Add To Cart" href="#">+ Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-wrap">
+            <div class="product-img mb-15">
+                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm1-6.jpg" alt="product"></a>
+                <span class="price-dec">-30%</span>
+                <div class="product-action">
+                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-plus"></i></a>
+                    <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
+                    <a title="Compare" href="#"><i class="la la-retweet"></i></a>
+                </div>
+            </div>
+            <div class="product-content">
+                <span>Chair</span>
+                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
+                <div class="price-addtocart">
+                    <div class="product-price">
+                        <span>$210.00</span>
+                        <span class="old">$230.00</span>
+                    </div>
+                    <div class="product-addtocart">
+                        <a title="Add To Cart" href="#">+ Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="~/Client/assets/js/plugins/zoomsl.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+   $('.small-img').click(function() {
+     $('.zoompro').attr('src',$(this).attr('src'));
+   })
+  $('.zoompro').imagezoomsl({
+    magnifycursor:'crosshair',
+    stepzoom: 0.5,
+    zoomrange: [2, 2],
+    zoomstart: 2,
+  }) 
+})
+</script>
+
