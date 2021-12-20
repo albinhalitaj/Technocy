@@ -1,0 +1,147 @@
+﻿@model RegisterModel
+@{
+    ViewBag.Title = "Regjistrohu";
+    Layout = "_Layout";
+}
+
+<div class="login-register-area pt-85 pb-90">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 ms-auto me-auto">
+                <div class="login-register-wrapper">
+                    <div class="login-register-tab-list nav">
+                        <a class="active" data-bs-toggle="tab" href="#lg2">
+                            <h4> Regjistrohu </h4>
+                        </a>
+                    </div>
+                    <div id="lg2" class="tab-pane active">
+                        <div class="login-form-container">
+                            <div class="login-register-form">
+                                <form asp-controller="Account" asp-action="Register">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                    <input type="text" asp-for="Email" placeholder="E-maili">
+                                    <span asp-validation-for="Fjalekalimi" class="text-danger"></span>
+                                    <input type="password" asp-for="Fjalekalimi" placeholder="Fjalëkalimi">
+                                    <span asp-validation-for="KonfirmoFjalekalimin" class="text-danger"></span>
+                                    <input type="password" asp-for="KonfirmoFjalekalimin" placeholder="Konfirmo fjalëkalimin">
+                                    <span asp-validation-for="Emri" class="text-danger"></span>
+                                    <input type="text" asp-for="Emri" placeholder="Emri">
+                                    <span asp-validation-for="Mbiemri" class="text-danger"></span>
+                                    <input type="text" asp-for="Mbiemri" placeholder="Mbiemri">
+                                    <select asp-for="Gjinia" class="form-input">
+                                        <option>Gjinia</option>
+                                        <option value="1">Mashkull</option>
+                                        <option value="2">Femër</option>
+                                    </select>
+                                    <span asp-validation-for="Gjinia" class="text-danger"></span>
+                                    <div style="display: flex;">
+                                        <span asp-validation-for="Shteti" class="text-danger"></span>
+                                        <select id="city" asp-for="Shteti" style="flex:1;margin-right: 10px" class="form-input">
+                                            <option value="Kosovë">Kosovë</option>
+                                            <option value="Shqipëri">Shqipëri</option>
+                                            <option value="Maqedoni">Maqedoni</option>
+                                            <option value="Diasporë">Diasporë</option>
+                                        </select>
+                                        <span asp-validation-for="Qyteti" class="text-danger"></span>
+                                        <div id="cityDiv" style="flex: 1">
+                                            <select id="cityDropDown" asp-for="Qyteti" class="form-input">
+                                                <option value="Prishtinë">Prishtinë</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex;flex: 3">
+                                        <select style="flex: 1;margin-right: 10px" asp-for="DitaLindjes" class="form-input">
+                                            <option>Dita e lindjes</option>
+                                            @for (var i = 1; i <= 31; i++)
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        </select>
+                                        <span asp-validation-for="DitaLindjes" class="text-danger"></span>
+                                        <select style="flex: 1;margin-right: 10px" asp-for="MuajiLindjes" class="form-input">
+                                            <option>Muaji i lindjes</option>
+                                            @for (var i = 1; i <= 12; i++)
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        </select>
+                                        <span asp-validation-for="MuajiLindjes" class="text-danger"></span>
+                                        <select style="flex: 1" asp-for="VitiLindjes" class="form-input">
+                                            <option>Viti i lindjes</option>
+                                            @for (var i = DateTime.Now.Year; i >= 1994; i--)
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        </select>
+                                        <span asp-validation-for="VitiLindjes" class="text-danger"></span>
+                                    </div>
+                                    <div class="terms-conditions">
+                                        <label><input style="margin-right: 5px" type="checkbox">Unë i pranoj Kushtet e përdorimit</label>
+                                    </div>
+                                    <div class="button-box">
+                                        <button type="submit" style="width: 100%;height: 50px">Regjistrohu</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div style="margin-top: 10px;text-align: center;font-size: 17px">
+                                <a asp-action="Login">Keni llogari? Kyçu</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        let selectedValue = "Kosovë";
+       $.ajax({
+           type: "POST",
+           dataType: "json",
+           url: "/account/GetCitiesByCountry/",
+           data: { country: selectedValue },
+           success: 
+               function(resp) {
+                 let mark = "";
+                 for (let i = 0;i < resp.data.length; i++){
+                     mark += "<option value="+ resp.data[i] +">"+ resp.data[i] +" </option>"
+                 }
+                 $('#cityDropDown').html(mark);
+               },
+           error: 
+               function (err) {
+                   console.error(err);
+               }
+       }) 
+    })
+    $('#city').change(function() {
+        let selectedValue = $(this).val();
+        if (selectedValue === "Diasporë"){
+            let inp = "<input type='text' id='Qyteti' name='Qyteti' placeholder='Qyteti'>"
+            $('#cityDiv').html(inp)
+        }else{
+             $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "/account/GetCitiesByCountry/",
+                data: { country: selectedValue },
+                success: 
+                    function(resp) {
+                      let mark = "";
+                      for (let i = 0;i < resp.data.length; i++){
+                          mark += "<option value="+ resp.data[i] +">"+ resp.data[i] +" </option>"
+                      }
+                      let div = "<select id='cityDropDown' asp-for='Qyteti' class='form-input'></select>";
+                      $('#cityDiv').html(div);
+                      $('#cityDropDown').html(mark);
+                    },
+                error: 
+                    function (err) {
+                        console.error(err);
+                    }
+            })        
+        }
+    })
+</script>
