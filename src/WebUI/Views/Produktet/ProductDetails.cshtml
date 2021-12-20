@@ -1,13 +1,14 @@
-﻿@model Domain.Entities.Product
+﻿@model ProductDetailsViewModel
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
     decimal discount = 0;
-    if (Model.OldPrice > 0)
+    decimal zbritjaEu = 0;
+    if (Model.Product.OldPrice > 0)
     {
-        var zbritjaEu = Model.OldPrice - Model.Price;
-        discount = (zbritjaEu / Model.OldPrice) * 100;
+        zbritjaEu = Model.Product.OldPrice - Model.Product.Price;
+        discount = (zbritjaEu / Model.Product.OldPrice) * 100;
     } 
 }
 
@@ -17,14 +18,14 @@
         <div class="col-lg-6 col-md-6">
             <div class="product-details-img">
                 <div class="zoompro-border zoompro-span">
-                    <img class="zoompro" src="@Model.ProductGalleries.FirstOrDefault().URL" style="object-fit: contain;width: 500px;height: 500px" alt="" />
+                    <img class="zoompro" src="@Model.Product.ProductGalleries.FirstOrDefault().URL" style="object-fit: contain;width: 500px;height: 500px" alt="" />
                     @if (discount > 0)
                     {
                         <span>-@Math.Round(discount)%</span>
                     }
                 </div>
                 <div id="gallery" class="mt-70 product-dec-slider">
-                    @foreach (var image in Model.ProductGalleries)
+                    @foreach (var image in Model.Product.ProductGalleries)
                     {
                         <a data-image="@image.URL" style="width: 70px !important;" data-zoom-image="@image.URL">
                             <img class="small-img" style="object-fit: contain;width: 70px;height: 70px" src="@image.URL" alt="">
@@ -35,11 +36,11 @@
         </div>
         <div class="col-lg-6 col-md-6">
             <div class="product-details-content pro-details-content-modify">
-                @foreach (var category in Model.ProductCategories)
+                @foreach (var category in Model.Product.ProductCategories)
                 {
                     <span>@category.Category.Name / </span>
                 }
-                <h2>@Model.Name</h2>
+                <h2>@Model.Product.Name</h2>
                 <div class="product-ratting-review">
                     <div class="product-ratting">
                         <i class="la la-star"></i>
@@ -52,34 +53,16 @@
                         <span>40+ Reviews</span>
                     </div>
                 </div>
-                <div class="pro-details-color-wrap">
-                    <span>Color:</span>
-                    <div class="pro-details-color-content">
-                        <ul>
-                            <li class="green"></li>
-                            <li class="yellow"></li>
-                            <li class="red"></li>
-                            <li class="blue"></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="pro-details-size">
-                    <span>Size:</span>
-                    <div class="pro-details-size-content">
-                        <ul>
-                            <li><a href="#">s</a></li>
-                            <li><a href="#">m</a></li>
-                            <li><a href="#">xl</a></li>
-                            <li><a href="#">xxl</a></li>
-                        </ul>
-                    </div>
+                <div>
+                    <p style="font-size: 20px;font-weight: bold;color: red;padding-bottom: 20px">Ju kurseni: @zbritjaEu.ToString("#.00") €</p>
                 </div>
                 <div class="pro-details-price-wrap">
+                    <br>
                     <div class="product-price">
-                        <span>@Model.Price.ToString("#,##0.00")€</span>
-                        @if (Model.OldPrice > 0)
+                        <span>@Model.Product.Price.ToString("#,##0.00")€</span>
+                        @if (Model.Product.OldPrice > 0)
                         {
-                            <span class="old">@Model.OldPrice.ToString("#.00")€</span>
+                            <span class="old">@Model.Product.OldPrice.ToString("#,##0.00")€</span>
                         }
                     </div>
                     @if (discount > 0)
@@ -89,7 +72,7 @@
                 </div>
                 <div class="pro-details-quality">
                     <div class="cart-plus-minus">
-                        <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
+                        <input class="cart-plus-minus-box" type="number" name="qtybutton" min="1" value="1" max="@Model.Product.Stock">
                     </div>
                 </div>
                 <div class="pro-details-compare-wishlist">
@@ -113,19 +96,20 @@
     <div class="row">
         <div class="ms-auto me-auto col-lg-10">
             <div class="dec-review-topbar nav mb-40">
-                <a data-bs-toggle="tab" href="#des-details1">Përshkrimi</a>
-                <a class="active" data-bs-toggle="tab" href="#des-details2">Detajet</a>
+                <a class="active" data-bs-toggle="tab" href="#des-details1">Përshkrimi</a>
+                <a data-bs-toggle="tab" href="#des-details2">Detajet</a>
                 <a data-bs-toggle="tab" href="#des-details3">Vlerësimet</a>
+                <a href="#tengjashme">Të ngjashme</a>
             </div>
             <div class="tab-content dec-review-bottom">
-                <div id="des-details1" class="tab-pane">
+                <div id="des-details1" class="tab-pane active">
                     <div class="description-wrap">
-                        <p>@Model.Summary</p>
+                        <p>@Model.Product.Summary</p>
                     </div>
                 </div>
-                <div id="des-details2" class="tab-pane active">
+                <div id="des-details2" class="tab-pane">
                     <div class="specification-wrap table-responsive">
-                        @Html.Raw(Model.Description)
+                        @Html.Raw(Model.Product.Description)
                     </div>
                 </div>
                 <div id="des-details3" class="tab-pane">
@@ -237,126 +221,36 @@
     </div>
 </div>
 </div>
-<div class="product-area pb-85">
+<div id="tengjashme" class="product-area pb-85">
 <div class="container">
     <div class="section-title-6 mb-50 text-center">
         <h2>Produkte Të Ngjashme</h2>
     </div>
     <div class="product-slider-active owl-carousel">
-        <div class="product-wrap">
-            <div class="product-img mb-15">
-                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm1-5.jpg" alt="product"></a>
-                <div class="product-action">
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-plus"></i></a>
-                    <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                    <a title="Compare" href="#"><i class="la la-retweet"></i></a>
-                </div>
-            </div>
-            <div class="product-content">
-                <span>Chair</span>
-                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                <div class="price-addtocart">
-                    <div class="product-price">
-                        <span>$210.00</span>
-                    </div>
-                    <div class="product-addtocart">
-                        <a title="Add To Cart" href="#">+ Add To Cart</a>
+        @foreach (var product in Model.RelatedProducts)
+        {
+            <div class="product-wrap">
+                <div class="product-img mb-15">
+                    <a asp-controller="Produktet" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault().URL" style="width: 200px;height: 240px;object-fit: contain" alt="product"></a>
+                    <div class="product-action">
+                        <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Shikim i shpejtë" href="#"><i class="la la-plus"></i></a>
+                        <a title="Shto në listën e dëshirave" href="#"><i class="la la-heart-o"></i></a>
+                        <a title="Krahaso" href="#"><i class="la la-retweet"></i></a>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="product-wrap">
-            <div class="product-img mb-15">
-                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm1-6.jpg" alt="product"></a>
-                <div class="product-action">
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-plus"></i></a>
-                    <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                    <a title="Compare" href="#"><i class="la la-retweet"></i></a>
-                </div>
-            </div>
-            <div class="product-content">
-                <span>Chair</span>
-                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                <div class="price-addtocart">
-                    <div class="product-price">
-                        <span>$210.00</span>
-                        <span class="old">$230.00</span>
-                    </div>
-                    <div class="product-addtocart">
-                        <a title="Add To Cart" href="#">+ Add To Cart</a>
+                <div class="product-content">
+                    <h4><a asp-controller="Produktet" asp-action="Product" asp-route-slug="@product.Slug">@(product.Name[..30])...</a></h4>
+                    <div class="price-addtocart">
+                        <div class="product-price">
+                            <span>@Model.Product.Price.ToString("#,##0.00")€</span>
+                        </div>
+                        <div class="product-addtocart">
+                            <a title="Shto në shportë" href="#">+ Shto në shportë</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="product-wrap">
-            <div class="product-img mb-15">
-                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm1-7.jpg" alt="product"></a>
-                <div class="product-action">
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-plus"></i></a>
-                    <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                    <a title="Compare" href="#"><i class="la la-retweet"></i></a>
-                </div>
-            </div>
-            <div class="product-content">
-                <span>Chair</span>
-                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                <div class="price-addtocart">
-                    <div class="product-price">
-                        <span>$250.00</span>
-                    </div>
-                    <div class="product-addtocart">
-                        <a title="Add To Cart" href="#">+ Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product-wrap">
-            <div class="product-img mb-15">
-                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm1-8.jpg" alt="product"></a>
-                <div class="product-action">
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-plus"></i></a>
-                    <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                    <a title="Compare" href="#"><i class="la la-retweet"></i></a>
-                </div>
-            </div>
-            <div class="product-content">
-                <span>Chair</span>
-                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                <div class="price-addtocart">
-                    <div class="product-price">
-                        <span>$320.00</span>
-                        <span class="old">$120.00</span>
-                    </div>
-                    <div class="product-addtocart">
-                        <a title="Add To Cart" href="#">+ Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product-wrap">
-            <div class="product-img mb-15">
-                <a href="product-details.html"><img src="~/Client/assets/images/product/pro-hm1-6.jpg" alt="product"></a>
-                <span class="price-dec">-30%</span>
-                <div class="product-action">
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-plus"></i></a>
-                    <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                    <a title="Compare" href="#"><i class="la la-retweet"></i></a>
-                </div>
-            </div>
-            <div class="product-content">
-                <span>Chair</span>
-                <h4><a href="product-details.html">Golden Easy Spot Chair.</a></h4>
-                <div class="price-addtocart">
-                    <div class="product-price">
-                        <span>$210.00</span>
-                        <span class="old">$230.00</span>
-                    </div>
-                    <div class="product-addtocart">
-                        <a title="Add To Cart" href="#">+ Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 </div>
 </div>

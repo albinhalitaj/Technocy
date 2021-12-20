@@ -53,5 +53,15 @@ namespace Data.client
             var products = con.Query<Product>(sql, commandType: CommandType.StoredProcedure);
             return products;
         }
+
+        public IEnumerable<Product> GetRelatedProducts(int categoryId)
+        {
+            const string sql = "usp_GetRelatedProducts";
+            using var con = _dataAccessLayer.AppConn();
+            var products = con.Query<Product>(sql, new {categoryId}, commandType: CommandType.StoredProcedure);
+            foreach (var product in products)
+                product.ProductGalleries = _productDal.GetProductGalleries(product.ProductId).ToList();
+            return products;
+        }
     }
 }

@@ -14050,6 +14050,21 @@ h3.cart-page-title {
   padding: 0 15px;
   color: #010225;
 }
+
+.form-input {
+    background-color: transparent;
+    border: 1px solid #ebebeb;
+    font-size: 14px;
+    height: 50px;
+    margin-bottom: 30px;
+    padding: 0 15px;
+    color: #010225; 
+}
+
+.terms-conditions {
+    margin-bottom: 20px;
+}
+
 .login-register-wrapper .login-form-container .login-register-form form input[type=checkbox] {
   height: 15px;
   margin: 0;

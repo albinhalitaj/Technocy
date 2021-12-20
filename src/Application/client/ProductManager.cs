@@ -21,5 +21,8 @@ namespace Application.client
 
         public IEnumerable<Product> SortProducts(string type) =>
             _productsDal.Sort(type);
+
+        public IEnumerable<Product> GetRelatedProducts(int categoryId) =>
+            _productsDal.GetRelatedProducts(categoryId);
     }
 }

@@ -4,6 +4,7 @@ using Application.admin;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
+using WebUI.Models;
 
 namespace WebUI.Controllers
 {
@@ -79,7 +80,16 @@ namespace WebUI.Controllers
             {
                 return RedirectToAction("Index","Home");
             }
-            return View("ProductDetails",product);
+
+            var productCategory = product.ProductCategories.FirstOrDefault().CategoryId;
+            var relatedProduct = _clientProductManager.GetRelatedProducts(productCategory).ToList();
+            relatedProduct.RemoveAll(x => x.ProductId == product.ProductId);
+            var productDetailModel = new ProductDetailsViewModel
+            {
+                Product = product,
+                RelatedProducts = relatedProduct.Distinct().AsEnumerable()
+            };
+            return View("ProductDetails",productDetailModel);
         }
     }
 }
