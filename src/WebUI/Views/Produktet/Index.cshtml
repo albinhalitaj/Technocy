@@ -40,7 +40,7 @@
                                 }
                                 else
                                 {
-                                   @foreach (var product in Model)
+                                   foreach (var product in Model)
                                     {
                                     <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
                                         <div class="product-wrap mb-35">
@@ -53,6 +53,11 @@
                                                     <span class="price-dec" style="position: absolute;top: 0;left: 0;margin-left: 10px;margin-top: 10px">
                                                         -@Math.Round(discount)%
                                                     </span>
+                                                }
+                                                @if (product.ProductCategories.Count(x => x.Category.Name == "Çka ka t're?") == 1)
+                                                {
+                                                    <img style="position: absolute;top: 0;right: 0;margin-right: 10px;width: 50px;height: 50px"
+                                                         src="Client/assets/images/new-icon.svg" alt="Produkt i sapo ardhur"/>
                                                 }
                                                 <div class="product-action">
                                                     <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-plus"></i></a>
