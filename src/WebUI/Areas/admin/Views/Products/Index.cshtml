@@ -187,7 +187,6 @@
 
 <script type="text/javascript">
 function showPopUp(username,productId) {
-         console.log(username,productId);
         window.Swal.fire({
             title: 'A jeni i sigurtë?',
             text: "Nuk mund ta ktheni këtë hap!",
@@ -200,13 +199,14 @@ function showPopUp(username,productId) {
         }).then((result) => {
            if (result.isConfirmed) {
                Swal.fire({
-                  title: 'Shkruani fjalekalimin',
+                  title: 'Shkruani fjalëkalimin tuaj',
                   input: 'password',
                   inputAttributes: {
                     autocapitalize: 'off'
                   },
                   showCancelButton: true,
                   confirmButtonText: 'Fshij',
+                  cancelButtonText: 'Anulo',
                   showLoaderOnConfirm: true,
                   allowOutsideClick: () => !Swal.isLoading()
                }).then((result) => {
@@ -225,7 +225,7 @@ function showPopUp(username,productId) {
                                  window.Swal.fire({
                                      icon: 'error',
                                      title: 'Oops...',
-                                     text: 'Fjalekalimi eshte gabim',
+                                     text: 'Fjalëkalimi është gabim!',
                                      footer: '<a href="">Kontakto administratorin?</a>'
                                    })   
                               } else {

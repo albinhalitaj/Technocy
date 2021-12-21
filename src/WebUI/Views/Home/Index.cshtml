@@ -99,7 +99,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12" style="max-height: 450px;">
                             <div class="product-wrap product-border-2 pro-hover-shadow mb-40">
                                 <div class="product-img mb-15">
-                                    <a asp-controller="Produktet" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault().URL" style="width: 200px;height: 240px;object-fit: contain;padding-left: 50px"  alt="product"></a>
+                                    <a asp-controller="Produktet" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault().URL" style="padding-top: 20px;width: 200px;height: 240px;object-fit: contain;padding-left: 50px"  alt="product"></a>
                                     @if (product.Stock < 1)
                                     {
                                         <div class="sold-out">
@@ -148,7 +148,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12" style="max-height: 450px;">
                             <div class="product-wrap product-border-2 pro-hover-shadow mb-40">
                                 <div class="product-img mb-15">
-                                    <a asp-controller="Produktet" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault().URL" style="width: 200px !important;height: 240px !important;object-fit: contain;padding-left: 50px"  alt="product"></a>
+                                    <a asp-controller="Produktet" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault().URL" style="padding-top: 20px;width: 200px !important;height: 240px !important;object-fit: contain;padding-left: 50px"  alt="product"></a>
                                     @if (product.OldPrice > 0)
                                     {
                                         var zbritjaEu = product.OldPrice - product.Price;
@@ -191,7 +191,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12" style="max-height: 450px;">
                             <div class="product-wrap product-border-2 pro-hover-shadow mb-40">
                                 <div class="product-img mb-15">
-                                    <a asp-controller="Produktet" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault().URL" style="width: 200px;height: 240px;object-fit: contain;padding-left: 50px"  alt="product"></a>
+                                    <a asp-controller="Produktet" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault().URL" style="padding-top: 20px;width: 200px;height: 240px;object-fit: contain;padding-left: 50px"  alt="product"></a>
                                     @if (product.OldPrice > 0)
                                     {
                                         var zbritjaEu = product.OldPrice - product.Price;

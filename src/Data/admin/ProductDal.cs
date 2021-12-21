@@ -248,7 +248,7 @@ namespace Data.admin
             using var con = _dataAccessLayer.AppConn();
             var rowsAffected = con.ExecuteAsync(sql, new {productId}, commandType: CommandType.StoredProcedure)
                 .Result;
-            return rowsAffected == 1;
+            return rowsAffected >= 1;
         }
 
         public bool DeleteProductGalleries(int productId)
