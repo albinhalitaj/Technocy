@@ -158,7 +158,7 @@ namespace WebUI.Areas.admin.Controllers
                 return Json(model); 
             }
             model.Success = false;
-            model.Error = "Produkti duhet te kete se paku nje foto";
+            model.Error = "Produkti duhet të ketë së paku një foto!";
             return Json(model);
         }
 
