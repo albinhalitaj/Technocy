@@ -30,8 +30,6 @@ namespace WebUI.Areas.admin.Controllers
         [Route("/admin/account/login")]
         public IActionResult Login(string returnUrl)
         {
-            if (User.Identity is {IsAuthenticated: true})
-                return RedirectToAction("Index", "Dashboard");
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -57,9 +55,9 @@ namespace WebUI.Areas.admin.Controllers
                         };
 
                         var identityPrincipal =
-                            new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                            new ClaimsIdentity(claims,"Admin_Schema");
                         var claimPrincipal = new ClaimsPrincipal(identityPrincipal);
-                        await HttpContext.SignInAsync(claimPrincipal);
+                        await HttpContext.SignInAsync("Admin_Schema",claimPrincipal);
                         if (!string.IsNullOrEmpty(returnUrl))
                             return LocalRedirect(returnUrl);
                         return RedirectToAction("Index", "Dashboard");
@@ -74,7 +72,7 @@ namespace WebUI.Areas.admin.Controllers
 
         public async Task<IActionResult> LogOff()
         {
-            await HttpContext.SignOutAsync();
+            await HttpContext.SignOutAsync("Admin_Schema");
             return RedirectToAction(nameof(Login));
         }
 

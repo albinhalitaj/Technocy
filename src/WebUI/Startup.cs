@@ -1,7 +1,9 @@
 using System;
+using System.Security.Claims;
 using Application;
 using AspNetCoreHero.ToastNotification;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,12 +35,17 @@ namespace WebUI
             services.AddAutoMapper(typeof(Startup));
             
             services.AddApplication();
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
+            services.AddAuthentication(opt => opt.DefaultScheme = "User_Schema")
+                .AddCookie("Admin_Schema",options =>
                 {
                     options.LoginPath = "/admin/account/login";
                     options.AccessDeniedPath = "/admin/dashboard/accessdenied";
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                })
+                .AddCookie("User_Schema", options =>
+                {
+                    options.LoginPath = "/account/login";
+                    options.AccessDeniedPath = "/account/accessdenied";
                 });
             services.AddControllersWithViews();
         }
@@ -59,6 +66,27 @@ namespace WebUI
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.Use(async (context, next) =>
+            {
+                var principal = new ClaimsPrincipal();
+                var result1 = await context.AuthenticateAsync("User_Schema");
+                if (result1?.Principal != null)
+                {
+                    principal.AddIdentities(result1.Principal.Identities);
+                }
+                
+                var result2 = await context.AuthenticateAsync("Admin_Schema");
+                if (result2?.Principal != null)
+                {
+                    principal.AddIdentities(result2.Principal.Identities);
+                }
+
+                context.User = principal;
+                
+                await next();
+
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();

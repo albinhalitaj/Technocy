@@ -40,7 +40,7 @@
                                         <a href="#">EUR </a>
                                     </div>
                                     <div class="setting-content2-right">
-                                        @if (User.Identity.IsAuthenticated)
+                                        @if (User.Identity is {IsAuthenticated: true})
                                         {
                                             <a asp-controller="Wishlist" asp-action="Index">Lista e dëshirave</a>    
                                             <a asp-controller="Profile" asp-action="Index">@User.Identity.Name?.ToUpper()</a>

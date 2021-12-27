@@ -92,10 +92,10 @@ namespace WebUI.Controllers
                     };
 
                     var identityPrincipal =
-                        new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        new ClaimsIdentity(claims, "User_Schema");
                     
                     var claimPrincipal = new ClaimsPrincipal(identityPrincipal);
-                    await HttpContext.SignInAsync(claimPrincipal);
+                    await HttpContext.SignInAsync("User_Schema",claimPrincipal);
                     if (!string.IsNullOrEmpty(returnUrl))
                         return LocalRedirect(returnUrl);
                     return RedirectToAction("Index", "Home");
@@ -107,7 +107,14 @@ namespace WebUI.Controllers
 
         public async Task<IActionResult> LogOff()
         {
-            await HttpContext.SignOutAsync();
+            if (HttpContext.Request.Cookies.ContainsKey(".AspNetCore.User_Schema"))
+            {
+                await HttpContext.SignOutAsync("User_Schema");
+            }
+            else
+            {
+                await HttpContext.SignOutAsync("Admin_Schema");
+            }
             return RedirectToAction("Index", "Home");
         }
     }
