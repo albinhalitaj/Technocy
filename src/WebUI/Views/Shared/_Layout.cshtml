@@ -42,12 +42,13 @@
                                     <div class="setting-content2-right">
                                         @if (User.Identity.IsAuthenticated)
                                         {
-                                            <a href="my-account.html">Llogaria ime</a>
-                                            <a href="wishlist.html">Lista e dëshirave</a>    
+                                            <a asp-controller="Wishlist" asp-action="Index">Lista e dëshirave</a>    
+                                            <a asp-controller="Profile" asp-action="Index">@User.Identity.Name?.ToUpper()</a>
+                                            <a asp-controller="Account" asp-action="LogOff">Çkyçu</a>
                                         }
                                         else
                                         {
-                                            <a asp-controller="Account" asp-action="Login">Kyqu</a>
+                                            <a asp-controller="Account" asp-action="Login">Kyçu</a>
                                         }
                                     </div>
                                 </div>
@@ -452,6 +453,7 @@
     <script src="~/Client/assets/js/plugins/sticky-sidebar.js"></script>
     <script src="~/Client/assets/js/plugins/smoothscroll.js"></script>
     <!-- Main JS -->
-    <script src="~/Client/assets/js/main.js"></script>
+<script src="~/Client/assets/js/main.js"></script>
+@await Component.InvokeAsync("Notyf")
 </body>
 </html>

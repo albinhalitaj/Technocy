@@ -13,15 +13,15 @@ namespace WebUI.Models
         public string KonfirmoFjalekalimin { get; set; }
         [Required(ErrorMessage = "Fusha Emri duhet plotësuar")]
         [MinLength(2,ErrorMessage = "Emri duhet të jetë më i gjatë se 2 karaktere")]
-        public string Emri { get; set; }
+        public string Name { get; set; }
         [Required(ErrorMessage = "Fusha Mbiemri duhet plotësuar")]
-        public string Mbiemri { get; set; }
+        public string Surname { get; set; }
         [Required(ErrorMessage = "Fusha Gjinia duhet plotësuar")]
-        public string Gjinia { get; set; }
+        public string Gender { get; set; }
         [Required(ErrorMessage = "Fusha Shteti duhet plotësuar")]
-        public string Shteti { get; set; }
+        public string Country { get; set; }
         [Required(ErrorMessage = "Fusha Qyteti duhet plotësuar")]
-        public string Qyteti { get; set; }
+        public string City { get; set; }
         [Required(ErrorMessage = "Fusha Dita e lindjes duhet plotësuar")]
         public int DitaLindjes { get; set; }
         [Required(ErrorMessage = "Fusha Muaji i lindjes duhet plotësuar")]

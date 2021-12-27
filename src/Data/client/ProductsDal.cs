@@ -37,18 +37,18 @@ namespace Data.client
             using var con = _dataAccessLayer.AppConn();
             var products = con.Query<Product>(sql, new {startingPrice, endingPrice},
                 commandType: CommandType.StoredProcedure);
-            foreach (var product in products)
+            var productsByPrice = products as Product[] ?? products.ToArray();
+            foreach (var product in productsByPrice)
             {
                 product.ProductGalleries = _productDal.GetProductGalleries(product.ProductId).ToList();
             }
 
-            return products;
+            return productsByPrice;
         }
 
         public IEnumerable<Product> Sort(string type)
         {
-            var sql = string.Empty;
-            sql = type == "asc" ? "usp_GetProductsByAscPrice" : "usp_GetProductsByDescPrice";
+            var sql = type == "asc" ? "usp_GetProductsByAscPrice" : "usp_GetProductsByDescPrice";
             using var con = _dataAccessLayer.AppConn();
             var products = con.Query<Product>(sql, commandType: CommandType.StoredProcedure);
             return products;
@@ -59,9 +59,10 @@ namespace Data.client
             const string sql = "usp_GetRelatedProducts";
             using var con = _dataAccessLayer.AppConn();
             var products = con.Query<Product>(sql, new {categoryId}, commandType: CommandType.StoredProcedure);
-            foreach (var product in products)
+            var relatedProducts = products as Product[] ?? products.ToArray();
+            foreach (var product in relatedProducts)
                 product.ProductGalleries = _productDal.GetProductGalleries(product.ProductId).ToList();
-            return products;
+            return relatedProducts;
         }
     }
 }

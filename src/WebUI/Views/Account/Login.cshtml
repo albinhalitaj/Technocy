@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Login";
     Layout = "_Layout";
+    var returnUrl = ViewBag.ReturnUrl as string;
 }
 
 <div class="login-register-area pt-85 pb-90">
@@ -18,11 +19,11 @@
                         <div id="lg1" class="tab-pane active">
                             <div class="login-form-container">
                                 <div class="login-register-form">
-                                    <form asp-controller="Account" asp-action="Login">
+                                    <form asp-controller="Account" asp-action="Login" asp-route-returnUrl="@returnUrl">
                                         <span asp-validation-for="Email" class="text-danger"></span>
-                                        <input type="text" asp-for="Email" name="user-name" placeholder="Emaili">
+                                        <input asp-for="Email" placeholder="Emaili">
                                         <span asp-validation-for="Fjalekalimi" class="text-danger"></span>
-                                        <input type="password" asp-for="Fjalekalimi" name="user-password" placeholder="Fjalëkalimi">
+                                        <input type="password" asp-for="Fjalekalimi" placeholder="Fjalëkalimi">
                                         <div class="button-box">
                                             <div class="login-toggle-btn">
                                                 <input type="checkbox">

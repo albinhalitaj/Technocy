@@ -24,27 +24,27 @@
                                     <input type="password" asp-for="Fjalekalimi" placeholder="Fjalëkalimi">
                                     <span asp-validation-for="KonfirmoFjalekalimin" class="text-danger"></span>
                                     <input type="password" asp-for="KonfirmoFjalekalimin" placeholder="Konfirmo fjalëkalimin">
-                                    <span asp-validation-for="Emri" class="text-danger"></span>
-                                    <input type="text" asp-for="Emri" placeholder="Emri">
-                                    <span asp-validation-for="Mbiemri" class="text-danger"></span>
-                                    <input type="text" asp-for="Mbiemri" placeholder="Mbiemri">
-                                    <select asp-for="Gjinia" class="form-input">
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                    <input type="text" asp-for="Name" placeholder="Emri">
+                                    <span asp-validation-for="Surname" class="text-danger"></span>
+                                    <input type="text" asp-for="Surname" placeholder="Mbiemri">
+                                    <select asp-for="Gender" class="form-input">
                                         <option>Gjinia</option>
                                         <option value="1">Mashkull</option>
                                         <option value="2">Femër</option>
                                     </select>
-                                    <span asp-validation-for="Gjinia" class="text-danger"></span>
+                                    <span asp-validation-for="Gender" class="text-danger"></span>
                                     <div style="display: flex;">
-                                        <span asp-validation-for="Shteti" class="text-danger"></span>
-                                        <select id="city" asp-for="Shteti" style="flex:1;margin-right: 10px" class="form-input">
+                                        <span asp-validation-for="Country" class="text-danger"></span>
+                                        <select id="Country" asp-for="Country" style="flex:1;margin-right: 10px" class="form-input">
                                             <option value="Kosovë">Kosovë</option>
                                             <option value="Shqipëri">Shqipëri</option>
                                             <option value="Maqedoni">Maqedoni</option>
                                             <option value="Diasporë">Diasporë</option>
                                         </select>
-                                        <span asp-validation-for="Qyteti" class="text-danger"></span>
+                                        <span asp-validation-for="City" class="text-danger"></span>
                                         <div id="cityDiv" style="flex: 1">
-                                            <select id="cityDropDown" asp-for="Qyteti" class="form-input">
+                                            <select id="cityDropDown" asp-for="City" class="form-input">
                                                 <option value="Prishtinë">Prishtinë</option>
                                             </select>
                                         </div>
@@ -116,10 +116,10 @@
                }
        }) 
     })
-    $('#city').change(function() {
+    $('#Country').change(function() {
         let selectedValue = $(this).val();
         if (selectedValue === "Diasporë"){
-            let inp = "<input type='text' id='Qyteti' name='Qyteti' placeholder='Qyteti'>"
+            let inp = "<input type='text' id='Qyteti' name='Qyteti' placeholder='Shteti'>"
             $('#cityDiv').html(inp)
         }else{
              $.ajax({
@@ -133,7 +133,7 @@
                       for (let i = 0;i < resp.data.length; i++){
                           mark += "<option value="+ resp.data[i] +">"+ resp.data[i] +" </option>"
                       }
-                      let div = "<select id='cityDropDown' asp-for='Qyteti' class='form-input'></select>";
+                      let div = "<select id='cityDropDown' id='Qyteti' name='Qyteti' class='form-input'></select>";
                       $('#cityDiv').html(div);
                       $('#cityDropDown').html(mark);
                     },

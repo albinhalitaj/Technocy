@@ -1,6 +1,7 @@
 ﻿using Application.Models;
 using AutoMapper;
 using Domain.Entities;
+using WebUI.Models;
 
 namespace Application.Mapping
 {
@@ -19,6 +20,10 @@ namespace Application.Mapping
             CreateMap<EditProductModel, Product>()
                 .ForMember(x=>x.ProductCategories,
                     x=>x.Ignore())
+                .ReverseMap();
+
+            CreateMap<RegisterModel, Customer>()
+                .ForMember(x=>x.PasswordHash,x=>x.MapFrom(a=>a.Fjalekalimi))
                 .ReverseMap();
         }
     }
