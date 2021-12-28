@@ -38,6 +38,7 @@ namespace WebUI.Controllers
         [HttpPost]
         public IActionResult Register(RegisterModel model)
         {
+            ViewBag.Categories = _categoryManager.GetCategories().Where(x => x.Visibility);
             if (ModelState.IsValid)
             {
                 var result = _accountManager.Register(model);
@@ -75,6 +76,7 @@ namespace WebUI.Controllers
         }
         
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model,string returnUrl)
         {
             ViewBag.Categories = _categoryManager.GetCategories().Where(x => x.Visibility);

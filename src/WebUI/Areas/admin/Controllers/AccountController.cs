@@ -35,6 +35,7 @@ namespace WebUI.Areas.admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model,string returnUrl)
         {
             if (ModelState.IsValid)
@@ -54,6 +55,11 @@ namespace WebUI.Areas.admin.Controllers
                             new (ClaimTypes.Role, employee.Role.Name)
                         };
 
+                        if (HttpContext.Request.Cookies.ContainsKey(".AspNetCore.User_Schema"))
+                        {
+                            await HttpContext.SignOutAsync("User_Schema");
+                        }
+                        
                         var identityPrincipal =
                             new ClaimsIdentity(claims,"Admin_Schema");
                         var claimPrincipal = new ClaimsPrincipal(identityPrincipal);
