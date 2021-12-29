@@ -108,9 +108,12 @@
                     <div class="pro-details-compare">
                         <a title="Add To Compare" href="#"><i class="la la-retweet"></i> Krahaso</a>
                     </div>
-                    <div class="pro-details-wishlist">
-                        <a title="Add To Wishlist" href="#"><i class="la la-heart-o"></i> Shto në listën e dëshirave</a>
-                    </div>
+                    @if (!ViewBag.IsInWishList)
+                    {
+                        <div class="pro-details-wishlist">
+                            <a title="Add To Wishlist" href="#"><i class="la la-heart-o"></i> Shto në listën e dëshirave</a>
+                        </div>
+                    }
                 </div>
                 <div class="pro-details-buy-now btn-hover btn-hover-radious">
                     <a href="#">Shto në shportë</a>

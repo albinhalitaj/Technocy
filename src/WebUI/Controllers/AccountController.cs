@@ -72,6 +72,10 @@ namespace WebUI.Controllers
         {
             ViewBag.Categories = _categoryManager.GetCategories().Where(x => x.Visibility);
             ViewBag.ReturnUrl = returnUrl;
+            if (User.Identity is {IsAuthenticated: true})
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
         
@@ -89,7 +93,7 @@ namespace WebUI.Controllers
                     var claims = new List<Claim>
                     {
                         new (ClaimTypes.Name, string.Concat(customer.Name, " ", customer.Surname)),
-                        new ("Id", customer.CusomterId.ToString()),
+                        new ("Id", customer.CustomerId.ToString()),
                         new (ClaimTypes.Email, customer.Email),
                     };
 

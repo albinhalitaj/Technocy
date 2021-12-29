@@ -11,7 +11,7 @@ namespace Domain.Entities
             WishlistItems = new HashSet<Wishlist>();
         }
         
-        public Guid CusomterId { get; set; }
+        public int CustomerId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }

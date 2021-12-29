@@ -49,8 +49,8 @@ namespace WebUI.Areas.admin.Controllers
                         var claims = new List<Claim>
                         {
                             new (ClaimTypes.Name, string.Concat(employee.Name, " ", employee.Surname)),
-                            new ("Username",employee.Username),
                             new ("Id", Convert.ToString(employee.EmployeeId)),
+                            new ("Username",employee.Username),
                             new (ClaimTypes.Email, employee.Email),
                             new (ClaimTypes.Role, employee.Role.Name)
                         };

@@ -34,6 +34,8 @@ namespace Application.client
         }
 
         public Customer Login(LoginModel model) => _accountManager.Login(model.Email, model.Fjalekalimi);
-        
+
+        public Customer GetCustomerById(int id) => _accountManager.GetCustomer(id);
+
     }
 }

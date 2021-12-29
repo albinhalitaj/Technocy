@@ -33,7 +33,7 @@ namespace Data.client
                 phone = customer.Phone,
                 insertDate = customer.InsertDate
             };
-            var rowsAffected = con.ExecuteAsync(sql, values, commandType: CommandType.StoredProcedure).Result;
+            var rowsAffected = con.Execute(sql, values, commandType: CommandType.StoredProcedure);
             return rowsAffected == 1;
         }
 
@@ -47,6 +47,14 @@ namespace Data.client
                 passwordHash = EncodeBase64.Base64Encode(password)
             };
             var customer = con.QueryFirstOrDefault<Customer>(sql, values, commandType: CommandType.StoredProcedure);
+            return customer;
+        }
+
+        public Customer GetCustomer(int id)
+        {
+            const string sql = "usp_GetCustomerById";
+            using var con = _dataAccessLayer.AppConn();
+            var customer = con.QueryFirstOrDefault<Customer>(sql, new {id}, commandType: CommandType.StoredProcedure);
             return customer;
         }
     }

@@ -1,3 +1,4 @@
+@model Domain.Entities.Customer
 @{
     ViewBag.Title = "Profile";
     Layout = "_Layout";
@@ -19,6 +20,7 @@
                                 <a href="#payment-method" data-bs-toggle="tab"><i class="fa fa-credit-card"></i> Mënyrat e pagesës</a>
                                 <a href="#address-edit" data-bs-toggle="tab"><i class="fa fa-map-marker"></i> Adresa</a>
                                 <a href="#account-info" data-bs-toggle="tab"><i class="fa fa-user"></i> Detajet e llogarisë</a>
+                                <a href="#change-pass" data-bs-toggle="tab"><i class="fa fa-user"></i> Ndrysho fjalekalimin</a>
                                 <a asp-controller="Account" asp-action="LogOff"><i class="fa fa-sign-out"></i> Dil</a>
                             </div>
                         </div>
@@ -113,45 +115,38 @@
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
                                                             <label for="first-name" class="required">Emri</label>
-                                                            <input type="text" id="first-name" />
+                                                            <input asp-for="Name" id="first-name" />
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
                                                             <label for="last-name" class="required">Mbiemri</label>
-                                                            <input type="text" id="last-name" />
+                                                            <input asp-for="Surname" id="last-name" />
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="single-input-item">
-                                                    <label for="display-name" class="required">Emri i plotë</label>
-                                                    <input type="text" id="display-name" />
                                                 </div>
                                                 <div class="single-input-item">
                                                     <label for="email" class="required">Emaili</label>
-                                                    <input type="email" id="email" />
+                                                    <input asp-for="Email" id="email" />
                                                 </div>
-                                                <fieldset>
-                                                    <legend>Ndrysho fjalëkalimin</legend>
-                                                    <div class="single-input-item">
-                                                        <label for="current-pwd" class="required">Fjalëkalimi aktual</label>
-                                                        <input type="password" id="current-pwd" />
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <div class="single-input-item">
-                                                                <label for="new-pwd" class="required">Fjalëkalimi i ri</label>
-                                                                <input type="password" id="new-pwd" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="single-input-item">
-                                                                <label for="confirm-pwd" class="required">Konfirmo fjalëkalimin e ri</label>
-                                                                <input type="password" id="confirm-pwd" />
-                                                            </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="single-input-item">
+                                                            <label for="address" class="required">Adresa</label>
+                                                            <input asp-for="Address" id="address" />
                                                         </div>
                                                     </div>
-                                                </fieldset>
+                                                    <div class="col-lg-6">
+                                                        <div class="single-input-item">
+                                                            <label for="postal-code" class="required">Kodi Postal</label>
+                                                            <input asp-for="PostalCode" id="postal-code" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="single-input-item">
+                                                    <label for="phone" class="required">Telefoni</label>
+                                                    <input asp-for="PostalCode" id="phone" />
+                                                </div>
                                                 <div class="single-input-item">
                                                     <button class="check-btn sqr-btn ">Ruaj ndryshimet</button>
                                                 </div>
@@ -159,6 +154,36 @@
                                         </div>
                                     </div>
                                 </div> <!-- Single Tab Content End -->
+                                <div class="tab-pane fade" id="change-pass" role="tabpanel">
+                                    <div class="myaccount-content">
+                                        <h3>Ndrysho fjalekalimin</h3>
+                                        <div class="account-details-form">
+                                            <form action="#">
+                                                <div class="single-input-item">
+                                                    <label for="current-pwd" class="required">Fjalëkalimi aktual</label>
+                                                    <input type="password" id="current-pwd" />
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="single-input-item">
+                                                            <label for="new-pwd" class="required">Fjalëkalimi i ri</label>
+                                                            <input type="password" id="new-pwd" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="single-input-item">
+                                                            <label for="confirm-pwd" class="required">Konfirmo fjalëkalimin e ri</label>
+                                                            <input type="password" id="confirm-pwd" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="single-input-item">
+                                                    <button class="check-btn sqr-btn ">Ruaj ndryshimet</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div> <!-- My Account Tab Content End -->
                     </div>

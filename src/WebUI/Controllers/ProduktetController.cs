@@ -1,28 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Application.admin;
+using Application.client;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using WebUI.Models;
+using ProductManager = Application.admin.ProductManager;
 
 namespace WebUI.Controllers
 {
     public class ProduktetController : Controller
     {
         private readonly ProductManager _productManager;
-        private readonly CategoryManager _categoryManager;
         private readonly Application.client.ProductManager _clientProductManager;
+        private readonly WishlistManager _wishlistManager;
         private IEnumerable<Category> Categories { get; }
         private int TotalProdukte { get; }
 
-        public ProduktetController(ProductManager productManager,CategoryManager categoryManager,
-            Application.client.ProductManager clientProductManager)
+        public ProduktetController(ProductManager productManager,
+            CategoryManager categoryManager,
+            Application.client.ProductManager clientProductManager,WishlistManager wishlistManager)
         {
             _productManager = productManager;
-            _categoryManager = categoryManager;
             _clientProductManager = clientProductManager;
-            Categories = _categoryManager.GetCategories().Where(x=>x.Visibility);
+            _wishlistManager = wishlistManager;
+            Categories = categoryManager.GetCategories().Where(x=>x.Visibility);
             TotalProdukte = _productManager.GetProducts().Count();
         }
         
@@ -75,13 +79,19 @@ namespace WebUI.Controllers
         public IActionResult Product(string slug)
         {
             ViewBag.Categories = Categories;
+            ViewBag.IsInWishList = false;
+            var customerWishlist = _wishlistManager.GetWishlistForCustomer(Convert.ToInt32(User.Claims.ElementAt(1).Value));
+            if (customerWishlist.Any(x=>x.Product.Slug == slug))
+            {
+                ViewBag.IsInWishList = true;
+            } 
             var product = _productManager.GetProductBySlug(slug);
             if (product == null)
             {
                 return RedirectToAction("Index","Home");
             }
 
-            var productCategory = product.ProductCategories.FirstOrDefault().CategoryId;
+            var productCategory = product.ProductCategories.FirstOrDefault()!.CategoryId;
             var relatedProduct = _clientProductManager.GetRelatedProducts(productCategory).ToList();
             relatedProduct.RemoveAll(x => x.ProductId == product.ProductId);
             var productDetailModel = new ProductDetailsViewModel

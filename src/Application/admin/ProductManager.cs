@@ -120,11 +120,13 @@ namespace Application.admin
             
             var productGalleries = _productManager.GetProductGalleries(productId);
             if (product == null) return productModel;
+            if (productModel == null) return null;
             productModel.ProductCategories = temp;
             productModel.Categories = _categoryManager.GetCategories();
             productModel.ProductGalleries = productGalleries;
 
             return productModel;
+
         }
 
         public Product GetProductBySlug(string slug) => _productManager.GetProductBySlug(slug);
@@ -138,9 +140,10 @@ namespace Application.admin
         {
             var productGalleries = _productManager.GetProductGalleries(productId);
 
-            if (productGalleries.Any())
+            var enumerable = productGalleries as ProductGallery[] ?? productGalleries.ToArray();
+            if (enumerable.Any())
             {
-                foreach (var productGallery in productGalleries)
+                foreach (var productGallery in enumerable)
                 {
                     var url = productGallery.URL.Remove(0, 1);
                     _fileManager.Delete(url, webRootPath);
@@ -174,5 +177,7 @@ namespace Application.admin
         }
 
         public string GetProductSku(string sku) => _productManager.GetProductSku(sku);
+
+        public Product GetProductById(int id) => _productManager.GetProductById(id);
     }
 }
