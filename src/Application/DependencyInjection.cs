@@ -34,6 +34,12 @@ namespace Application
             services.AddSingleton<CustomerManager>();
             services.AddSingleton<WishlistDal>();
             services.AddSingleton<WishlistManager>();
+            services.AddSingleton<DashboardDal>();
+            services.AddSingleton<DashboardManager>();
+            services.AddSingleton<OrderDal>();
+            services.AddSingleton<OrderService>();
+            services.AddSingleton<OrdersDal>();
+            services.AddSingleton<OrderManager>();
         }
     }
 }

@@ -99,7 +99,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12" style="max-height: 450px;">
                             <div class="product-wrap product-border-2 pro-hover-shadow mb-40">
                                 <div class="product-img mb-15">
-                                    <a asp-controller="Produktet" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault()?.URL" style="padding-top: 20px;width: 200px;height: 240px;object-fit: contain;padding-left: 50px"  alt="product"></a>
+                                    <a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault()?.URL" style="padding-top: 20px;width: 200px;height: 240px;object-fit: contain;padding-left: 50px"  alt="product"></a>
                                     @if (product.Stock < 1)
                                     {
                                         <div class="sold-out">
@@ -119,14 +119,17 @@
                                         <img style="position: absolute;top: 0;right: 0;margin-right: 10px;width: 50px;height: 50px"
                                              src="Client/assets/images/new-icon.svg" alt="Produkt i sapo ardhur"/>
                                     }
-                                    <div class="product-action-3">
-                                        <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-arrows"></i></a>
-                                        <a title="Wishlist" onclick="addToWishList('@product.ProductId','@product.Stock','@product.Price')"><i class="la la-heart-o"></i></a>
-                                        <a title="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                    </div>
+                                    @if (product.Stock > 0)
+                                    {
+                                        <div class="product-action-3">
+                                            <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-arrows"></i></a>
+                                            <a title="Wishlist" onclick="addToWishList('@product.ProductId','@product.Stock','@product.Price')"><i class="la la-heart-o"></i></a>
+                                            <a title="Add To Cart" onclick="addToCart('@product.ProductId')"><i class="la la-cart-plus"></i></a>
+                                        </div>
+                                    }
                                 </div>
                                 <div class="product-content-2 max-h-5x">
-                                    <h4><a asp-controller="Produktet" asp-action="Product" asp-route-slug="@product.Slug">@(product.Name[..30])...</a></h4>
+                                    <h4><a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug">@(product.Name[..30])...</a></h4>
                                     <span>Përfshirë TVSH-në</span>
                                     <div class="pro-price-2 mt-50">
                                         <span>@product.Price.ToString("#,##0.00")€</span>
@@ -148,7 +151,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12" style="max-height: 450px;">
                             <div class="product-wrap product-border-2 pro-hover-shadow mb-40">
                                 <div class="product-img mb-15">
-                                    <a asp-controller="Produktet" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault()?.URL" style="padding-top: 20px;width: 200px !important;height: 240px !important;object-fit: contain;padding-left: 50px"  alt="product"></a>
+                                    <a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault()?.URL" style="padding-top: 20px;width: 200px !important;height: 240px !important;object-fit: contain;padding-left: 50px"  alt="product"></a>
                                     @if (product.OldPrice > 0)
                                     {
                                         var zbritjaEu = product.OldPrice - product.Price;
@@ -165,11 +168,11 @@
                                     <div class="product-action-3">
                                         <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-arrows"></i></a>
                                         <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a title="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
+                                        <a title="Add To Cart" onclick="addToCart('@product.ProductId')"><i class="la la-cart-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="product-content-2 max-h-5x">
-                                    <h4><a asp-controller="Produktet" asp-action="Product" asp-route-slug="@product.Slug">@(product.Name[..30])...</a></h4>
+                                    <h4><a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug">@(product.Name[..30])...</a></h4>
                                     <span>Përfshirë TVSH-në</span>
                                     <div class="pro-price-2 mt-50">
                                         <span>@product.Price.ToString("#,##0.00")€</span>
@@ -191,7 +194,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12" style="max-height: 450px;">
                             <div class="product-wrap product-border-2 pro-hover-shadow mb-40">
                                 <div class="product-img mb-15">
-                                    <a asp-controller="Produktet" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault()?.URL" style="padding-top: 20px;width: 200px;height: 240px;object-fit: contain;padding-left: 50px"  alt="product"></a>
+                                    <a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault()?.URL" style="padding-top: 20px;width: 200px;height: 240px;object-fit: contain;padding-left: 50px"  alt="product"></a>
                                     @if (product.OldPrice > 0)
                                     {
                                         var zbritjaEu = product.OldPrice - product.Price;
@@ -208,11 +211,11 @@
                                     <div class="product-action-3">
                                         <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-arrows"></i></a>
                                         <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a title="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
+                                        <a title="Add To Cart" onclick="addToCart('@product.ProductId')"><i class="la la-cart-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="product-content-2 max-h-5x">
-                                    <h4><a asp-controller="Produktet" asp-action="Product" asp-route-slug="@product.Slug">@(product.Name[..30])...</a></h4>
+                                    <h4><a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug">@(product.Name[..30])...</a></h4>
                                     <span>Përfshirë TVSH-në</span>
                                     <div class="pro-price-2 mt-50">
                                         <span>@product.Price.ToString("#,##0.00")€</span>
@@ -284,21 +287,14 @@
 </div>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/Client/assets/js/cart.js"></script>
 <script type="text/javascript">
-
-    $(document).ready(function() {
-      $('.count-style-3').text("2");
-      $('.count-style-3').attr('hidden',true);
-      $('.mini-cart-price-3').attr('hidden',true);
-    })
-    
     function addToWishList(productId,stock,price) {
       $.ajax({
         type: "POST",
         url: "/Wishlist/Add/",
         data: {"ProductId":productId,"Stock":stock > 0,"Price":price},
         success: async function(resp) {
-          console.log(resp)
           if (resp.success){
             const Toast = Swal.mixin({
                 toast: true,
@@ -315,7 +311,7 @@
                 icon: 'success',
                 title: 'Product Added To Wishlist'
               })
-          }else if (!resp.succes && resp.error === "User is not authenticated") {
+          }else if (!resp.success && resp.error === "User is not authenticated") {
               location.href = "/account/login/";
           }
           else {

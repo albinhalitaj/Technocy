@@ -24,6 +24,7 @@ namespace Domain.Entities
         public string Phone { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime LastUpdatedDate { get; set; }
+        public decimal? Total { get; set; }
         
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Wishlist> WishlistItems { get; set; }

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WebUI.Areas.admin.Models.DashboardViewModel
+@{
    ViewBag.Title = "Ballina";
     Layout = "_AdminLayout";
 }
@@ -42,7 +43,7 @@
                   </div>
                </div>
                <div class="saw-indicator__body">
-                  <div class="saw-indicator__value">$3799.00</div>
+                  <div class="saw-indicator__value">@Model.Porosi.ToString("#,##0.00") €</div>
                   <div class="saw-indicator__delta saw-indicator__delta--rise">
                      <div class="saw-indicator__delta-direction">
                         <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="currentColor">
@@ -60,7 +61,7 @@
          <div class="col-12 col-md-4 d-flex">
             <div class="card saw-indicator flex-grow-1" data-sa-container-query="{&quot;340&quot;:&quot;saw-indicator--size--lg&quot;}">
                <div class="sa-widget-header saw-indicator__header">
-                  <h2 class="sa-widget-header__title">Average order value</h2>
+                  <h2 class="sa-widget-header__title">Mesatarja porosive</h2>
                   <div class="sa-widget-header__actions">
                      <div class="dropdown">
                         <button type="button" class="btn btn-sm btn-sa-muted d-block" id="widget-context-menu-2" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More">
@@ -80,7 +81,7 @@
                   </div>
                </div>
                <div class="saw-indicator__body">
-                  <div class="saw-indicator__value">$272.98</div>
+                  <div class="saw-indicator__value">@Model.Mesatarja.ToString("#,##0.00") €</div>
                   <div class="saw-indicator__delta saw-indicator__delta--fall">
                      <div class="saw-indicator__delta-direction">
                         <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="currentColor">
@@ -118,7 +119,7 @@
                   </div>
                </div>
                <div class="saw-indicator__body">
-                  <div class="saw-indicator__value">578</div>
+                  <div class="saw-indicator__value">@Model.Produkte</div>
                   <div class="saw-indicator__delta saw-indicator__delta--rise">
                      <div class="saw-indicator__delta-direction">
                         <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="currentColor">
@@ -155,7 +156,7 @@
                      </div>
                   </div>
                </div>
-               <div class="saw-pulse__counter">148</div>
+               <div class="saw-pulse__counter">@Model.Konsumator</div>
                <div class="sa-widget-table saw-pulse__table">
                   <table>
                      <thead>
@@ -230,7 +231,7 @@
          <div class="col-12 col-xxl-9 d-flex">
             <div class="card flex-grow-1 saw-table">
                <div class="sa-widget-header saw-table__header">
-                  <h2 class="sa-widget-header__title">Recent orders</h2>
+                  <h2 class="sa-widget-header__title">Porosite e fundit</h2>
                   <div class="sa-widget-header__actions">
                      <div class="dropdown">
                         <button type="button" class="btn btn-sm btn-sa-muted d-block" id="widget-context-menu-6" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More">
@@ -250,8 +251,14 @@
                   </div>
                </div>
                <div class="saw-table__body sa-widget-table text-nowrap">
-                  <table>
-                     <thead>
+                  @if (!Model.Orders.Any())
+                  {
+                     <h4>Nuk ka porosi aktive!</h4>
+                  }
+                  else
+                  {
+                     <table>
+                        <thead>
                         <tr>
                            <th>No.</th>
                            <th>Status</th>
@@ -260,162 +267,33 @@
                            <th>Date</th>
                            <th>Total</th>
                         </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           <td><a href="app-order.html" class="text-reset">#00745</a></td>
-                           <td>
-                              <div class="d-flex fs-6">
-                                 <div class="badge badge-sa-primary">Pending</div>
-                              </div>
-                           </td>
-                           <td><img src="vendor/flag-icons/24/IT.png" class="sa-language-icon d-block" alt="" title="Italy"/></td>
-                           <td>
-                              <div class="d-flex align-items-center">
-                                 <a href="app-customer.html" class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
-                                    <div class="sa-symbol__text">GB</div>
-                                 </a>
-                                 <div><a href="app-customer.html" class="text-reset">Giordano Bruno</a></div>
-                              </div>
-                           </td>
-                           <td>2020-11-02</td>
-                           <td>$2,742.00</td>
-                        </tr>
-                        <tr>
-                           <td><a href="app-order.html" class="text-reset">#00513</a></td>
-                           <td>
-                              <div class="d-flex fs-6">
-                                 <div class="badge badge-sa-warning">Hold</div>
-                              </div>
-                           </td>
-                           <td><img src="vendor/flag-icons/24/DE.png" class="sa-language-icon d-block" alt="" title="Germany"/></td>
-                           <td>
-                              <div class="d-flex align-items-center">
-                                 <a href="app-customer.html" class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
-                                    <div class="sa-symbol__text">HW</div>
-                                 </a>
-                                 <div><a href="app-customer.html" class="text-reset">Hans Weber</a></div>
-                              </div>
-                           </td>
-                           <td>2020-09-05</td>
-                           <td>$204.00</td>
-                        </tr>
-                        <tr>
-                           <td><a href="app-order.html" class="text-reset">#00507</a></td>
-                           <td>
-                              <div class="d-flex fs-6">
-                                 <div class="badge badge-sa-primary">Pending</div>
-                              </div>
-                           </td>
-                           <td><img src="vendor/flag-icons/24/IT.png" class="sa-language-icon d-block" alt="" title="Italy"/></td>
-                           <td>
-                              <div class="d-flex align-items-center">
-                                 <a href="app-customer.html" class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
-                                    <div class="sa-symbol__text">AR</div>
-                                 </a>
-                                 <div><a href="app-customer.html" class="text-reset">Andrea Rossi</a></div>
-                              </div>
-                           </td>
-                           <td>2020-08-21</td>
-                           <td>$5,039.00</td>
-                        </tr>
-                        <tr>
-                           <td><a href="app-order.html" class="text-reset">#00104</a></td>
-                           <td>
-                              <div class="d-flex fs-6">
-                                 <div class="badge badge-sa-danger">Canceled</div>
-                              </div>
-                           </td>
-                           <td><img src="vendor/flag-icons/24/US.png" class="sa-language-icon d-block" alt="" title="USA"/></td>
-                           <td>
-                              <div class="d-flex align-items-center">
-                                 <a href="app-customer.html" class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
-                                    <div class="sa-symbol__text">RF</div>
-                                 </a>
-                                 <div><a href="app-customer.html" class="text-reset">Richard Feynman</a></div>
-                              </div>
-                           </td>
-                           <td>2020-06-22</td>
-                           <td>$79.00</td>
-                        </tr>
-                        <tr>
-                           <td><a href="app-order.html" class="text-reset">#00097</a></td>
-                           <td>
-                              <div class="d-flex fs-6">
-                                 <div class="badge badge-sa-success">Completed</div>
-                              </div>
-                           </td>
-                           <td><img src="vendor/flag-icons/24/CO.png" class="sa-language-icon d-block" alt="" title="Columbia"/></td>
-                           <td>
-                              <div class="d-flex align-items-center">
-                                 <a href="app-customer.html" class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
-                                    <div class="sa-symbol__text">LG</div>
-                                 </a>
-                                 <div><a href="app-customer.html" class="text-reset">Leonardo Garcia</a></div>
-                              </div>
-                           </td>
-                           <td>2020-05-09</td>
-                           <td>$826.00</td>
-                        </tr>
-                        <tr>
-                           <td><a href="app-order.html" class="text-reset">#00082</a></td>
-                           <td>
-                              <div class="d-flex fs-6">
-                                 <div class="badge badge-sa-success">Completed</div>
-                              </div>
-                           </td>
-                           <td><img src="vendor/flag-icons/24/RS.png" class="sa-language-icon d-block" alt="" title="Srbija"/></td>
-                           <td>
-                              <div class="d-flex align-items-center">
-                                 <a href="app-customer.html" class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
-                                    <div class="sa-symbol__text">NT</div>
-                                 </a>
-                                 <div><a href="app-customer.html" class="text-reset">Nikola Tesla</a></div>
-                              </div>
-                           </td>
-                           <td>2020-04-27</td>
-                           <td>$1,052.00</td>
-                        </tr>
-                        <tr>
-                           <td><a href="app-order.html" class="text-reset">#00063</a></td>
-                           <td>
-                              <div class="d-flex fs-6">
-                                 <div class="badge badge-sa-primary">Pending</div>
-                              </div>
-                           </td>
-                           <td><img src="vendor/flag-icons/24/FR.png" class="sa-language-icon d-block" alt="" title="France"/></td>
-                           <td>
-                              <div class="d-flex align-items-center">
-                                 <a href="app-customer.html" class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
-                                    <div class="sa-symbol__text">MC</div>
-                                 </a>
-                                 <div><a href="app-customer.html" class="text-reset">Marie Curie</a></div>
-                              </div>
-                           </td>
-                           <td>2020-02-09</td>
-                           <td>$441.00</td>
-                        </tr>
-                        <tr>
-                           <td><a href="app-order.html" class="text-reset">#00012</a></td>
-                           <td>
-                              <div class="d-flex fs-6">
-                                 <div class="badge badge-sa-success">Completed</div>
-                              </div>
-                           </td>
-                           <td><img src="vendor/flag-icons/24/RU.png" class="sa-language-icon d-block" alt="" title="Russia"/></td>
-                           <td>
-                              <div class="d-flex align-items-center">
-                                 <a href="app-customer.html" class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
-                                    <div class="sa-symbol__text">KT</div>
-                                 </a>
-                                 <div><a href="app-customer.html" class="text-reset">Konstantin Tsiolkovsky</a></div>
-                              </div>
-                           </td>
-                           <td>2020-01-01</td>
-                           <td>$12,961.00</td>
-                        </tr>
-                     </tbody>
-                  </table>
+                        </thead>
+                        <tbody>
+                        @foreach (var order in Model.Orders)
+                        {
+                           <tr>
+                              <td><a asp-controller="Orders" asp-action="Details" asp-route-orderNumber="@order.OrderNumber" class="text-reset">#@order.OrderNumber</a></td>
+                              <td>
+                                 <div class="d-flex fs-6">
+                                    <div class="badge badge-sa-primary">@order.Status</div>
+                                 </div>
+                              </td>
+                              <td><img src="vendor/flag-icons/24/IT.png" class="sa-language-icon d-block" alt="" title="Italy"/></td>
+                              <td>
+                                 <div class="d-flex align-items-center">
+                                    <a href="app-customer.html" class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
+                                       <div class="sa-symbol__text">@order.ShipName[..1]@order.ShipSurname[..1]</div>
+                                    </a>
+                                    <div><a href="app-customer.html" class="text-reset">@order.ShipName @order.ShipSurname</a></div>
+                                 </div>
+                              </td>
+                              <td>@order.OrderDate.ToString("g")</td>
+                              <td>@order.Total.ToString("#,##0.00") €</td>
+                           </tr>
+                        }
+                        </tbody>
+                     </table>
+                  }
                </div>
             </div>
          </div>

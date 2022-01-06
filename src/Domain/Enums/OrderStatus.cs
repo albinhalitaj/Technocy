@@ -3,7 +3,7 @@
     public enum OrderStatus
     {
         ManualVerificationNeeded = 0,
-        Hold = 1, // waiting for call
+        Confirmed = 1, 
         Completed = 2,
         Shipped = 3,
         Cancelled = 4

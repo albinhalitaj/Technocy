@@ -1,4 +1,5 @@
-@model Domain.Entities.Customer
+@using Domain.Enums
+@model ProfileViewModel
 @{
     ViewBag.Title = "Profile";
     Layout = "_Layout";
@@ -45,8 +46,14 @@
                                     <div class="myaccount-content">
                                         <h3>Porositë</h3>
                                         <div class="myaccount-table table-responsive text-center">
-                                            <table class="table table-bordered">
-                                                <thead class="thead-light">
+                                            @if (!Model.Orders.Any())
+                                            {
+                                                <h4>Ju nuk keni ende porosi të kryera.</h4>
+                                            }
+                                            else
+                                            {
+                                                <table class="table table-bordered">
+                                                    <thead class="thead-light">
                                                     <tr>
                                                         <th>Porosia</th>
                                                         <th>Data</th>
@@ -54,31 +61,40 @@
                                                         <th>Totali</th>
                                                         <th>Action</th>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Aug 22, 2018</td>
-                                                        <td>Pending</td>
-                                                        <td>$3000</td>
-                                                        <td><a href="cart.html" class="check-btn sqr-btn ">View</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>July 22, 2018</td>
-                                                        <td>Approved</td>
-                                                        <td>$200</td>
-                                                        <td><a href="cart.html" class="check-btn sqr-btn ">View</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>June 12, 2017</td>
-                                                        <td>On Hold</td>
-                                                        <td>$990</td>
-                                                        <td><a href="cart.html" class="check-btn sqr-btn ">View</a></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach (var order in Model.Orders)
+                                                    {
+                                                        <tr>
+                                                            <td>#@order.OrderNumber</td>
+                                                            <td>@order.OrderDate.ToString("f")</td>
+                                                            @switch (order.Status)
+                                                            {
+                                                                case OrderStatus.ManualVerificationNeeded:
+                                                                    <td>Verifikimi manual i nevojshëm</td>
+                                                                    break;
+                                                                case OrderStatus.Confirmed:
+                                                                    <td>Konfirmuar</td>
+                                                                    break;
+                                                                case OrderStatus.Completed:
+                                                                    <td>Kompletuar</td>
+                                                                    break;
+                                                                case OrderStatus.Shipped:
+                                                                    <td>E Nisur</td>
+                                                                    break;
+                                                                case OrderStatus.Cancelled:
+                                                                    <td>Anuluar</td>
+                                                                    break;
+                                                                default:
+                                                                    throw new ArgumentOutOfRangeException();
+                                                            }
+                                                            <td>@order.Total.ToString("#,##0.00") €</td>
+                                                            <td><a href="cart.html" class="check-btn sqr-btn ">Shiko</a></td>
+                                                        </tr>
+                                                    }
+                                                    </tbody>
+                                                </table>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +112,7 @@
                                     <div class="myaccount-content">
                                         <h3>Adresa</h3>
                                         <address>
-                                            <p><strong>@User.Identity.Name</strong></p>
+                                            <p><strong>@User.Identity?.Name</strong></p>
                                             <p>1355 Market St, Suite 900 <br>
                                             San Francisco, CA 94103</p>
                                             <p>Mobile: (123) 456-7890</p>
@@ -115,37 +131,37 @@
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
                                                             <label for="first-name" class="required">Emri</label>
-                                                            <input asp-for="Name" id="first-name" />
+                                                            <input asp-for="Customer.Name" id="first-name" />
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
                                                             <label for="last-name" class="required">Mbiemri</label>
-                                                            <input asp-for="Surname" id="last-name" />
+                                                            <input asp-for="Customer.Surname" id="last-name" />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="single-input-item">
                                                     <label for="email" class="required">Emaili</label>
-                                                    <input asp-for="Email" id="email" />
+                                                    <input asp-for="Customer.Email" id="email" />
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
                                                             <label for="address" class="required">Adresa</label>
-                                                            <input asp-for="Address" id="address" />
+                                                            <input asp-for="Customer.Address" id="address" />
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
                                                             <label for="postal-code" class="required">Kodi Postal</label>
-                                                            <input asp-for="PostalCode" id="postal-code" />
+                                                            <input asp-for="Customer.PostalCode" id="postal-code" />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="single-input-item">
                                                     <label for="phone" class="required">Telefoni</label>
-                                                    <input asp-for="PostalCode" id="phone" />
+                                                    <input asp-for="Customer.PostalCode" id="phone" />
                                                 </div>
                                                 <div class="single-input-item">
                                                     <button class="check-btn sqr-btn ">Ruaj ndryshimet</button>

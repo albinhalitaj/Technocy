@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Application.admin;
 using Application.client;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +15,13 @@ namespace WebUI.Controllers
     {
         private readonly CategoryManager _categoryManager;
         private readonly WishlistManager _wishlistManager;
+        private readonly INotyfService _notyf;
 
-        public WishlistController(CategoryManager categoryManager,WishlistManager wishlistManager)
+        public WishlistController(CategoryManager categoryManager,WishlistManager wishlistManager,INotyfService notyf)
         {
             _categoryManager = categoryManager;
             _wishlistManager = wishlistManager;
+            _notyf = notyf;
         }
         
         // GET
@@ -36,7 +39,7 @@ namespace WebUI.Controllers
             {
                 return Json(new {Success = false, Error = "User is not authenticated"});
             }
-            if (_wishlistManager.IsExist(model.ProductId))
+            if (_wishlistManager.IsExist(model.ProductId,Convert.ToInt32(User.Claims.ElementAt(1).Value)))
             {
                 return Json(new {Success = false});
             }
@@ -51,6 +54,17 @@ namespace WebUI.Controllers
             
             var result = _wishlistManager.AddWishlistItem(wishlistItem);
             return Json(new {Success = result});
+        }
+
+        [HttpPost]
+        public IActionResult Remove(int customerId, int productId)
+        {
+            var result = _wishlistManager.DeleteWishlistItem(customerId, productId);
+            if (!result)
+            {
+                _notyf.Error("Ndodhi një gabim! Ju lutem provoni përsëri.", 5);
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

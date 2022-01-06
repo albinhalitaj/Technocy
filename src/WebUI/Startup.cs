@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Rotativa.AspNetCore;
+using Stripe;
 
 namespace WebUI
 {
@@ -33,7 +35,7 @@ namespace WebUI
             });
             
             services.AddAutoMapper(typeof(Startup));
-            
+            services.AddSession(); 
             services.AddApplication();
             services.AddAuthentication(opt => opt.DefaultScheme = "User_Schema")
                 .AddCookie("Admin_Schema",options =>
@@ -47,11 +49,13 @@ namespace WebUI
                     options.LoginPath = "/account/login";
                     options.AccessDeniedPath = "/account/accessdenied";
                 });
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
             services.AddControllersWithViews();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -91,6 +95,8 @@ namespace WebUI
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -104,10 +110,11 @@ namespace WebUI
 
                 endpoints.MapControllerRoute(
                     name: "products",
-                    pattern: "produktet/{categorySlug}",
+                    pattern: "products/{categorySlug}",
                     defaults: new { controller = "Produktet", action = "FilterProductsByCategories" }
                 );
             });
+            RotativaConfiguration.Setup(env.WebRootPath);
         }
     }
 }

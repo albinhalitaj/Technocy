@@ -1,0 +1,158 @@
+@model CheckoutModel
+@using WebUI.Helpers
+@using Domain.Entities
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "_Layout";
+    var customer = ViewBag.Customer as Customer;
+}
+
+<div class="checkout-main-area pt-90 pb-90">
+    <div class="container">
+        <div class="customer-zone mb-20">
+            <p class="cart-page-title">Keni kupon? <a class="checkout-click3" href="#">Klikoni këtu për të futur kodin tuaj</a></p>
+            <div class="checkout-login-info3">
+                <form action="#">
+                    <input type="text" placeholder="Coupon code">
+                    <input type="submit" value="Apply Coupon">
+                </form>
+            </div>
+        </div>
+        <form asp-controller="Checkout" asp-action="ProcessOrder">
+        <div class="checkout-wrap pt-30">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="billing-info-wrap mr-50">
+                        <h3>Detajet e faturimit</h3>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-20">
+                                    <label>Emri <abbr class="required" title="required">*</abbr></label>
+                                    <input type="text" asp-for="Order.ShipName" value="@customer?.Name">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-20">
+                                    <label>Mbiemri <abbr class="required" title="required">*</abbr></label>
+                                    <input type="text" asp-for="Order.ShipSurname" value="@customer?.Surname">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="billing-info mb-20">
+                                    <label>Adresa / Rruga <abbr class="required" title="required">*</abbr></label>
+                                    <input class="billing-address" asp-for="Order.ShipAddress" value="@customer?.Address" placeholder="House number and street name" type="text">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="billing-info mb-20">
+                                    <label>Shteti <abbr class="required" title="required">*</abbr></label>
+                                    <input type="text" asp-for="Order.ShipCountry" value="@customer?.Country">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="billing-info mb-20">
+                                    <label>Qyteti <abbr class="required" title="required">*</abbr></label>
+                                    <input type="text" asp-for="Order.ShipCity" value="@customer?.City">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="billing-info mb-20">
+                                    <label>Kodi Postal <abbr class="required" title="required">*</abbr></label>
+                                    <input type="text" asp-for="Order.ShipPostalCode" value="@customer?.PostalCode">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="billing-info mb-20">
+                                    <label>Telefoni <abbr class="required" title="required">*</abbr></label>
+                                    <input type="text" asp-for="Order.ShipPhone" value="@customer?.Phone">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="billing-info mb-20">
+                                    <label>Emaili <abbr class="required" title="required">*</abbr></label>
+                                    <input type="text" asp-for="Order.ShipEmail" value="@customer?.Email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="additional-info-wrap">
+                            <label>Shënime për porosinë tuaj</label>
+                            <textarea asp-for="Order.OrderNotes" placeholder="Shënime për porosinë tuaj, p.sh. shënime të veçanta për dorëzim."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="your-order-area">
+                        <h3>Porosia juaj</h3>
+                        <div class="your-order-wrap gray-bg-4">
+                            <div class="your-order-info-wrap">
+                                <div class="your-order-info">
+                                    <ul>
+                                        <li>Produktet <span>Totali</span></li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-middle">
+                                    <ul>
+                                        @if (Context.Session.GetObjectFromJson<List<Cart>>("cart") != null)
+                                        {
+                                            foreach (var product in Context.Session.GetObjectFromJson<List<Cart>>("cart"))
+                                            {
+                                                <li>@product.Product.Name[..30]... X @product.Quantity <span>@product.Product.Price.ToString("#,##0.00") €</span></li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="your-order-info order-subtotal">
+                                    @{
+                                        var cart = Context.Session.GetObjectFromJson<List<Cart>>("cart");
+                                        decimal subtot = 0;
+                                        if (cart != null)
+                                        {
+                                            subtot = cart.Sum(x => x.Product.Price * x.Quantity);
+                                        }
+                                    }
+                                    <ul>
+                                        <li>Subtotali <span>@subtot.ToString("#,##0.00") €</span></li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-info order-shipping">
+                                    <ul>
+                                        <li>Transporti (Standart) <p>5 € </p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-info order-total">
+                                    <ul>
+                                        @{
+                                            var totali = subtot + 5;
+                                        }
+                                        <li>Totali <span>@totali.ToString("#,##0.00") €</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="payment-method">
+                                <div class="pay-top sin-payment">
+                                    <input id="payment_method_1" class="input-radio" asp-for="Order.PaymentMethod" type="radio" value="0" checked="checked">
+                                    <label for="payment_method_1"> Paguaj me para në dorë </label>
+                                    <div class="payment-box payment_method_bacs">
+                                        <p>Pagesa bëhet pasi të pranohet porosia.</p>
+                                    </div>
+                                </div>
+                                <div class="pay-top sin-payment">
+                                    <input id="payment-method-2" class="input-radio" asp-for="Order.PaymentMethod" type="radio" value="1">
+                                    <label for="payment-method-2"> Paguaj me kartelë</label>
+                                    <div id="card-payment" class="payment-box payment_method_bacs">
+                                        <p>Kryeni pagesën tuaj me kartelë bankare.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Place-order mt-40">
+                        <button type="submit">Place Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>

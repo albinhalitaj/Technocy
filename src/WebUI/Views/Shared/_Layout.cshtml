@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿@using WebUI.Helpers
+<!doctype html>
 <html class="no-js" lang="en">
 <head>
     <meta charset="utf-8">
@@ -19,7 +20,7 @@
     <link rel="stylesheet" href="~/Client/assets/css/plugins/magnific-popup.css">
     <link rel="stylesheet" href="~/Client/assets/css/plugins/jquery-ui.css">
     <link rel="stylesheet" href="~/Client/assets/css/style.css">
-
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 
 <body>
@@ -90,67 +91,55 @@
                                 <div class="cart-wrap cart-wrap-3">
                                     <button class="cart-active">
                                         <i class="la la-shopping-cart"></i> <br>
-                                        <span class="mini-cart-price-3">$400.00</span>
-                                        <span class="count-style-3">01</span>
+                                        <span class="mini-cart-price-3" hidden="hidden">$400.00</span>
+                                        <span class="count-style-3" hidden="hidden">1</span>
                                     </button>
                                     <div class="shopping-cart-content">
                                         <div class="shopping-cart-top">
-                                            <h4>Your Cart</h4>
+                                            <h4>Shporta juaj</h4>
                                             <a class="cart-close" href="#"><i class="la la-close"></i></a>
                                         </div>
                                         <ul>
-                                            <li class="single-shopping-cart">
-                                                <div class="shopping-cart-img">
-                                                    <a href="#"><img alt="" src="~/Client/assets/images/cart/cart-1.jpg"></a>
-                                                    <div class="item-close">
-                                                        <a href="#"><i class="sli sli-close"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="shopping-cart-title">
-                                                    <h4><a href="#">Golden Easy Spot Chair.</a></h4>
-                                                    <span>$99.00</span>
-                                                </div>
-                                                <div class="shopping-cart-delete">
-                                                    <a href="#"><i class="la la-trash"></i></a>
-                                                </div>
-                                            </li>
-                                            <li class="single-shopping-cart">
-                                                <div class="shopping-cart-img">
-                                                    <a href="#"><img alt="" src="~/Client/assets/images/cart/cart-2.jpg"></a>
-                                                    <div class="item-close">
-                                                        <a href="#"><i class="sli sli-close"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="shopping-cart-title">
-                                                    <h4><a href="#">Golden Easy Spot Chair.</a></h4>
-                                                    <span>$99.00</span>
-                                                </div>
-                                                <div class="shopping-cart-delete">
-                                                    <a href="#"><i class="la la-trash"></i></a>
-                                                </div>
-                                            </li>
-                                            <li class="single-shopping-cart">
-                                                <div class="shopping-cart-img">
-                                                    <a href="#"><img alt="" src="~/Client/assets/images/cart/cart-3.jpg"></a>
-                                                    <div class="item-close">
-                                                        <a href="#"><i class="sli sli-close"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="shopping-cart-title">
-                                                    <h4><a href="#">Golden Easy Spot Chair.</a></h4>
-                                                    <span>$99.00</span>
-                                                </div>
-                                                <div class="shopping-cart-delete">
-                                                    <a href="#"><i class="la la-trash"></i></a>
-                                                </div>
-                                            </li>
+                                            @if (Context.Session.GetObjectFromJson<List<Cart>>("cart") != null)
+                                            {
+                                                @foreach(var cart in Context.Session.GetObjectFromJson<List<Cart>>("cart"))
+                                                {
+                                                    <li class="single-shopping-cart">
+                                                        <div class="shopping-cart-img">
+                                                            <a href="#"><img alt="" src="@cart.Product.ProductGalleries.FirstOrDefault()?.URL" style="object-fit: contain;width: 50px;height: 50px"></a>
+                                                            <div class="item-close">
+                                                                <a href="#"><i class="sli sli-close"></i></a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="shopping-cart-title">
+                                                            <h4 style="width: 160px"><a href="#">@(cart.Product.Name[..30])...</a></h4>
+                                                            <span>@cart.Product.Price.ToString("#,##0.00")€</span>
+                                                        </div>
+                                                        <div class="shopping-cart-delete">
+                                                            <a href="#"><i class="la la-trash"></i></a>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <h4>Shporta juaj është e zbrazët.</h4>
+                                            }
                                         </ul>
                                         <div class="shopping-cart-bottom">
                                             <div class="shopping-cart-total">
-                                                <h4>Subtotal <span class="shop-total">$290.00</span></h4>
+                                                @{
+                                                    var shporta = Context.Session.GetObjectFromJson<List<Cart>>("cart");
+                                                    decimal subtotali = 0;
+                                                    if (shporta != null)
+                                                    {   
+                                                        subtotali = shporta.Sum(item => item.Product.Price * item.Quantity);
+                                                    }
+                                                }
+                                                <h4>Subtotali <span class="shop-total">@subtotali.ToString("#,##0.00")€</span></h4>
                                             </div>
                                             <div class="shopping-cart-btn btn-hover default-btn text-center">
-                                                <a class="black-color" href="checkout.html">Continue to Chackout</a>
+                                                <a class="black-color" asp-controller="Checkout">Vazhdo me pagesë</a>
                                             </div>
                                         </div>
                                     </div>
@@ -169,7 +158,7 @@
                                         <ul>
                                             @foreach (var category in ViewBag.Categories)
                                             {
-                                                <li class="angle-shape" style="margin-right: 50px"><a style="line-height: 82px;" href="/produktet/@category.Slug">@category.Name</a></li>
+                                                <li class="angle-shape" style="margin-right: 50px"><a style="line-height: 82px;" href="/products/@category.Slug">@category.Name</a></li>
                                             }
                                         </ul>
                                     </nav>
@@ -452,9 +441,32 @@
     <script src="~/Client/assets/js/plugins/elevatezoom.js"></script>
     <script src="~/Client/assets/js/plugins/sticky-sidebar.js"></script>
     <script src="~/Client/assets/js/plugins/smoothscroll.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Main JS -->
 <script src="~/Client/assets/js/main.js"></script>
 @await Component.InvokeAsync("Notyf")
 </body>
 </html>
+
+<script>
+$(document).ready(function (){
+        $.ajax({
+            type: "GET",
+            url: "/cart/cartdetails",
+            success: function(response) {
+                if (response.items > 0){
+                    let count = $('.count-style-3');
+                    let total = $('.mini-cart-price-3');
+                    count.text(response.items);  
+                    total.text(response.total+"€")
+                    count.attr('hidden',false); 
+                    total.attr('hidden',false); 
+                }
+            },
+            error: function(err) {
+              console.error(err);
+            }
+        })
+    })
+</script>

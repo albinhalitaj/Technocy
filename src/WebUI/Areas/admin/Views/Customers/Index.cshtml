@@ -54,9 +54,17 @@
                      <td class="text-nowrap">@customer.InsertDate</td>
                      <td>@customer.Country</td>
                      <td>@customer.City</td>
-                     <td>
-                        <div class="sa-price"><span class="sa-price__symbol">$</span><span class="sa-price__integer">28,522</span><span class="sa-price__decimal">.35</span></div>
-                     </td>
+                        <td>
+                           @if (customer.Total.HasValue)
+                           {
+                              var ordTotal = (decimal) customer.Total;
+                              <div class="sa-price"><span class="sa-price__integer">@ordTotal.ToString("#,##0.00") €</span></div>
+                           }
+                           else
+                           {
+                              <div class="sa-price"><span class="sa-price__integer">0 €</span></div> 
+                           }
+                        </td>
                      <td>
                         <div class="dropdown">
                            <button class="btn btn-sa-muted btn-sm" type="button" id="customer-context-menu-0" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More">
@@ -66,9 +74,6 @@
                            </button>
                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="customer-context-menu-0">
                               <li><a class="dropdown-item" href="#">Edit</a></li>
-                              <li><a class="dropdown-item" href="#">Duplicate</a></li>
-                              <li><a class="dropdown-item" href="#">Add tag</a></li>
-                              <li><a class="dropdown-item" href="#">Remove tag</a></li>
                               <li>
                                  <hr class="dropdown-divider"/>
                               </li>

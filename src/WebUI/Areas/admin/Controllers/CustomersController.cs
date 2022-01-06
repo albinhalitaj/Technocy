@@ -15,7 +15,6 @@ namespace WebUI.Areas.admin.Controllers
             _customerManager = customerManager;
         }
         
-        // GET
         public IActionResult Index()
         {
             var customers = _customerManager.GetCustomers();

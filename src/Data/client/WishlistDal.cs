@@ -42,12 +42,21 @@ namespace Data.client
             return wishlistItems;
         }
 
-        public bool IsExist(int productId)
+        public bool IsExist(int productId,int customerId)
         {
             const string sql = "usp_IsProductInWishlist";
             using var con = _dataAccessLayer.AppConn();
-            var result = con.QueryAsync<Wishlist>(sql, new {productId}, commandType: CommandType.StoredProcedure).Result;
+            var result = con.QueryAsync<Wishlist>(sql, new {productId,customerId}, commandType: CommandType.StoredProcedure).Result;
             return result.Any();
+        }
+
+        public bool DeleteWishlistItem(int customerId, int productId)
+        {
+            const string sql = "usp_DeleteWishlistItem";
+            using var con = _dataAccessLayer.AppConn();
+            var rowsAffected =
+                con.ExecuteAsync(sql, new {customerId, productId}, commandType: CommandType.StoredProcedure).Result;
+            return rowsAffected == 1;
         }
     }
 }

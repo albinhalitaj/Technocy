@@ -30,6 +30,9 @@ namespace Application.client
             return wishlistItems;
         }
 
-        public bool IsExist(int productId) => _wishlistDal.IsExist(productId);
+        public bool IsExist(int productId,int customerId) => _wishlistDal.IsExist(productId,customerId);
+
+        public bool DeleteWishlistItem(int customerId, int productId) =>
+            _wishlistDal.DeleteWishlistItem(customerId, productId);
     }
 }
