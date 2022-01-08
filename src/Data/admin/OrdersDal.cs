@@ -50,7 +50,11 @@ namespace Data.admin
         {
             const string sql = "usp_GetCustomerOrders";
             using var con = _dataAccessLayer.AppConn();
-            var customerOrders = con.Query<Order>(sql, new {customerId}, commandType: CommandType.StoredProcedure);
+            var customerOrders = con.Query<Order>(sql, new {customerId}, commandType: CommandType.StoredProcedure).ToList();
+            foreach (var order in customerOrders)
+            {
+                order.OrderDetails = GetOrderDetails(order.OrderId);
+            }
             return customerOrders;
         }
 
@@ -58,7 +62,7 @@ namespace Data.admin
         {
             const string sql = "usp_GetFullOrderDetails";
             using var con = _dataAccessLayer.AppConn();
-            var order= con.Query<Order>(sql, new {orderNumber}, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            var order = con.Query<Order>(sql, new {orderNumber}, commandType: CommandType.StoredProcedure).FirstOrDefault();
             if (order != null)
             {
                 order.OrderDetails = GetOrderDetails(order.OrderId);
@@ -66,6 +70,14 @@ namespace Data.admin
                 order.Customer = _accountDal.GetCustomer(order.CustomerId);
             }
             return order;
+        }
+
+        public bool ChangeOrderStatus(string orderNumber,int orderStatus)
+        {
+            const string sql = "usp_UpdateOrderStatus";
+            using var con = _dataAccessLayer.AppConn();
+            var status = con.Execute(sql, new {orderNumber,orderStatus}, commandType: CommandType.StoredProcedure);
+            return status > 0;
         }
     }
 }

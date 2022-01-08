@@ -10,6 +10,8 @@ function addToCart(productId) {
                 let total = $('.mini-cart-price-3').attr('hidden', false);
                 total.text(resp.total + "€")
 
+                location.href = "/cart";
+
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-right',
@@ -25,7 +27,6 @@ function addToCart(productId) {
                     icon: 'success',
                     title: 'Product Added To Cart'
                 })
-                location.reload();
             }
         },
         error: function (err) {

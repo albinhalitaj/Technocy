@@ -1,6 +1,6 @@
 @model IEnumerable<Domain.Entities.Customer>
 @{
-    ViewBag.Title = "Customers";
+    ViewBag.Title = "Konsumatorët";
     Layout = "_AdminLayout";
 }
 
@@ -12,8 +12,10 @@
                <div class="col">
                   <nav class="mb-2" aria-label="breadcrumb">
                      <ol class="breadcrumb breadcrumb-sa-simple">
-                        <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Ballina</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Konsumatorët</li>
+                        <li>
+                           <a style="margin-right: 10px" asp-controller="Dashboard" asp-action="Index">Ballina</a>
+                        </li>
+                        <li aria-current="page">Konsumatorët</li>
                      </ol>
                   </nav>
                   <h1 class="h3 m-0">Konsumatorët</h1>

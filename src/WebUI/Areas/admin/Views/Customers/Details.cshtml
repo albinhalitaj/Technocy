@@ -1,5 +1,6 @@
 ﻿@using Humanizer
 @using Data.admin
+@using Domain.Enums
 @model Domain.Entities.Customer
 
 @{
@@ -16,9 +17,13 @@
                <div class="col">
                   <nav class="mb-2" aria-label="breadcrumb">
                      <ol class="breadcrumb breadcrumb-sa-simple">
-                        <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Ballina</a></li>
-                        <li class="breadcrumb-item"><a asp-controller="Customers" asp-action="Index">Konsumatorët</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">@Model.FullName</li>
+                        <li>
+                           <a style="margin-right: 10px" asp-controller="Dashboard" asp-action="Index">Ballina</a>
+                        </li>
+                        <li>
+                           <a style="margin-right: 10px" asp-controller="Customers" asp-action="Index">Konsumatorët</a>
+                        </li>
+                        <li aria-current="page">@Model.FullName</li>
                      </ol>
                   </nav>
                   <h1 class="h3 m-0">@Model.FullName</h1>
@@ -62,7 +67,7 @@
                               <dd class="fs-exact-13 text-muted mb-0 mt-1">
                                  @if (Model.Orders.Count > 0)
                                  {
-                                    <p>@Model.Orders.Average(x => x.Total).ToString("#,##0.00") €</p>
+                                    <p>@(Model.Orders.Where(x=>x.Status != OrderStatus.Cancelled).Average(x => x.Total).ToString("#,##0.00")) €</p>
                                  }
                                  else
                                  {
@@ -95,7 +100,7 @@
                   <div class="card mt-5">
                      <div class="card-body px-5 py-4 d-flex align-items-center justify-content-between">
                         <h2 class="mb-0 fs-exact-18 me-4">Porositë</h2>
-                        <div class="text-muted fs-exact-14 text-end">Totali i shpenzuar @Model.Orders.Sum(x=>x.Total).ToString("#,##0.00") € në @Model.Orders.Count porosi</div>
+                        <div class="text-muted fs-exact-14 text-end">Totali i shpenzuar @Model.Orders.Where(x=>x.Status != OrderStatus.Cancelled).Sum(x=>x.Total).ToString("#,##0.00") € në @Model.Orders.Count porosi</div>
                      </div>
                      <div class="table-responsive">
                         <table class="sa-table text-nowrap">
@@ -110,7 +115,7 @@
                                        await Html.RenderPartialAsync("_OrderStatus", new {order.Status});
                                     }
                                     </td>
-                                    <td>@Model.Orders.Count(x => x.OrderId == order.OrderId) produkte</td>
+                                    <td>@order.OrderDetails.Count() produkte</td>
                                     <td>@order.Total.ToString("#,##0.00") €</td>
                                  </tr>
                               }

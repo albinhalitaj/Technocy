@@ -14,8 +14,10 @@
                <div class="col">
                   <nav class="mb-2" aria-label="breadcrumb">
                      <ol class="breadcrumb breadcrumb-sa-simple">
-                        <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Ballina</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Porositë</li>
+                        <li>
+                           <a style="margin-right: 10px" asp-controller="Dashboard" asp-action="Index">Ballina</a>
+                        </li>
+                        <li aria-current="page">Porositë</li>
                      </ol>
                   </nav>
                   <h1 class="h3 m-0">Porositë</h1>
@@ -46,7 +48,7 @@
                      <td><input type="checkbox" class="form-check-input m-0 fs-exact-16 d-block" aria-label="..."/></td>
                      <td><a asp-action="Details" asp-route-orderNumber="@order.OrderNumber" class="text-reset">#@order.OrderNumber</a></td>
                      <td>@order.OrderDate</td>
-                     <td><a href="app-customer.html" class="text-reset">@order.ShipName @order.ShipSurname</a></td>
+                     <td><a asp-controller="Customers" asp-action="Details" asp-route-customerId="@order.CustomerId" class="text-reset">@order.ShipName @order.ShipSurname</a></td>
                      <td>
                         <div class="d-flex fs-6">
                            @if (order.PaymentStatus == PaymentStatus.Paid)
@@ -78,12 +80,45 @@
                               </svg>
                            </button>
                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="order-context-menu-0">
-                              <li><a class="dropdown-item" href="#">Edito</a></li>
-                              <li><a class="dropdown-item" target="_blank" asp-controller="Orders" asp-action="Print" asp-route-orderNumber="@order.OrderNumber">Printo</a></li>
+                              @switch (order.Status)
+                              {
+                                 case OrderStatus.ManualVerificationNeeded:
+                                    <li>
+                                       <a id="confirm" onclick="changeOrderStatus('@order.OrderNumber',1)" class="dropdown-item">Konfirmo</a>
+                                    </li>
+                                    <li>
+                                       <a id="cancel" onclick="changeOrderStatus('@order.OrderNumber',4)" class="dropdown-item">Anulo</a>
+                                    </li>
+                                    break;
+                                 case OrderStatus.Confirmed:
+                                    <li>
+                                       <a id="ship" onclick="changeOrderStatus('@order.OrderNumber',3)" class="dropdown-item">E Nisur</a>
+                                    </li>
+                                    <li>
+                                       <a id="cancel" onclick="changeOrderStatus('@order.OrderNumber',4)" class="dropdown-item">Anulo</a>
+                                    </li>
+                                    break;
+                                 case OrderStatus.Completed:
+                                    break;
+                                 case OrderStatus.Shipped:
+                                    <li>
+                                       <a id="complete" onclick="changeOrderStatus('@order.OrderNumber',2)" class="dropdown-item">Kompleto</a>
+                                    </li>
+                                    <li>
+                                       <a id="cancel" onclick="changeOrderStatus('@order.OrderNumber',4)" class="dropdown-item">Anulo</a>
+                                    </li>
+                                    break;
+                                 case OrderStatus.Cancelled:
+                                    break;
+                                 default:
+                                    throw new ArgumentOutOfRangeException();
+                              }
                               <li>
                                  <hr class="dropdown-divider"/>
                               </li>
-                              <li><a class="dropdown-item text-danger" href="#">Fshi</a></li>
+                              <li>
+                                 <a class="dropdown-item" target="_blank" asp-controller="Orders" asp-action="Print" asp-route-orderNumber="@order.OrderNumber">Printo</a>
+                              </li>
                            </ul>
                         </div>
                      </td>
@@ -95,3 +130,21 @@
       </div>
    </div>
 </div>
+
+<script type="text/javascript">
+
+function changeOrderStatus(s, number) {
+   console.log(s, number);
+   $.ajax({
+     type: "POST",
+     url: "@Url.Action("ChangeOrderStatus", "Orders")",
+     data: {"orderNumber": s,"orderStatus": number}, 
+     success: function(resp) {
+       if (resp){
+          location.reload();
+       }
+     }
+ })
+}
+
+</script>

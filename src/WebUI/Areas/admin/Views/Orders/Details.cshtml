@@ -14,9 +14,13 @@
             <div class="col">
                <nav class="mb-2" aria-label="breadcrumb">
                   <ol class="breadcrumb breadcrumb-sa-simple">
-                     <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Ballina</a></li>
-                     <li class="breadcrumb-item"><a asp-controller="Orders" asp-action="Index">Porositë</a></li>
-                     <li class="breadcrumb-item active" aria-current="page">Porosia #@Model.OrderNumber</li>
+                     <li>
+                        <a style="margin-right: 10px" asp-controller="Dashboard" asp-action="Index">Ballina</a>
+                     </li>
+                     <li style="margin-right: 10px">
+                        <a asp-controller="Orders" asp-action="Index">Porositë</a>
+                     </li>
+                     <li aria-current="page">Porosia #@Model.OrderNumber</li>
                   </ol>
                </nav>
                <h1 class="h3 m-0">Porosia #@Model.OrderNumber</h1>

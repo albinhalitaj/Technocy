@@ -16,5 +16,7 @@ namespace Application.admin
         public IEnumerable<Order> GetOrders() => _ordersDal.GetOrders();
 
         public Order GetOrderDetails(string orderNumber) => _ordersDal.GetOrderDetails(orderNumber);
+
+        public bool UpdateOrderStatus(string orderNumber,int orderStatus) => _ordersDal.ChangeOrderStatus(orderNumber,orderStatus);
     }
 }

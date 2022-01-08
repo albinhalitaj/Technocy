@@ -1,14 +1,13 @@
 using System.Linq;
 using Application.admin;
 using Application.client;
-using Data.admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Areas.admin.Controllers
 {
     [Area("admin")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "Admin_Schema")]
     public class CustomersController : Controller
     {
         private readonly CustomerManager _customerManager;

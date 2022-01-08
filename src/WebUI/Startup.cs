@@ -115,7 +115,6 @@ namespace WebUI
                     defaults: new { controller = "Produktet", action = "FilterProductsByCategories" }
                 );
             });
-            RotativaConfiguration.Setup((IHostingEnvironment) env);
         }
     }
 }

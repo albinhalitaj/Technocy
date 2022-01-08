@@ -35,5 +35,12 @@ namespace WebUI.Areas.admin.Controllers
             var order = _orderManager.GetOrderDetails(orderNumber);
             return View(order);
         }
+
+        [HttpPost]
+        public IActionResult ChangeOrderStatus(string orderNumber,int orderStatus)
+        {
+            var result = _orderManager.UpdateOrderStatus(orderNumber, orderStatus);
+            return Json(result);
+        }
     }
 }

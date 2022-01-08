@@ -34,4 +34,9 @@
       <Content Remove="Areas\admin\Data\**" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\Rotativa\wkhtmltoimage.exe" />
+      <_ContentIncludedByDefault Remove="wwwroot\Rotativa\wkhtmltopdf.exe" />
+    </ItemGroup>
+
 </Project>

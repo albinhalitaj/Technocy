@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.admin;
@@ -30,7 +31,18 @@ namespace WebUI.Areas.admin.Controllers
         [Route("/admin/account/login")]
         public IActionResult Login(string returnUrl)
         {
-            ViewBag.ReturnUrl = returnUrl;
+            try
+            {
+                if (User.Identity.IsAuthenticated && User.Claims.Any(x=>x.Type == ClaimTypes.Role))
+                {
+                    return RedirectToAction("Index", "Dashboard");
+                }
+            }
+            catch (Exception)
+            {
+                ViewBag.ReturnUrl = returnUrl;
+                return View();
+            }
             return View();
         }
 
