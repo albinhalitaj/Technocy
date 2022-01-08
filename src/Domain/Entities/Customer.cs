@@ -14,6 +14,8 @@ namespace Domain.Entities
         public int CustomerId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+
+        public string FullName => Name + " " + Surname;
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public DateTime Birthdate { get; set; }

@@ -15,7 +15,7 @@ namespace Data.DataAccess
         
         public SqlConnection AppConn()
         {
-            var conString =  _configuration.GetConnectionString("albikCon");
+            var conString =  _configuration.GetConnectionString("winCon");
             var con = new SqlConnection(conString);
             if (con.State != ConnectionState.Open)
             {

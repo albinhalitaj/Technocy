@@ -13,7 +13,7 @@
             </div>
             <div class="col-auto d-flex">
                <select class="form-select me-3">
-                  <option selected="">7 October, 2021</option>
+                  <option selected="">@DateTime.Now</option>
                </select>
                <a href="#" class="btn btn-primary">Eksporto</a>
             </div>
@@ -33,7 +33,6 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="widget-context-menu-1">
                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                           <li><a class="dropdown-item" href="#">Move</a></li>
                            <li>
                               <hr class="dropdown-divider"/>
                            </li>
@@ -161,38 +160,30 @@
                   <table>
                      <thead>
                         <tr>
-                           <th>Active pages</th>
-                           <th class="text-end">Perdoruesit</th>
+                           <th>Faqet aktive</th>
                         </tr>
                      </thead>
                      <tbody>
                         <tr>
-                           <td><a href="#" class="text-reset">/products/brandix-z4</a></td>
-                           <td class="text-end">15</td>
+                           <td><a href="#" class="text-reset">/products/{kategoria}</a></td>
                         </tr>
                         <tr>
-                           <td><a href="#" class="text-reset">/categories/drivetrain</a></td>
-                           <td class="text-end">11</td>
+                           <td><a href="#" class="text-reset">/product/{slug}</a></td>
                         </tr>
                         <tr>
-                           <td><a href="#" class="text-reset">/categories/monitors</a></td>
-                           <td class="text-end">7</td>
+                           <td><a href="#" class="text-reset">/home</a></td>
                         </tr>
                         <tr>
-                           <td><a href="#" class="text-reset">/account/orders</a></td>
-                           <td class="text-end">4</td>
+                           <td><a href="#" class="text-reset">/profile</a></td>
                         </tr>
                         <tr>
-                           <td><a href="#" class="text-reset">/cart</a></td>
-                           <td class="text-end">3</td>
+                           <td><a href="#" class="text-reset">/account</a></td>
                         </tr>
                         <tr>
                            <td><a href="#" class="text-reset">/checkout</a></td>
-                           <td class="text-end">3</td>
                         </tr>
                         <tr>
-                           <td><a href="#" class="text-reset">/pages/about-us</a></td>
-                           <td class="text-end">1</td>
+                           <td><a href="#" class="text-reset">/payment</a></td>
                         </tr>
                      </tbody>
                   </table>
@@ -200,38 +191,17 @@
             </div>
          </div>
          <div class="col-12 col-lg-8 col-xxl-9 d-flex">
-            <div class="card flex-grow-1 saw-chart" data-sa-data="[{&quot;label&quot;:&quot;Jan&quot;,&quot;value&quot;:50},{&quot;label&quot;:&quot;Feb&quot;,&quot;value&quot;:130},{&quot;label&quot;:&quot;Mar&quot;,&quot;value&quot;:525},{&quot;label&quot;:&quot;Apr&quot;,&quot;value&quot;:285},{&quot;label&quot;:&quot;May&quot;,&quot;value&quot;:470},{&quot;label&quot;:&quot;Jun&quot;,&quot;value&quot;:130},{&quot;label&quot;:&quot;Jul&quot;,&quot;value&quot;:285},{&quot;label&quot;:&quot;Aug&quot;,&quot;value&quot;:240},{&quot;label&quot;:&quot;Sep&quot;,&quot;value&quot;:710},{&quot;label&quot;:&quot;Oct&quot;,&quot;value&quot;:470},{&quot;label&quot;:&quot;Nov&quot;,&quot;value&quot;:640},{&quot;label&quot;:&quot;Dec&quot;,&quot;value&quot;:1110}]">
+            <div id="bar-chart" class="card flex-grow-1 saw-chart">
                <div class="sa-widget-header saw-chart__header">
-                  <h2 class="sa-widget-header__title">Income statistics</h2>
-                  <div class="sa-widget-header__actions">
-                     <div class="dropdown">
-                        <button type="button" class="btn btn-sm btn-sa-muted d-block" id="widget-context-menu-5" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="3" height="13" fill="currentColor">
-                              <path d="M1.5,8C0.7,8,0,7.3,0,6.5S0.7,5,1.5,5S3,5.7,3,6.5S2.3,8,1.5,8z M1.5,3C0.7,3,0,2.3,0,1.5S0.7,0,1.5,0 S3,0.7,3,1.5S2.3,3,1.5,3z M1.5,10C2.3,10,3,10.7,3,11.5S2.3,13,1.5,13S0,12.3,0,11.5S0.7,10,1.5,10z"></path>
-                           </svg>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="widget-context-menu-5">
-                           <li><a class="dropdown-item" href="#">Settings</a></li>
-                           <li><a class="dropdown-item" href="#">Move</a></li>
-                           <li>
-                              <hr class="dropdown-divider"/>
-                           </li>
-                           <li><a class="dropdown-item text-danger" href="#">Remove</a></li>
-                        </ul>
-                     </div>
-                  </div>
+                  <h2 class="sa-widget-header__title">Statistikat e të hyrave</h2>
                </div>
-               <div class="saw-chart__body">
-                  <div class="saw-chart__container">
-                     <canvas></canvas>
-                  </div>
-               </div>
+               <div id="container"></div>
             </div>
          </div>
          <div class="col-12 col-xxl-9 d-flex">
             <div class="card flex-grow-1 saw-table">
                <div class="sa-widget-header saw-table__header">
-                  <h2 class="sa-widget-header__title">Porosite e fundit</h2>
+                  <h2 class="sa-widget-header__title">Porositë e fundit</h2>
                   <div class="sa-widget-header__actions">
                      <div class="dropdown">
                         <button type="button" class="btn btn-sm btn-sa-muted d-block" id="widget-context-menu-6" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More">
@@ -241,7 +211,6 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="widget-context-menu-6">
                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                           <li><a class="dropdown-item" href="#">Move</a></li>
                            <li>
                               <hr class="dropdown-divider"/>
                            </li>
@@ -261,30 +230,34 @@
                         <thead>
                         <tr>
                            <th>No.</th>
-                           <th>Status</th>
+                           <th>Statusi</th>
                            <th>Co.</th>
-                           <th>Customer</th>
-                           <th>Date</th>
-                           <th>Total</th>
+                           <th>Konsumatori</th>
+                           <th>Data</th>
+                           <th>Totali</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach (var order in Model.Orders)
+                        @foreach (var order in Model.Orders.OrderByDescending(x=>x.OrderDate))
                         {
                            <tr>
                               <td><a asp-controller="Orders" asp-action="Details" asp-route-orderNumber="@order.OrderNumber" class="text-reset">#@order.OrderNumber</a></td>
                               <td>
                                  <div class="d-flex fs-6">
-                                    <div class="badge badge-sa-primary">@order.Status</div>
+                                    @{
+                                       await Html.RenderPartialAsync("_OrderStatus", new {order.Status});
+                                    }
                                  </div>
                               </td>
-                              <td><img src="vendor/flag-icons/24/IT.png" class="sa-language-icon d-block" alt="" title="Italy"/></td>
+                              <td>
+                                 <img src="~/Admin/vendor/flag-icons/24/KOS.png" style="width: 24px;height: 24px;object-fit: contain" class="sa-language-icon d-block" alt="" title="Italy"/>
+                              </td>
                               <td>
                                  <div class="d-flex align-items-center">
-                                    <a href="app-customer.html" class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
+                                    <a asp-controller="Customers" asp-action="Details" asp-route-customerId="@order.CustomerId" class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
                                        <div class="sa-symbol__text">@order.ShipName[..1]@order.ShipSurname[..1]</div>
                                     </a>
-                                    <div><a href="app-customer.html" class="text-reset">@order.ShipName @order.ShipSurname</a></div>
+                                    <div><a asp-controller="Customers" asp-action="Details" asp-route-customerId="@order.CustomerId" class="text-reset">@order.ShipName @order.ShipSurname</a></div>
                                  </div>
                               </td>
                               <td>@order.OrderDate.ToString("g")</td>
@@ -310,7 +283,6 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="widget-context-menu-7">
                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                           <li><a class="dropdown-item" href="#">Move</a></li>
                            <li>
                               <hr class="dropdown-divider"/>
                            </li>
@@ -399,188 +371,94 @@
                </div>
             </div>
          </div>
-         <div class="col-12 col-lg-6 d-flex">
-            <div class="card flex-grow-1">
-               <div class="card-body">
-                  <div class="sa-widget-header mb-4">
-                     <h2 class="sa-widget-header__title">Recent activity</h2>
-                     <div class="sa-widget-header__actions">
-                        <div class="dropdown">
-                           <button type="button" class="btn btn-sm btn-sa-muted d-block" id="widget-context-menu-8" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="3" height="13" fill="currentColor">
-                                 <path d="M1.5,8C0.7,8,0,7.3,0,6.5S0.7,5,1.5,5S3,5.7,3,6.5S2.3,8,1.5,8z M1.5,3C0.7,3,0,2.3,0,1.5S0.7,0,1.5,0 S3,0.7,3,1.5S2.3,3,1.5,3z M1.5,10C2.3,10,3,10.7,3,11.5S2.3,13,1.5,13S0,12.3,0,11.5S0.7,10,1.5,10z"></path>
-                              </svg>
-                           </button>
-                           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="widget-context-menu-8">
-                              <li><a class="dropdown-item" href="#">Settings</a></li>
-                              <li><a class="dropdown-item" href="#">Move</a></li>
-                              <li>
-                                 <hr class="dropdown-divider"/>
-                              </li>
-                              <li><a class="dropdown-item text-danger" href="#">Remove</a></li>
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="sa-timeline mb-n2 pt-2">
-                     <ul class="sa-timeline__list">
-                        <li class="sa-timeline__item">
-                           <div class="sa-timeline__item-title">Yesterday</div>
-                           <div class="sa-timeline__item-content">Phasellus id mattis nulla. Mauris velit nisi, imperdiet vitae sodales in, maximus ut lectus. Vivamus commodo scelerisque lacus, at porttitor dui iaculis id. <a href="#">Curabitur imperdiet ultrices fermentum.</a></div>
-                        </li>
-                        <li class="sa-timeline__item">
-                           <div class="sa-timeline__item-title">5 days ago</div>
-                           <div class="sa-timeline__item-content">Nulla ut ex mollis, volutpat tellus vitae, accumsan ligula. <a href="#">Curabitur imperdiet ultrices fermentum.</a></div>
-                        </li>
-                        <li class="sa-timeline__item">
-                           <div class="sa-timeline__item-title">March 27</div>
-                           <div class="sa-timeline__item-content">Donec tempor sapien et fringilla facilisis. Nam maximus consectetur diam.</div>
-                        </li>
-                        <li class="sa-timeline__item">
-                           <div class="sa-timeline__item-title">November 30</div>
-                           <div class="sa-timeline__item-content">Many philosophical debates that began in ancient times are still debated today. In one general sense, philosophy is associated with wisdom, intellectual culture and a search for knowledge.</div>
-                        </li>
-                     </ul>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="col-12 col-lg-6 d-flex">
-            <div class="card flex-grow-1">
-               <div class="card-body">
-                  <div class="sa-widget-header">
-                     <h2 class="sa-widget-header__title">Recent reviews</h2>
-                     <div class="sa-widget-header__actions">
-                        <div class="dropdown">
-                           <button type="button" class="btn btn-sm btn-sa-muted d-block" id="widget-context-menu-9" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="3" height="13" fill="currentColor">
-                                 <path d="M1.5,8C0.7,8,0,7.3,0,6.5S0.7,5,1.5,5S3,5.7,3,6.5S2.3,8,1.5,8z M1.5,3C0.7,3,0,2.3,0,1.5S0.7,0,1.5,0 S3,0.7,3,1.5S2.3,3,1.5,3z M1.5,10C2.3,10,3,10.7,3,11.5S2.3,13,1.5,13S0,12.3,0,11.5S0.7,10,1.5,10z"></path>
-                              </svg>
-                           </button>
-                           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="widget-context-menu-9">
-                              <li><a class="dropdown-item" href="#">Settings</a></li>
-                              <li><a class="dropdown-item" href="#">Move</a></li>
-                              <li>
-                                 <hr class="dropdown-divider"/>
-                              </li>
-                              <li><a class="dropdown-item text-danger" href="#">Remove</a></li>
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <ul class="list-group list-group-flush">
-                  <li class="list-group-item py-2">
-                     <div class="d-flex align-items-center py-3">
-                        <a href="app-product.html" class="me-4">
-                           <div class="sa-symbol sa-symbol--shape--rounded sa-symbol--size--lg"><img src="images/products/product-1-40x40.jpg" width="40" height="40" alt=""/></div>
-                        </a>
-                        <div class="d-flex align-items-center flex-grow-1 flex-wrap">
-                           <div class="col">
-                              <a href="app-product.html" class="text-reset fs-exact-14">Wiper Blades Brandix WL2</a>
-                              <div class="text-muted fs-exact-13">Reviewed by <a href="app-customer.html" class="text-reset">Ryan Ford</a></div>
-                           </div>
-                           <div class="col-12 col-sm-auto">
-                              <div class="sa-rating ms-sm-3 my-2 my-sm-0" style="--sa-rating--value:0.6">
-                                 <div class="sa-rating__body"></div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </li>
-                  <li class="list-group-item py-2">
-                     <div class="d-flex align-items-center py-3">
-                        <a href="app-product.html" class="me-4">
-                           <div class="sa-symbol sa-symbol--shape--rounded sa-symbol--size--lg"><img src="images/products/product-7-40x40.jpg" width="40" height="40" alt=""/></div>
-                        </a>
-                        <div class="d-flex align-items-center flex-grow-1 flex-wrap">
-                           <div class="col">
-                              <a href="app-product.html" class="text-reset fs-exact-14">Electric Planer Brandix KL370090G 300 Watts</a>
-                              <div class="text-muted fs-exact-13">Reviewed by <a href="app-customer.html" class="text-reset">Adam Taylor</a></div>
-                           </div>
-                           <div class="col-12 col-sm-auto">
-                              <div class="sa-rating ms-sm-3 my-2 my-sm-0" style="--sa-rating--value:0.8">
-                                 <div class="sa-rating__body"></div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </li>
-                  <li class="list-group-item py-2">
-                     <div class="d-flex align-items-center py-3">
-                        <a href="app-product.html" class="me-4">
-                           <div class="sa-symbol sa-symbol--shape--rounded sa-symbol--size--lg"><img src="images/products/product-10-40x40.jpg" width="40" height="40" alt=""/></div>
-                        </a>
-                        <div class="d-flex align-items-center flex-grow-1 flex-wrap">
-                           <div class="col">
-                              <a href="app-product.html" class="text-reset fs-exact-14">Water Tap</a>
-                              <div class="text-muted fs-exact-13">Reviewed by <a href="app-customer.html" class="text-reset">Jessica Moore</a></div>
-                           </div>
-                           <div class="col-12 col-sm-auto">
-                              <div class="sa-rating ms-sm-3 my-2 my-sm-0" style="--sa-rating--value:0.4">
-                                 <div class="sa-rating__body"></div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </li>
-                  <li class="list-group-item py-2">
-                     <div class="d-flex align-items-center py-3">
-                        <a href="app-product.html" class="me-4">
-                           <div class="sa-symbol sa-symbol--shape--rounded sa-symbol--size--lg"><img src="images/products/product-5-40x40.jpg" width="40" height="40" alt=""/></div>
-                        </a>
-                        <div class="d-flex align-items-center flex-grow-1 flex-wrap">
-                           <div class="col">
-                              <a href="app-product.html" class="text-reset fs-exact-14">Brandix Router Power Tool 2017ERXPK</a>
-                              <div class="text-muted fs-exact-13">Reviewed by <a href="app-customer.html" class="text-reset">Helena Garcia</a></div>
-                           </div>
-                           <div class="col-12 col-sm-auto">
-                              <div class="sa-rating ms-sm-3 my-2 my-sm-0" style="--sa-rating--value:0.6">
-                                 <div class="sa-rating__body"></div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </li>
-                  <li class="list-group-item py-2">
-                     <div class="d-flex align-items-center py-3">
-                        <a href="app-product.html" class="me-4">
-                           <div class="sa-symbol sa-symbol--shape--rounded sa-symbol--size--lg"><img src="images/products/product-2-40x40.jpg" width="40" height="40" alt=""/></div>
-                        </a>
-                        <div class="d-flex align-items-center flex-grow-1 flex-wrap">
-                           <div class="col">
-                              <a href="app-product.html" class="text-reset fs-exact-14">Undefined Tool IRadix DPS3000SY 2700 Watts</a>
-                              <div class="text-muted fs-exact-13">Reviewed by <a href="app-customer.html" class="text-reset">Ryan Ford</a></div>
-                           </div>
-                           <div class="col-12 col-sm-auto">
-                              <div class="sa-rating ms-sm-3 my-2 my-sm-0" style="--sa-rating--value:1">
-                                 <div class="sa-rating__body"></div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </li>
-                  <li class="list-group-item py-2">
-                     <div class="d-flex align-items-center py-3">
-                        <a href="app-product.html" class="me-4">
-                           <div class="sa-symbol sa-symbol--shape--rounded sa-symbol--size--lg"><img src="images/products/product-16-40x40.jpg" width="40" height="40" alt=""/></div>
-                        </a>
-                        <div class="d-flex align-items-center flex-grow-1 flex-wrap">
-                           <div class="col">
-                              <a href="app-product.html" class="text-reset fs-exact-14">Brandix Screwdriver SCREW150</a>
-                              <div class="text-muted fs-exact-13">Reviewed by <a href="app-customer.html" class="text-reset">Charlotte Jones</a></div>
-                           </div>
-                           <div class="col-12 col-sm-auto">
-                              <div class="sa-rating ms-sm-3 my-2 my-sm-0" style="--sa-rating--value:0.8">
-                                 <div class="sa-rating__body"></div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </li>
-               </ul>
-            </div>
-         </div>
       </div>
    </div>
 </div>
+
+@section Scripts
+{
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+   <script src="https://code.highcharts.com/modules/exporting.js"></script>
+   <script src="https://code.highcharts.com/modules/export-data.js"></script>
+   <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+   <script type="text/javascript">
+      $(document).ready(function() {
+        $.ajax({
+            type: "GET",
+            url: "/admin/dashboard/getchartdata",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (resp) {
+               let model = [
+                  resp.data.january,
+                  resp.data.february,
+                  resp.data.march,
+                  resp.data.april,
+                  resp.data.may,
+                  resp.data.july,
+                  resp.data.june,
+                  resp.data.august,
+                  resp.data.september,
+                  resp.data.october,
+                  resp.data.november,
+                  resp.data.december
+               ]
+               console.log(model)
+               Highcharts.chart('container', {
+                   chart: {
+                       type: 'column'
+                   },
+                   title: {
+                       text: 'Statistikat e të hyrave'
+                   },
+                   xAxis: {
+                       categories: [
+                           'Jan',
+                           'Feb',
+                           'Mar',
+                           'Apr',
+                           'May',
+                           'Jun',
+                           'Jul',
+                           'Aug',
+                           'Sep',
+                           'Oct',
+                           'Nov',
+                           'Dec'
+                       ],
+                       crosshair: true
+                   },
+                   yAxis: {
+                       min: 0,
+                       title: {
+                           text: 'Te ardhura (euro)'
+                       }
+                   },
+                   tooltip: {
+                       headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                       pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                           '<td style="padding:0"><b>{point.y:.1f} €</b></td></tr>',
+                       footerFormat: '</table>',
+                       shared: true,
+                       useHTML: true
+                   },
+                   plotOptions: {
+                       column: {
+                           pointPadding: 0.2,
+                           borderWidth: 0
+                       },
+                       series: {
+                          color: '#FFD333'
+                       }
+                   },
+                   series: [{
+                       name: 'Të hyra',
+                       data: model
+               
+                   }]
+               });
+            }
+        })
+      })
+   </script>
+}

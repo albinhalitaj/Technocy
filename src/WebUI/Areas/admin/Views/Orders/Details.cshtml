@@ -21,8 +21,11 @@
                </nav>
                <h1 class="h3 m-0">Porosia #@Model.OrderNumber</h1>
             </div>
-            <div class="col-auto d-flex"><a href="#" class="btn btn-secondary me-3">Delete</a>
-               <a href="#" class="btn btn-primary">Edit</a></div>
+            <div class="col-auto d-flex">
+               <a class="btn btn-secondary" asp-action="Print" target="_blank" asp-route-orderNumber="@Model.OrderNumber">Printo</a>
+               <a href="#" class="btn btn-secondary me-3">Delete</a>
+               <a href="#" class="btn btn-primary">Edit</a>
+            </div>
          </div>
       </div>
       <div class="sa-page-meta mb-5">
@@ -40,25 +43,8 @@
                   {
                      <span class="badge badge-sa-danger me-2">Pa paguar</span>
                   }
-                  @switch (Model.Status)
-                  {
-                     case OrderStatus.ManualVerificationNeeded:
-                        <span class="badge badge-sa-warning me-2">Verifikimi manual i nevojshëm</span> 
-                        break;
-                     case OrderStatus.Confirmed:
-                        <span class="badge badge-sa-success me-2">Konfirmuar</span>
-                        break;
-                     case OrderStatus.Completed:
-                        <span class="badge badge-sa-success me-2">Kompletuar</span>
-                        break;
-                     case OrderStatus.Shipped:
-                        <span class="badge badge-sa-light me-2">E nisur</span>
-                        break;
-                     case OrderStatus.Cancelled:
-                        <span class="badge badge-sa-danger me-2">Anuluar</span>
-                        break;
-                     default:
-                        throw new ArgumentOutOfRangeException();
+                  @{
+                     await Html.RenderPartialAsync("_OrderStatus",new {Model.Status});
                   }
                </div>
             </div>
@@ -169,17 +155,18 @@
                <a href="#" class="fs-exact-14">Ndrysho</a>
             </div>
             <div class="card-body d-flex align-items-center pt-4">
-               <div class="sa-symbol sa-symbol--shape--circle sa-symbol--size--lg"><img src="~/Admin/images/customers/customer-1-40x40.jpg" width="40" height="40" alt=""/></div>
+               <div class="sa-symbol sa-symbol--shape--circle sa-symbol--size--lg">
+                  <img src="~/Admin/images/customers/customer-1-40x40.jpg" style="width: 30px;object-fit: contain" alt=""/>
+               </div>
                <div class="ms-3 ps-2">
                   <div class="fs-exact-14 fw-medium">@Model.Customer.Name @Model.Customer.Surname</div>
-                  <div class="fs-exact-13 text-muted">This is a first order</div>
+                  <div class="fs-exact-13 text-muted"></div>
                </div>
             </div>
          </div>
          <div class="card mt-5">
             <div class="card-body d-flex align-items-center justify-content-between pb-0 pt-4">
                <h2 class="fs-exact-16 mb-0">Kontakti</h2>
-               <a href="#" class="fs-exact-14">Ndrysho</a>
             </div>
             <div class="card-body pt-4 fs-exact-14">
                <div>@Model.Customer.Name @Model.Customer.Surname</div>
@@ -190,14 +177,12 @@
          <div class="card mt-5">
             <div class="card-body d-flex align-items-center justify-content-between pb-0 pt-4">
                <h2 class="fs-exact-16 mb-0">Adresa e Dergimit</h2>
-               <a href="#" class="fs-exact-14">Ndrysho</a>
             </div>
             <div class="card-body pt-4 fs-exact-14">@Model.ShipName @Model.ShipSurname<br/>@Model.ShipAddress<br/>@Model.ShipPostalCode, @Model.ShipCity<br/> @Model.ShipCountry, @Model.ShipPhone</div>
          </div>
          <div class="card mt-5">
             <div class="card-body d-flex align-items-center justify-content-between pb-0 pt-4">
                <h2 class="fs-exact-16 mb-0">Adresa e Faturimit</h2>
-               <a href="#" class="fs-exact-14">Ndrysho</a>
             </div>
             <div class="card-body pt-4 fs-exact-14">@Model.Customer.Name @Model.Customer.Surname<br/>@Model.Customer.Address<br/>@Model.Customer.PostalCode, @Model.Customer.City<br/>@Model.Customer.Country</div>
          </div>

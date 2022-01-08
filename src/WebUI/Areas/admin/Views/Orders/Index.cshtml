@@ -23,7 +23,7 @@
             </div>
          </div>
          <div class="card">
-            <div class="p-4"><input type="text" placeholder="Start typing to search for orders" class="form-control form-control--search mx-auto" id="table-search"/></div>
+            <div class="p-4"><input type="text" placeholder="Filloni të shkruani për të kërkuar porosi" class="form-control form-control--search mx-auto" id="table-search"/></div>
             <div class="sa-divider"></div>
             <table class="sa-datatables-init text-nowrap" data-order="[[ 1, &quot;desc&quot; ]]" data-sa-search-input="#table-search">
                <thead>
@@ -61,25 +61,8 @@
                      </td>
                      <td>
                         <div class="d-flex fs-6">
-                           @switch (order.Status)
-                           {
-                              case OrderStatus.ManualVerificationNeeded:
-                                 <span class="badge badge-sa-warning me-2">Verifikimi manual i nevojshëm</span> 
-                                 break;
-                              case OrderStatus.Confirmed:
-                                 <span class="badge badge-sa-success me-2">Konfirmuar</span>
-                                 break;
-                              case OrderStatus.Completed:
-                                 <span class="badge badge-sa-success me-2">Kompletuar</span>
-                                 break;
-                              case OrderStatus.Shipped:
-                                 <span class="badge badge-sa-light me-2">E nisur</span>
-                                 break;
-                              case OrderStatus.Cancelled:
-                                 <span class="badge badge-sa-danger me-2">Anuluar</span>
-                                 break;
-                              default:
-                                 throw new ArgumentOutOfRangeException();
+                           @{
+                              await Html.RenderPartialAsync("_OrderStatus", new {order.Status});
                            }
                         </div>
                      </td>
@@ -96,7 +79,7 @@
                            </button>
                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="order-context-menu-0">
                               <li><a class="dropdown-item" href="#">Edito</a></li>
-                              <li><a class="dropdown-item" asp-controller="Orders" asp-action="Print" asp-route-orderNumber="@order.OrderNumber">Printo</a></li>
+                              <li><a class="dropdown-item" target="_blank" asp-controller="Orders" asp-action="Print" asp-route-orderNumber="@order.OrderNumber">Printo</a></li>
                               <li>
                                  <hr class="dropdown-divider"/>
                               </li>

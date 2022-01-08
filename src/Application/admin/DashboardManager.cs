@@ -21,5 +21,7 @@ namespace Application.admin
 
         public List<Order> GetOrders() => _dashboardDal.GetOrders();
         public int TotalProducts() => _dashboardDal.TotalProducts();
+
+        public ChartDataViewModel GetChartData() => _dashboardDal.ChartData();
     }
 }

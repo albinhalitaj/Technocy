@@ -49,7 +49,7 @@ namespace WebUI.Controllers
                 var status = _orderService.Insert(order,orderDetails);
                 if (!status) return RedirectToAction("Index");
                 HttpContext.Session.SetObjectAsJson("cart",null);
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Confirmation","Checkout");
             }
             return RedirectToAction("Index");
         }

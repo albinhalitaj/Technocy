@@ -6,7 +6,7 @@ using Rotativa.AspNetCore;
 namespace WebUI.Areas.admin.Controllers
 {
     [Area("admin")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "Admin_Schema")]
     public class OrdersController : Controller
     {
         private readonly OrderManager _orderManager;
@@ -23,7 +23,6 @@ namespace WebUI.Areas.admin.Controllers
         }
 
         [HttpGet]
-        [Route("admin/order/{orderNumber}")]
         public IActionResult Details(string orderNumber)
         {
             var order = _orderManager.GetOrderDetails(orderNumber);
@@ -34,7 +33,7 @@ namespace WebUI.Areas.admin.Controllers
         public IActionResult Print(string orderNumber)
         {
             var order = _orderManager.GetOrderDetails(orderNumber);
-            return new ViewAsPdf(order);
+            return View(order);
         }
     }
 }

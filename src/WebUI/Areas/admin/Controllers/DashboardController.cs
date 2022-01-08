@@ -28,5 +28,27 @@ namespace WebUI.Areas.admin.Controllers
             };
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult GetChartData()
+        {
+            var data = _dashboardManager.GetChartData();
+            var model = new
+            {
+                data.January,
+                data.February,
+                data.March,
+                data.April,
+                data.May,
+                data.July,
+                data.June,
+                data.August,
+                data.September,
+                data.October,
+                data.November,
+                data.December
+            };
+            return Json(new {Data = model});
+        }
     }
 }

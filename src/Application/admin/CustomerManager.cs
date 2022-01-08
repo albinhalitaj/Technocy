@@ -13,7 +13,9 @@ namespace Application.admin
         {
             _customerDal = customerDal;
         }
-
+        
         public IEnumerable<Customer> GetCustomers() => _customerDal.GetCustomers();
+        public Customer GetCustomer(int customerId) => _customerDal.GetCustomer(customerId);
+        public CustomerOrderMetaData LastOrderHrs(int customerId) => _customerDal.GetCustomerLastOrder(customerId);
     }
 }

@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Rotativa.AspNetCore;
 using Stripe;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace WebUI
 {
@@ -114,7 +115,7 @@ namespace WebUI
                     defaults: new { controller = "Produktet", action = "FilterProductsByCategories" }
                 );
             });
-            RotativaConfiguration.Setup(env.WebRootPath);
+            RotativaConfiguration.Setup((IHostingEnvironment) env);
         }
     }
 }

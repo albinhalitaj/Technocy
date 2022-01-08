@@ -88,8 +88,15 @@ namespace WebUI.Controllers
             {
                 HttpContext.Session.SetObjectAsJson("cart",null);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(Confirmation));
+        }
 
+        [HttpGet]
+        [Route("/order/confirmation")]
+        public IActionResult Confirmation(string orderNumber)
+        {
+            ViewBag.Categories = _categoryManager.GetCategories().Where(x=>x.Visibility);
+            return View();
         }
     }
 }

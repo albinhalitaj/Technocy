@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -37,5 +36,27 @@ namespace Data.admin
             var total = con.QueryFirst<decimal?>(sql, new {customerId}, commandType: CommandType.StoredProcedure);
             return total;
         }
+
+        public Customer GetCustomer(int id)
+        {
+            const string sql = "usp_GetCustomerById";
+            using var con = _dataAccessLayer.AppConn();
+            var customer = con.QueryFirstOrDefault<Customer>(sql, new { id }, commandType: CommandType.StoredProcedure);
+            return customer;
+        }
+
+        public CustomerOrderMetaData GetCustomerLastOrder(int customerId)
+        {
+            const string sql = "usp_GetCustomerLastOrder";
+            using var con = _dataAccessLayer.AppConn();
+            var customerMetaData = con.QueryFirstOrDefault<CustomerOrderMetaData>(sql, new {customerId}, commandType: CommandType.StoredProcedure);
+            return customerMetaData;
+        }
+    }
+
+    public class CustomerOrderMetaData
+    {
+        public int Hours;
+        public string OrderNumber;
     }
 }
