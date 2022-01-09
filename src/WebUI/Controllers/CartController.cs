@@ -10,18 +10,15 @@ namespace WebUI.Controllers
 {
     public class CartController : Controller
     {
-        private readonly CategoryManager _categoryManager;
         private readonly ProductManager _productManager;
 
-        public CartController(CategoryManager categoryManager,ProductManager productManager)
+        public CartController(ProductManager productManager)
         {
-            _categoryManager = categoryManager;
             _productManager = productManager;
         }
         
         public IActionResult Index()
         {
-            ViewBag.Categories = _categoryManager.GetCategories().Where(x=>x.Visibility);
             var cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("cart");
             ViewBag.Cart = cart;
             if (cart == null) return View();
@@ -123,6 +120,13 @@ namespace WebUI.Controllers
                 }
             }
             return -1;
+        }
+
+        [HttpGet]
+        public IActionResult Clear()
+        {
+            HttpContext.Session.SetObjectAsJson("cart",null);
+            return View("Index");
         }
     }
 }

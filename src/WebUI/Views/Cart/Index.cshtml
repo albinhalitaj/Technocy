@@ -68,11 +68,11 @@ else
                     <div class="col-lg-12">
                         <div class="cart-shiping-update-wrapper">
                             <div class="cart-shiping-update">
-                                <a href="#">Vazhdoni me blerje</a>
+                                <a asp-controller="Home" asp-action="Index">Vazhdoni me blerje</a>
                             </div>
                             <div class="cart-clear">
                                 <button>Përditësoni shportën tuaj</button>
-                                <a href="#">Pastroni shportën</a>
+                                <a asp-action="Clear">Pastroni shportën</a>
                             </div>
                         </div>
                     </div>
@@ -152,7 +152,7 @@ else
                                 </ul>
                             </div>
                             <h4 class="grand-totall-title">Totali <span>@tot.ToString("#,##0.00") €</span></h4>
-                            <a href="#">Vazhdoni me pagesë</a>
+                            <a asp-controller="Checkout">Vazhdoni me pagesë</a>
                         </div>
                     </div>
                 </div>

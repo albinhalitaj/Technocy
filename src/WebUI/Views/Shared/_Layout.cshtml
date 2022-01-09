@@ -1,4 +1,6 @@
 ﻿@using WebUI.Helpers
+@using Application.admin
+@inject CategoryManager _categoryManager
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
@@ -23,6 +25,9 @@
     <script src="https://js.stripe.com/v3/"></script>
 </head>
 
+@{
+    var cart = Context.Session.GetObjectFromJson<List<Cart>>("cart");
+}
 <body>
     <div class="main-wrapper">
         <header class="header-area header-padding-4">
@@ -102,18 +107,20 @@
                                         <ul>
                                             @if (Context.Session.GetObjectFromJson<List<Cart>>("cart") != null)
                                             {
-                                                @foreach(var cart in Context.Session.GetObjectFromJson<List<Cart>>("cart"))
+                                                @foreach(var item in cart)
                                                 {
                                                     <li class="single-shopping-cart">
                                                         <div class="shopping-cart-img">
-                                                            <a href="#"><img alt="" src="@cart.Product.ProductGalleries.FirstOrDefault()?.URL" style="object-fit: contain;width: 50px;height: 50px"></a>
+                                                            <a asp-controller="Products" asp-action="Product" asp-route-slug="@item.Product.Slug">
+                                                                <img alt="" src="@item.Product.ProductGalleries.FirstOrDefault()?.URL" style="object-fit: contain;width: 50px;height: 50px">
+                                                            </a>
                                                             <div class="item-close">
                                                                 <a href="#"><i class="sli sli-close"></i></a>
                                                             </div>
                                                         </div>
                                                         <div class="shopping-cart-title">
-                                                            <h4 style="width: 160px"><a href="#">@(cart.Product.Name[..30])...</a></h4>
-                                                            <span>@cart.Product.Price.ToString("#,##0.00")€</span>
+                                                            <h4 style="width: 160px"><a href="#">@(item.Product.Name[..30])...</a></h4>
+                                                            <span>@item.Product.Price.ToString("#,##0.00")€</span>
                                                         </div>
                                                         <div class="shopping-cart-delete">
                                                             <a href="#"><i class="la la-trash"></i></a>
@@ -129,11 +136,10 @@
                                         <div class="shopping-cart-bottom">
                                             <div class="shopping-cart-total">
                                                 @{
-                                                    var shporta = Context.Session.GetObjectFromJson<List<Cart>>("cart");
                                                     decimal subtotali = 0;
-                                                    if (shporta != null)
+                                                    if (cart != null)
                                                     {   
-                                                        subtotali = shporta.Sum(item => item.Product.Price * item.Quantity);
+                                                        subtotali = cart.Sum(item => item.Product.Price * item.Quantity);
                                                     }
                                                 }
                                                 <h4>Subtotali <span class="shop-total">@subtotali.ToString("#,##0.00")€</span></h4>
@@ -154,14 +160,10 @@
                         <div class="row">
                             <div class="col-md-12 d-flex justify-content-center">
                                 <div class="main-menu menu-common-style menu-lh-4 menu-margin-5 menu-font-2">
-                                    <nav>
-                                        <ul>
-                                            @foreach (var category in ViewBag.Categories)
-                                            {
-                                                <li class="angle-shape" style="margin-right: 50px"><a style="line-height: 82px;" href="/products/@category.Slug">@category.Name</a></li>
-                                            }
-                                        </ul>
-                                    </nav>
+                                   @{
+                                       var categories = _categoryManager.GetCategories().Where(x=>x.Visibility);
+                                       await Html.RenderPartialAsync("_Categories",categories);
+                                   } 
                                 </div>
                             </div>
                         </div>
@@ -173,8 +175,8 @@
                     <div class="row align-items-center">
                         <div class="col-6">
                             <div class="mobile-logo">
-                                <a href="index.html">
-                                    <img alt="" src="~/Client/assets/images/logo/logo-1.png">
+                                <a asp-controller="Home" asp-action="Index">
+                                    <img alt="" src="~/Admin/images/print-logo.png">
                                 </a>
                             </div>
                         </div>
@@ -183,72 +185,59 @@
                                 <div class="cart-wrap common-style">
                                     <button class="cart-active">
                                         <i class="la la-shopping-cart"></i>
-                                        <span class="count-style">2 Produkte</span>
+                                        <span class="count-style">@cart?.Count Produkte</span>
                                     </button>
                                     <div class="shopping-cart-content">
                                         <div class="shopping-cart-top">
-                                            <h4>Your Cart</h4>
+                                            <h4>Shporta juaj</h4>
                                             <a class="cart-close" href="#"><i class="la la-close"></i></a>
                                         </div>
                                         <ul>
-                                            <li class="single-shopping-cart">
-                                                <div class="shopping-cart-img">
-                                                    <a href="#"><img alt="" src="~/Client/assets/images/cart/cart-1.jpg"></a>
-                                                    <div class="item-close">
-                                                        <a href="#"><i class="sli sli-close"></i></a>
-                                                    </div>
+                                            @if (cart != null)
+                                            {
+                                                foreach (var item in cart)
+                                                {
+                                                    <li class="single-shopping-cart">
+                                                        <div class="shopping-cart-img">
+                                                            <a asp-controller="Products" asp-action="Product" asp-route-slug="@item.Product.Slug">
+                                                                <img alt="" src="@item.Product.ProductGalleries.FirstOrDefault()?.URL" 
+                                                                     style="width: 30px;height: 40px;object-fit: contain">
+                                                            </a>
+                                                            <div class="item-close">
+                                                                <a href="#"><i class="sli sli-close"></i></a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="shopping-cart-title">
+                                                            <h4><a asp-controller="Products" asp-action="Product" asp-route-slug="@item.Product.Slug">@item.Product.Name</a></h4>
+                                                            <span>@item.Product.Price.ToString("#,##0.00") €</span>
+                                                        </div>
+                                                        <div class="shopping-cart-delete">
+                                                            <a href="#"><i class="la la-trash"></i></a>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <div>
+                                                    Shporta juaj është e zbrazët.
                                                 </div>
-                                                <div class="shopping-cart-title">
-                                                    <h4><a href="#">Golden Easy Spot Chair.</a></h4>
-                                                    <span>$99.00</span>
-                                                </div>
-                                                <div class="shopping-cart-delete">
-                                                    <a href="#"><i class="la la-trash"></i></a>
-                                                </div>
-                                            </li>
-                                            <li class="single-shopping-cart">
-                                                <div class="shopping-cart-img">
-                                                    <a href="#"><img alt="" src="~/Client/assets/images/cart/cart-2.jpg"></a>
-                                                    <div class="item-close">
-                                                        <a href="#"><i class="sli sli-close"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="shopping-cart-title">
-                                                    <h4><a href="#">Golden Easy Spot Chair.</a></h4>
-                                                    <span>$99.00</span>
-                                                </div>
-                                                <div class="shopping-cart-delete">
-                                                    <a href="#"><i class="la la-trash"></i></a>
-                                                </div>
-                                            </li>
-                                            <li class="single-shopping-cart">
-                                                <div class="shopping-cart-img">
-                                                    <a href="#"><img alt="" src="~/Client/assets/images/cart/cart-3.jpg"></a>
-                                                    <div class="item-close">
-                                                        <a href="#"><i class="sli sli-close"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="shopping-cart-title">
-                                                    <h4><a href="#">Golden Easy Spot Chair.</a></h4>
-                                                    <span>$99.00</span>
-                                                </div>
-                                                <div class="shopping-cart-delete">
-                                                    <a href="#"><i class="la la-trash"></i></a>
-                                                </div>
-                                            </li>
+                                            }
                                         </ul>
                                         <div class="shopping-cart-bottom">
                                             <div class="shopping-cart-total">
-                                                <h4>Subtotal <span class="shop-total">$290.00</span></h4>
+                                                <h4>Subtotali <span class="shop-total">@subtotali.ToString("#,##0.00") €</span></h4>
                                             </div>
                                             <div class="shopping-cart-btn btn-hover default-btn text-center">
-                                                <a class="black-color" href="checkout.html">Continue to Chackout</a>
+                                                <a class="black-color" asp-controller="Checkout">Vazhdo me pagesë</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mobile-off-canvas">
-                                    <a class="mobile-aside-button" href="#"><i class="la la-navicon la-2x"></i></a>
+                                    <a class="mobile-aside-button" href="#">
+                                        <i class="la la-navicon la-2x"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -267,14 +256,9 @@
                 </div>
                 <div class="mobile-menu-wrap">
                     <div class="mobile-navigation">
-                        <nav>
-                            <ul class="mobile-menu">
-                                @foreach (var category in ViewBag.Categories)
-                                {
-                                    <li class="menu-item-has-children"><a href="index.html">@category.Name</a></li>
-                                }
-                            </ul>
-                        </nav>
+                        @{
+                            await Html.RenderPartialAsync("_CategoriesMobile",categories);
+                        }
                     </div>
                 </div>
                 <div class="mobile-curr-lang-wrap">
@@ -296,12 +280,12 @@
                         </div>
                     </div>
                     <div class="single-mobile-curr-lang">
-                        <a class="mobile-account-active" href="#">Llogaria ime <i class="la la-angle-down"></i></a>
+                        <a class="mobile-account-active" asp-controller="Profile" asp-action="Index">Llogaria ime <i class="la la-angle-down"></i></a>
                         <div class="lang-curr-dropdown account-dropdown-active">
                             <ul>
-                                <li><a href="#">Kyqu</a></li>
-                                <li><a href="#">Regjistrohu</a></li>
-                                <li><a href="#">Llogaria ime</a></li>
+                                <li><a asp-controller="Account" asp-action="Login">Kyqu</a></li>
+                                <li><a asp-controller="Account" asp-action="Register">Regjistrohu</a></li>
+                                <li><a asp-controller="Profile" asp-action="Index">Llogaria ime</a></li>
                             </ul>
                         </div>
                     </div>

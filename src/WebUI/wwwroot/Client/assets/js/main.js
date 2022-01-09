@@ -685,7 +685,7 @@
     /*---------------------
         Price slider
     --------------------- */
-    var sliderrange = $('#slider-range');
+    /*var sliderrange = $('#slider-range');
     var amountprice = $('#amount');
     $(function() {
         sliderrange.slider({
@@ -699,7 +699,7 @@
         });
         amountprice.val("$" + sliderrange.slider("values", 0) +
             " - $" + sliderrange.slider("values", 1));
-    });
+    });*/
     
     
     /*--- checkout toggle function ----*/

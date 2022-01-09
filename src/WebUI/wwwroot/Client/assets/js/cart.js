@@ -10,8 +10,6 @@ function addToCart(productId) {
                 let total = $('.mini-cart-price-3').attr('hidden', false);
                 total.text(resp.total + "€")
 
-                location.href = "/cart";
-
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-right',
@@ -20,13 +18,15 @@ function addToCart(productId) {
                         popup: 'colored-toast'
                     },
                     showConfirmButton: false,
-                    timer: 2500,
+                    timer: 1500,
                     timerProgressBar: true
                 })
                 await Toast.fire({
                     icon: 'success',
-                    title: 'Product Added To Cart'
+                    title: 'Produkti u shtua në shportë'
                 })
+                location.href = "/cart";
+
             }
         },
         error: function (err) {

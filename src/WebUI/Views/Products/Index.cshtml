@@ -1,5 +1,6 @@
-﻿@model IEnumerable<Domain.Entities.Product>
-
+﻿@using Application.admin
+@model IEnumerable<Domain.Entities.Product>
+@inject CategoryManager _categoryManager
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
@@ -84,18 +85,6 @@
                                 }
                             </div>
                         </div>
-                        <div class="pagination-style text-center">
-                            <ul>
-                                <li><a class="prev" disabled="" href="#"><i class="la la-angle-left"></i></a></li>
-                                <li><a class="active" href="#">01</a></li>
-                                <li><a href="#">02</a></li>
-                                <li><a href="#">03</a></li>
-                                <li><a href="#">04</a></li>
-                                <li><a href="#">05</a></li>
-                                <li><a href="#">06</a></li>
-                                <li><a class="next" href="#"><i class="la la-angle-right"></i></a></li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -116,23 +105,11 @@
                         <h4 class="sidebar-title">Filtro me kategori</h4>
                         <div class="shop-catigory mt-20">
                             <ul id="faq">
-                                @foreach (var category in ViewBag.Categories)
+                                @foreach (var category in _categoryManager.GetCategories().Where(x=>x.Visibility))
                                 {
                                     <li> <a href="/products/@category.Slug">@category.Name</a></li>
                                 }
                             </ul>
-                        </div>
-                    </div>
-                    <div class="shop-price-filter mt-35 shop-sidebar-border pt-40 sidebar-widget">
-                        <h4 class="sidebar-title">Filtrimi me Çmim</h4>
-                        <div class="price-filter mt-20">
-                            <div id="slider-range"></div>
-                            <div class="price-slider-amount">
-                                <div class="label-input">
-                                    <input type="text" id="amount" name="price" placeholder="Add Your Price" />
-                                </div>
-                                <button type="button">Filtro</button>
-                            </div>
                         </div>
                     </div>
                 </div>

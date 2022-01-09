@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Application.admin;
 using Application.client;
 using Domain.Entities;
 using Domain.Enums;
@@ -17,22 +16,18 @@ namespace WebUI.Controllers
     [Authorize]
     public class CheckoutController : Controller
     {
-        private readonly CategoryManager _categoryManager;
         private readonly AccountManager _accountManager;
         private readonly OrderService _orderService;
 
-        public CheckoutController(CategoryManager categoryManager,AccountManager accountManager,
+        public CheckoutController(AccountManager accountManager,
             OrderService orderService)
         {
-            _categoryManager = categoryManager;
             _accountManager = accountManager;
             _orderService = orderService;
         }
         
-        // GET
         public IActionResult Index()
         {
-            ViewBag.Categories = _categoryManager.GetCategories().Where(x=>x.Visibility);
             if (HttpContext.Session.GetObjectFromJson<List<Cart>>("cart") == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -47,9 +42,10 @@ namespace WebUI.Controllers
         public IActionResult ProcessOrder(CheckoutModel model)
         {
             var cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("cart");
-
-            var order = new Order
+            if (ModelState.IsValid)
             {
+               var order = new Order
+                {
                 Customer = _accountManager.GetCustomerById(Convert.ToInt32(User.Claims.ElementAt(1).Value)),
                 OrderDate = DateTime.UtcNow,
                 PaymentStatus = PaymentStatus.Unpaid,
@@ -66,7 +62,7 @@ namespace WebUI.Controllers
                 ShipPhone = model.Order.ShipPhone,
                 OrderNotes = model.Order.OrderNotes,
                 CustomerId = Convert.ToInt32(User.Claims.ElementAt(1).Value)
-            };
+                };
 
             var orderDetails = 
                 cart.Select(cartItem =>
@@ -88,15 +84,14 @@ namespace WebUI.Controllers
             {
                 HttpContext.Session.SetObjectAsJson("cart",null);
             }
-            return RedirectToAction(nameof(Confirmation));
+            return RedirectToAction(nameof(Confirmation)); 
+            }
+
+            return View("Index",model);
         }
 
         [HttpGet]
         [Route("/order/confirmation")]
-        public IActionResult Confirmation(string orderNumber)
-        {
-            ViewBag.Categories = _categoryManager.GetCategories().Where(x=>x.Visibility);
-            return View();
-        }
+        public IActionResult Confirmation(string orderNumber) => View();
     }
 }

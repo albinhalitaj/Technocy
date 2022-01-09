@@ -111,12 +111,14 @@
                     @if (!ViewBag.IsInWishList)
                     {
                         <div class="pro-details-wishlist">
-                            <a title="Add To Wishlist" href="#"><i class="la la-heart-o"></i> Shto në listën e dëshirave</a>
+                            <a title="Add To Wishlist" href="#">
+                                <i class="la la-heart-o"></i> Shto në listën e dëshirave
+                            </a>
                         </div>
                     }
                 </div>
                 <div class="pro-details-buy-now btn-hover btn-hover-radious">
-                    <a href="#">Shto në shportë</a>
+                    <a onclick="addToCart('@Model.Product.ProductId')">Shto në shportë</a>
                 </div>
                 <div style="margin-top: 30px">
                     <p style="font-weight: bold">Mundësitë e pagesave: </p>
