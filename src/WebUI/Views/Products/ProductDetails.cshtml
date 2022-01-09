@@ -111,7 +111,8 @@
                     @if (!ViewBag.IsInWishList)
                     {
                         <div class="pro-details-wishlist">
-                            <a title="Add To Wishlist" href="#">
+                            <a title="Shto në listën e dëshirave" 
+                               onclick="addToWishList('@Model.Product.ProductId','@Model.Product.Stock','@Model.Product.Price')">
                                 <i class="la la-heart-o"></i> Shto në listën e dëshirave
                             </a>
                         </div>
@@ -318,5 +319,56 @@ $(document).ready(function() {
     zoomstart: 2,
   }) 
 })
+
+function addToWishList(productId,stock,price) {
+      $.ajax({
+        type: "POST",
+        url: "/Wishlist/Add/",
+        data: {"ProductId":productId,"Stock":stock > 0,"Price":price},
+        success: async function(resp) {
+          if (resp.success){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-right',
+                iconColor: 'red',
+                customClass: {
+                  popup: 'colored-toast'
+                },
+                showConfirmButton: false,
+                timer: 2500,
+                timerProgressBar: true
+              })
+              await Toast.fire({
+                icon: 'success',
+                title: 'Product Added To Wishlist'
+              })
+          }else if (!resp.success && resp.error === "User is not authenticated") {
+              location.href = "/account/login/";
+          }
+          else {
+              const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-right',
+                  iconColor: 'red',
+                  customClass: {
+                    popup: 'colored-toast'
+                  },
+                  showConfirmButton: false,
+                  timer: 2500,
+                  timerProgressBar: true
+                })
+                await Toast.fire({
+                  icon: 'error',
+                  title: 'Product is already in wishlist'
+                })
+          }
+        },
+        error: function(err) {
+          location.href="/account/login";
+        }
+      })
+     }
 </script>
+
+
 

@@ -39,52 +39,52 @@ namespace WebUI.Controllers
         }
         
         [HttpPost]
-        public IActionResult ProcessOrder(CheckoutModel model)
+        public IActionResult ProcessOrder(Order model)
         {
             var cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("cart");
             if (ModelState.IsValid)
             {
-               var order = new Order
+                var order = new Order
                 {
-                Customer = _accountManager.GetCustomerById(Convert.ToInt32(User.Claims.ElementAt(1).Value)),
-                OrderDate = DateTime.UtcNow,
-                PaymentStatus = PaymentStatus.Unpaid,
-                PaymentMethod = model.Order.PaymentMethod,
-                Status = (int) OrderStatus.ManualVerificationNeeded,
-                SubTotal = cart.Sum(x=>x.Product.Price * x.Quantity),
-                Total = cart.Sum(x=>x.Product.Price * x.Quantity) + 5,
-                ShipName = model.Order.ShipName,
-                ShipSurname = model.Order.ShipSurname,
-                ShipAddress = model.Order.ShipAddress,
-                ShipCity = model.Order.ShipCity,
-                ShipCountry = model.Order.ShipCountry,
-                ShipPostalCode = model.Order.ShipPostalCode,
-                ShipPhone = model.Order.ShipPhone,
-                OrderNotes = model.Order.OrderNotes,
-                CustomerId = Convert.ToInt32(User.Claims.ElementAt(1).Value)
+                    Customer = _accountManager.GetCustomerById(Convert.ToInt32(User.Claims.ElementAt(1).Value)),
+                    OrderDate = DateTime.UtcNow,
+                    PaymentStatus = PaymentStatus.Unpaid,
+                    PaymentMethod = model.PaymentMethod,
+                    Status = (int) OrderStatus.ManualVerificationNeeded,
+                    SubTotal = cart.Sum(x=>x.Product.Price * x.Quantity),
+                    Total = cart.Sum(x=>x.Product.Price * x.Quantity) + 5,
+                    ShipName = model.ShipName,
+                    ShipSurname = model.ShipSurname,
+                    ShipAddress = model.ShipAddress,
+                    ShipCity = model.ShipCity,
+                    ShipCountry = model.ShipCountry,
+                    ShipPostalCode = model.ShipPostalCode,
+                    ShipPhone = model.ShipPhone,
+                    OrderNotes = model.OrderNotes,
+                    CustomerId = Convert.ToInt32(User.Claims.ElementAt(1).Value)
                 };
 
-            var orderDetails = 
-                cart.Select(cartItem =>
-                    new OrderDetail {OrderId = _orderService.GetLastOrderId() + 1, 
-                        ProductId = cartItem.Product.ProductId, 
-                        Price = cartItem.Product.Price, 
-                        Quantity = cartItem.Quantity}).ToList();
+                var orderDetails = 
+                    cart.Select(cartItem =>
+                        new OrderDetail {OrderId = _orderService.GetLastOrderId() + 1, 
+                            ProductId = cartItem.Product.ProductId, 
+                            Price = cartItem.Product.Price, 
+                            Quantity = cartItem.Quantity}).ToList();
 
-            if (model.Order.PaymentMethod == PaymentMethod.Card)
-            {
-                TempData["checkoutModel"] = JsonConvert.SerializeObject(model);
-                TempData["order"] = JsonConvert.SerializeObject(order);
-                TempData["orderDetails"] = JsonConvert.SerializeObject(orderDetails);
-                return RedirectToAction("Index", "Payment");
-            }
+                if (model.PaymentMethod == PaymentMethod.Card)
+                {
+                    TempData["checkoutModel"] = JsonConvert.SerializeObject(model);
+                    TempData["order"] = JsonConvert.SerializeObject(order);
+                    TempData["orderDetails"] = JsonConvert.SerializeObject(orderDetails);
+                    return RedirectToAction("Index", "Payment");
+                }
             
-            var result = _orderService.Insert(order,orderDetails);
-            if (result)
-            {
-                HttpContext.Session.SetObjectAsJson("cart",null);
-            }
-            return RedirectToAction(nameof(Confirmation)); 
+                var result = _orderService.Insert(order,orderDetails);
+                if (result)
+                {
+                    HttpContext.Session.SetObjectAsJson("cart",null);
+                }
+                return RedirectToAction(nameof(Confirmation)); 
             }
 
             return View("Index",model);

@@ -7,7 +7,7 @@ namespace WebUI.Services
 {
     public class ProcessPayment
     {
-        public static async Task<dynamic> PayAsync(CheckoutModel payModel)
+        public static async Task<dynamic> PayAsync(CheckoutModel model)
         {
             try
             {
@@ -17,11 +17,11 @@ namespace WebUI.Services
                 {
                     Card = new TokenCardOptions
                     {
-                        Number = payModel.CardNumber,
-                        ExpMonth = payModel.Month,
-                        ExpYear = payModel.Year,
-                        Cvc = payModel.CVC,
-                        Name = payModel.Order.Customer.Name + " " + payModel.Order.Customer.Surname,
+                        Number = model.PaymentModel.CardNumber,
+                        ExpMonth = Convert.ToInt32(model.PaymentModel.Expiration[..2]),
+                        ExpYear = Convert.ToInt32(model.PaymentModel.Expiration.Split("/")[1]),
+                        Cvc = model.PaymentModel.CVV,
+                        Name = model.Order.Customer.Name + " " + model.Order.Customer.Surname,
                     }
                 };
 
@@ -29,23 +29,23 @@ namespace WebUI.Services
                 var stripeToken = await serviceToken.CreateAsync(options);
 
                 var customers = new CustomerService();
-                var customer = await customers.CreateAsync(new CustomerCreateOptions()
+                var customer = await customers.CreateAsync(new CustomerCreateOptions
                 {
-                    Email = payModel.Order.Customer.Email,
+                    Email = model.Order.Customer.Email,
                     Source = stripeToken.Id,
-                    Name = payModel.Order.Customer.Name + " " + payModel.Order.Customer.Surname,
+                    Name = model.Order.Customer.Name + " " + model.Order.Customer.Surname,
                     Address = new AddressOptions
                     {
-                        City = payModel.Order.Customer.City,
-                        Country = payModel.Order.Customer.Country,
-                        Line1 = payModel.Order.Customer.Address,
-                        PostalCode = payModel.Order.Customer.PostalCode
+                        City = model.Order.ShipCity,
+                        Country = model.Order.ShipCountry,
+                        Line1 = model.Order.ShipAddress,
+                        PostalCode = model.Order.ShipPostalCode
                     }
                 });
 
                 var chargeOptions = new ChargeCreateOptions
                 {
-                    Amount = (int)payModel.Amount * 100,
+                    Amount = (int) model.Amount * 100,
                     Currency = "eur",
                     Description = "Shop payment",
                     Customer = customer.Id

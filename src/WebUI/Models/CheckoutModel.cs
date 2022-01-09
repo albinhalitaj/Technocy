@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Domain.Entities;
 
 namespace WebUI.Models
@@ -7,24 +6,7 @@ namespace WebUI.Models
     {
         public Order Order { get; set; }
         
-        [Required]
-        public string Cardholder { get; set; }
-        
-        [Required]
-        [Display(Name = "Card Number")]
-        public string CardNumber { get; set; }
-
-        [Required]
-        [Display(Name = "Expiration Month")]
-        public int Month { get; set; }
-
-        [Required]
-        [Display(Name = "Expiration Year")]
-        public int Year { get; set; }
-
-        [Required]
-        public string CVC { get; set; }
-        
+        public PaymentModel PaymentModel { get; set; } 
         public long Amount { get; set; }
     }
 }

@@ -4,18 +4,19 @@ namespace WebUI.Models
 {
     public class PaymentModel
     {
-        [Required]
+        [Required(ErrorMessage = "required")]
         public string Cardholder { get; set; }
         
-        [Required]
+        [Required(ErrorMessage = "required")]
         [Display(Name = "Card Number")]
+        [DataType(DataType.CreditCard)]
         public string CardNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "required")]
         [Display(Name = "Expiration")]
         public string Expiration { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "required")]
         public string CVV { get; set; }
     }
 }
