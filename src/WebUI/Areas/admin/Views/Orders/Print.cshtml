@@ -1,0 +1,109 @@
+@model Domain.Entities.Order
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Fatura</title>
+    <link rel="stylesheet" href="~/Admin/css/style.css"/>
+    <link rel="stylesheet" href="~/Admin/vendor/bootstrap/css/bootstrap.ltr.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i"/>
+</head>
+<body>
+<div id="top" class="sa-app__body">
+   <div class="sa-invoice">
+      <div class="sa-invoice__card">
+         <div class="sa-invoice__header">
+            <div class="sa-invoice__meta">
+               <div class="sa-invoice__title">Fatura #@Model.OrderNumber</div>
+               <div class="sa-invoice__meta-items">
+                  <span>Data Leshimit:</span> @Model.OrderDate.ToString("F")<br/>
+                  <span>Deri me:</span> @Model.OrderDate.AddDays(14).ToString("D")<br/>
+               </div>
+            </div>
+            <div class="sa-invoice__logo">
+               <!-- invoice-logo -->
+               <div class="sa-invoice-logo">
+                  <div class="sa-invoice-logo__body">
+                     <div class="sa-invoice-logo__letters">
+                        <img src="~/Admin/images/print-logo.png" alt="logo">
+                     </div>
+                  </div>
+               </div>
+               <!-- invoice-logo / end -->
+            </div>
+         </div>
+         <div class="sa-invoice__sides">
+            <div class="sa-invoice__side">
+               <div class="sa-invoice__side-title">Fatura për</div>
+               <div class="sa-invoice__side-name">@Model.ShipName @Model.ShipSurname</div>
+               <div class="sa-invoice__side-meta">@Model.ShipAddress, @Model.ShipCity, @Model.ShipPostalCode @Model.ShipCountry<br/>@Model.ShipPhone, @Model.ShipEmail</div>
+            </div>
+            <div class="sa-invoice__side">
+               <div class="sa-invoice__side-title">Fatura Nga</div>
+               <div class="sa-invoice__side-name">Technocy Ltd.</div>
+               <div class="sa-invoice__side-meta">Hajrullah Abdullahu, Prishtinë 10000 Kosovë<br/>+383 49 200 236, info@technocy.com</div>
+            </div>
+         </div>
+         <div class="sa-invoice__table-container">
+            <table class="sa-invoice__table">
+               <thead class="sa-invoice__table-head">
+                  <tr>
+                     <th class="sa-invoice__table-column--type--product">Produkti / Shërbimi</th>
+                     <th class="sa-invoice__table-column--type--unit">Njësia</th>
+                     <th class="sa-invoice__table-column--type--price">Cmimi</th>
+                     <th class="sa-invoice__table-column--type--quantity">Sasia</th>
+                     <th class="sa-invoice__table-column--type--total">Totali</th>
+                  </tr>
+               </thead>
+               <tbody class="sa-invoice__table-body">
+                  @foreach (var item in Model.OrderDetails)
+                  {
+                     <tr>
+                        <td class="sa-invoice__table-column--type--product">@item.Product.Name</td>
+                        <td class="sa-invoice__table-column--type--unit">Copë</td>
+                        <td class="sa-invoice__table-column--type--price">@item.Price.ToString("#,##0.00") €</td>
+                        <td class="sa-invoice__table-column--type--quantity">@item.Quantity</td>
+                        <td class="sa-invoice__table-column--type--total">@Model.Total.ToString("#,##0.00") €</td>
+                     </tr>
+                  }
+               </tbody>
+               <tbody class="sa-invoice__table-totals">
+                  <tr>
+                     <th class="sa-invoice__table-column--type--header" colSpan="4">Subtotali</th>
+                     <td class="sa-invoice__table-column--type--total">@Model.SubTotal.ToString("#,##0.00") €</td>
+                  </tr>
+                  <tr>
+                     <th class="sa-invoice__table-column--type--header" colSpan="4">Transporti</th>
+                     <td class="sa-invoice__table-column--type--total">5 €</td>
+                  </tr>
+                  <tr>
+                     <th class="sa-invoice__table-column--type--header" colSpan="4">Zbritje</th>
+                     <td class="sa-invoice__table-column--type--total">0 €</td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <div class="sa-invoice__total">
+            <div class="sa-invoice__total-title">Shuma Totale:</div>
+            <div class="sa-invoice__total-value">@Model.Total.ToString("#,##0.00") €</div>
+         </div>
+         <div class="sa-invoice__disclaimer">Informacioni mbi karakteristikat teknike, grupin e dorëzimit, vendin e prodhimit dhe pamjen e mallrave është vetëm për referencë dhe bazohet në informacionin më të fundit të disponueshëm në kohën e publikimit.</div>
+      </div>
+   </div>
+</div>
+
+<script src="~/Admin/js/stroyka.js"></script>
+<script src="~/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/Admin/vendor/jquery/jquery.min.js"></script>
+<script>
+   $(document).ready(function() {
+     window.print();
+   })
+</script>
+</body>
+</html>

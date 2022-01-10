@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.admin;
@@ -30,13 +31,23 @@ namespace WebUI.Areas.admin.Controllers
         [Route("/admin/account/login")]
         public IActionResult Login(string returnUrl)
         {
-            if (User.Identity is {IsAuthenticated: true})
-                return RedirectToAction("Index", "Dashboard");
-            ViewBag.ReturnUrl = returnUrl;
+            try
+            {
+                if (User.Identity.IsAuthenticated && User.Claims.Any(x=>x.Type == ClaimTypes.Role))
+                {
+                    return RedirectToAction("Index", "Dashboard");
+                }
+            }
+            catch (Exception)
+            {
+                ViewBag.ReturnUrl = returnUrl;
+                return View();
+            }
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model,string returnUrl)
         {
             if (ModelState.IsValid)
@@ -50,16 +61,21 @@ namespace WebUI.Areas.admin.Controllers
                         var claims = new List<Claim>
                         {
                             new (ClaimTypes.Name, string.Concat(employee.Name, " ", employee.Surname)),
-                            new ("Username",employee.Username),
                             new ("Id", Convert.ToString(employee.EmployeeId)),
+                            new ("Username",employee.Username),
                             new (ClaimTypes.Email, employee.Email),
                             new (ClaimTypes.Role, employee.Role.Name)
                         };
 
+                        if (HttpContext.Request.Cookies.ContainsKey(".AspNetCore.User_Schema"))
+                        {
+                            await HttpContext.SignOutAsync("User_Schema");
+                        }
+                        
                         var identityPrincipal =
-                            new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                            new ClaimsIdentity(claims,"Admin_Schema");
                         var claimPrincipal = new ClaimsPrincipal(identityPrincipal);
-                        await HttpContext.SignInAsync(claimPrincipal);
+                        await HttpContext.SignInAsync("Admin_Schema",claimPrincipal);
                         if (!string.IsNullOrEmpty(returnUrl))
                             return LocalRedirect(returnUrl);
                         return RedirectToAction("Index", "Dashboard");
@@ -74,7 +90,7 @@ namespace WebUI.Areas.admin.Controllers
 
         public async Task<IActionResult> LogOff()
         {
-            await HttpContext.SignOutAsync();
+            await HttpContext.SignOutAsync("Admin_Schema");
             return RedirectToAction(nameof(Login));
         }
 

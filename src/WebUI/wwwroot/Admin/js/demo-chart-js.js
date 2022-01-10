@@ -3,8 +3,8 @@
 /* global Chart */
 
 const salesData = [
-    (10 / 240) * 1200,
-    (26 / 240) * 1200,
+    10,
+    1000,
     (105 / 240) * 1200,
     (57 / 240) * 1200,
     (94 / 240) * 1200,
@@ -42,7 +42,7 @@ const browsersData = {
 /*
 // Line
 */
-(function() {
+/*(function() {
     const chartCanvas = document.getElementById('example-chart-js-line');
 
     if (!chartCanvas || !(chartCanvas instanceof HTMLCanvasElement)) {
@@ -104,12 +104,12 @@ const browsersData = {
             },
         },
     });
-}());
+}());*/
 
 /*
 // Line Area
 */
-(function() {
+/*(function() {
     const chartCanvas = document.getElementById('example-chart-js-line-area');
 
     if (!chartCanvas || !(chartCanvas instanceof HTMLCanvasElement)) {
@@ -172,12 +172,12 @@ const browsersData = {
             },
         },
     });
-}());
+}());*/
 
 /*
 // Vertical Bar
 */
-(function() {
+/*(function() {
     const chartCanvas = document.getElementById('example-chart-js-vertical-bar');
 
     if (!chartCanvas || !(chartCanvas instanceof HTMLCanvasElement)) {
@@ -237,12 +237,12 @@ const browsersData = {
             },
         },
     });
-}());
+}());*/
 
 /*
 // Horizontal Bar
 */
-(function() {
+/*(function() {
     const chartCanvas = document.getElementById('example-chart-js-horizontal-bar');
 
     if (!chartCanvas || !(chartCanvas instanceof HTMLCanvasElement)) {
@@ -306,12 +306,12 @@ const browsersData = {
             },
         },
     });
-}());
+}());*/
 
 /*
 // Stacked Bar
 */
-(function() {
+/*(function() {
     const chartCanvas = document.getElementById('example-chart-js-stacked-bar');
 
     if (!chartCanvas || !(chartCanvas instanceof HTMLCanvasElement)) {
@@ -380,7 +380,7 @@ const browsersData = {
             },
         },
     });
-}());
+}());*/
 
 /*
 // Pie

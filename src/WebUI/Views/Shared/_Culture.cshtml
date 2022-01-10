@@ -1,0 +1,28 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer _localizer
+@inject Microsoft.Extensions.Options.IOptions<Microsoft.AspNetCore.Builder.RequestLocalizationOptions> locOptions
+
+@{
+    var culture = Context.Features.Get<Microsoft.AspNetCore.Localization.IRequestCultureFeature>();
+    var cultureList = locOptions.Value.SupportedUICultures.Select(x=> new SelectListItem { Value = x.Name, Text = x.Name == "en" ? "English" : "Shqip" }).ToList();
+}
+
+<div>
+    <form asp-controller="Home" asp-action="ChangeCulture" method="post">
+        <select id="lang" class="form-select" style="background-color: black;color: white;outline: none;height: 27px;padding-top: 0px"
+                name="culture" asp-items="cultureList"
+                asp-for="@culture.RequestCulture.UICulture.Name"
+                onchange="this.form.submit();">
+        </select>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#lang > option').each(function() {
+        $(this).attr('style','background-color: black;color: white')
+      })
+    })
+</script>
+
+
+

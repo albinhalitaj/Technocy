@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="keniKupon" xml:space="preserve">
+        <value>Keni kupon?</value>
+    </data>
+    <data name="kuponCode" xml:space="preserve">
+        <value>Kodi i kuponit</value>
+    </data>
+    <data name="aplikoKuponin" xml:space="preserve">
+        <value>Apliko kuponin</value>
+    </data>
+    <data name="detajetFaturimit" xml:space="preserve">
+        <value>Detajet e faturimit</value>
+    </data>
+    <data name="emri" xml:space="preserve">
+        <value>Emri</value>
+    </data>
+    <data name="mbiemri" xml:space="preserve">
+        <value>Mbiemri</value>
+    </data>
+    <data name="adresa" xml:space="preserve">
+        <value>Adresa / Rruga</value>
+    </data>
+    <data name="shteti" xml:space="preserve">
+        <value>Shteti</value>
+    </data>
+    <data name="qyteti" xml:space="preserve">
+        <value>Qyteti</value>
+    </data>
+    <data name="kodiPostal" xml:space="preserve">
+        <value>Kodi Postal</value>
+    </data>
+    <data name="telefoni" xml:space="preserve">
+        <value>Telefoni</value>
+    </data>
+    <data name="emaili" xml:space="preserve">
+        <value>Emaili</value>
+    </data>
+    <data name="shenimePerPorosi" xml:space="preserve">
+        <value>Shënime për porosinë tuaj</value>
+    </data>
+    <data name="shenimePerPorosiPlace" xml:space="preserve">
+        <value>Shënime për porosinë tuaj, p.sh. shënime të veçanta për dorëzim.</value>
+    </data>
+    <data name="porosiaJuaj" xml:space="preserve">
+        <value>Porosia juaj</value>
+    </data>
+    <data name="produktet" xml:space="preserve">
+        <value>Produktet</value>
+    </data>
+    <data name="totali" xml:space="preserve">
+        <value>Totali</value>
+    </data>
+    <data name="subtotali" xml:space="preserve">
+        <value>Subtotali</value>
+    </data>
+    <data name="transporti" xml:space="preserve">
+        <value>Transporti</value>
+    </data>
+    <data name="paymentMethod1" xml:space="preserve">
+        <value>Paguaj me para në dorë</value>
+    </data>
+    <data name="paymentMethod2" xml:space="preserve">
+        <value>Paguaj me kartelë</value>
+    </data>
+    <data name="paymentMethod1Desc" xml:space="preserve">
+        <value>Pagesa bëhet pasi të pranohet porosia.</value>
+    </data>
+    <data name="paymentMethod2Desc" xml:space="preserve">
+        <value>Kryeni pagesën tuaj me kartelë bankare.</value>
+    </data>
+    <data name="konfirmoPorosine" xml:space="preserve">
+        <value>Konfirmo porosinë</value>
+    </data>
+</root>

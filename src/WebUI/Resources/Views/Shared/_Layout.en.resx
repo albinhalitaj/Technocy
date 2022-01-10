@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="welcome" xml:space="preserve">
+        <value>Welcome to our store</value>
+    </data>
+    <data name="kycu" xml:space="preserve">
+        <value>Login</value>
+    </data>
+    <data name="listaDeshirave" xml:space="preserve">
+        <value>Wishlist</value>
+    </data>
+    <data name="ckycu" xml:space="preserve">
+        <value>Logout</value>
+    </data>
+    <data name="kerkoHome" xml:space="preserve">
+        <value>Search here</value>
+    </data>
+    <data name="shportaJuaj" xml:space="preserve">
+        <value>Your Cart</value>
+    </data>
+    <data name="shportaZbrazet" xml:space="preserve">
+        <value>Your cart is empty.</value>
+    </data>
+    <data name="subtotali" xml:space="preserve">
+        <value>Subtotal</value>
+    </data>
+    <data name="vazhdoPagese" xml:space="preserve">
+        <value>Continue to checkout</value>
+    </data>
+    <data name="produkte" xml:space="preserve">
+        <value>Products</value>
+    </data>
+    <data name="kerkoniProdukte" xml:space="preserve">
+        <value>Search for products...</value>
+    </data>
+    <data name="gjuha" xml:space="preserve">
+        <value>Language</value>
+    </data>
+    <data name="monedha" xml:space="preserve">
+        <value>Currency</value>
+    </data>
+    <data name="llogariaIme" xml:space="preserve">
+        <value>My Account</value>
+    </data>
+    <data name="regjistrohu" xml:space="preserve">
+        <value>Sign Up</value>
+    </data>
+    <data name="infoKontakt" xml:space="preserve">
+        <value>Contact Info:</value>
+    </data>
+    <data name="telefoni" xml:space="preserve">
+        <value>Phone:</value>
+    </data>
+    <data name="naNdiqni" xml:space="preserve">
+        <value>Follow us</value>
+    </data>
+    <data name="email" xml:space="preserve">
+        <value>E-Mail</value>
+    </data>
+    <data name="linqet" xml:space="preserve">
+        <value>Store links</value>
+    </data>
+    <data name="pagesa" xml:space="preserve">
+        <value>Payment</value>
+    </data>
+    <data name="shporta" xml:space="preserve">
+        <value>Cart</value>
+    </data>
+    <data name="arka" xml:space="preserve">
+        <value>Checkout</value>
+    </data>
+    <data name="transporti" xml:space="preserve">
+        <value>Shipment</value>
+    </data>
+    <data name="mbeshtetja" xml:space="preserve">
+        <value>Support</value>
+    </data>
+    <data name="mbeshtetjaKonsumatorit" xml:space="preserve">
+        <value>Customer Support</value>
+    </data>
+    <data name="politikatTransportit" xml:space="preserve">
+        <value>Shipping Policy</value>
+    </data>
+    <data name="kthimet" xml:space="preserve">
+        <value>Returns</value>
+    </data>
+    <data name="statusiPorosise" xml:space="preserve">
+        <value>Order Status</value>
+    </data>
+    <data name="kontakti" xml:space="preserve">
+        <value>Contact</value>
+    </data>
+    <data name="rrethNesh" xml:space="preserve">
+        <value>About Us</value>
+    </data>
+    <data name="privatesia" xml:space="preserve">
+        <value>Privacy</value>
+    </data>
+    <data name="terms" xml:space="preserve">
+        <value>Terms and conditions</value>
+    </data>
+    <data name="whyUs" xml:space="preserve">
+        <value>Why Technocy?</value>
+    </data>
+    <data name="rights" xml:space="preserve">
+        <value>All right reserved.</value>
+    </data>
+</root>

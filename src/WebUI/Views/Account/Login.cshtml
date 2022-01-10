@@ -1,0 +1,48 @@
+﻿@model LoginModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer _localizer
+@{
+    ViewBag.Title = "Login";
+    Layout = "_Layout";
+    var returnUrl = ViewBag.ReturnUrl as string;
+}
+
+<div class="login-register-area pt-85 pb-90">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 ms-auto me-auto">
+                <div class="login-register-wrapper">
+                    <div class="login-register-tab-list nav">
+                        <a data-bs-toggle="tab" class="active" href="#lg1">
+                            <h4> @_localizer["kycu"] </h4>
+                        </a>
+                    </div>
+                    <div class="tab-content">
+                        <div id="lg1" class="tab-pane active">
+                            <div class="login-form-container">
+                                <div class="login-register-form">
+                                    <form asp-controller="Account" asp-action="Login" asp-route-returnUrl="@returnUrl">
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                        <input asp-for="Email" placeholder="@_localizer["email"]">
+                                        <span asp-validation-for="Fjalekalimi" class="text-danger"></span>
+                                        <input type="password" asp-for="Fjalekalimi" placeholder="@_localizer["fjalekalimi"]">
+                                        <div class="button-box">
+                                            <div class="login-toggle-btn">
+                                                <input type="checkbox">
+                                                <label>@_localizer["meMbajMend"]</label>
+                                                <a href="#">@_localizer["keniHarruarFjalekalimin"]</a>
+                                            </div>
+                                            <button type="submit" style="width: 100%;height: 50px">@_localizer["kycu"]</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div style="margin-top: 10px;text-align: center;font-size: 17px">
+                                    <a asp-action="Register">@_localizer["regjistrohu"]</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Application.admin;
+﻿using Application.admin;
 using Application.Models;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
@@ -39,7 +38,7 @@ namespace WebUI.Areas.admin.Controllers
                 Categories = _categoryManager.GetCategories(),
                 Products = _productManager.GetProducts()
             };
-            return View(model);
+            return View("~/Areas/admin/Views/Products/Index.cshtml",model);
         }
 
         [HttpGet]
@@ -128,7 +127,7 @@ namespace WebUI.Areas.admin.Controllers
                 Products = filteredProducts
             };
 
-            return View("Index", productsModel);
+            return View("~/Areas/admin/Views/Products/Index.cshtml", productsModel);
         }
 
         [Route("/admin/products/delete/{id}")]
@@ -158,7 +157,7 @@ namespace WebUI.Areas.admin.Controllers
                 return Json(model); 
             }
             model.Success = false;
-            model.Error = "Produkti duhet te kete se paku nje foto";
+            model.Error = "Produkti duhet të ketë së paku një foto!";
             return Json(model);
         }
 

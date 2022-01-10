@@ -174,6 +174,32 @@ namespace Data.admin
             return product;
         }
 
+        public Product GetProductBySlug(string slug)
+        {
+            const string sql = "usp_GetProductBySlug";
+            using var con = _dataAccessLayer.AppConn();
+            var product = con.QueryAsync<Product>(sql, new {slug}, commandType: CommandType.StoredProcedure)
+                .Result
+                .FirstOrDefault();
+            if (product == null) return null;
+            product.ProductGalleries = GetProductGalleries(product.ProductId).ToList();
+            product.ProductCategories = GetProductCategories(product.ProductId).ToList();
+            return product;
+        }
+        
+        public Product GetProductById(int id)
+        {
+            const string sql = "usp_GetProductById";
+            using var con = _dataAccessLayer.AppConn();
+            var product = con.QueryAsync<Product>(sql, new {id}, commandType: CommandType.StoredProcedure)
+                .Result
+                .FirstOrDefault();
+            if (product == null) return null;
+            product.ProductGalleries = GetProductGalleries(product.ProductId).ToList();
+            product.ProductCategories = GetProductCategories(product.ProductId).ToList();
+            return product;
+        }
+        
         private class FilterModel
         {
             public decimal StartingPrice { get; set; }
@@ -235,7 +261,7 @@ namespace Data.admin
             using var con = _dataAccessLayer.AppConn();
             var rowsAffected = con.ExecuteAsync(sql, new {productId}, commandType: CommandType.StoredProcedure)
                 .Result;
-            return rowsAffected == 1;
+            return rowsAffected >= 1;
         }
 
         public bool DeleteProductGalleries(int productId)

@@ -1,0 +1,167 @@
+@model Order
+@using WebUI.Helpers
+@using Domain.Entities
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer _localizer
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "_Layout";
+    var customer = ViewBag.Customer as Customer;
+}
+
+<div class="checkout-main-area pt-90 pb-90">
+    <div class="container">
+        <div class="customer-zone mb-20">
+            <p class="cart-page-title">@_localizer["keniKupon"] <a class="checkout-click3" href="#">Klikoni këtu për të futur kodin tuaj</a></p>
+            <div class="checkout-login-info3">
+                <form action="#">
+                    <input type="text" placeholder="@_localizer["kuponCode"]">
+                    <input type="submit" value="@_localizer["aplikoKuponin"]">
+                </form>
+            </div>
+        </div>
+        <form asp-controller="Checkout" asp-action="ProcessOrder">
+        <div class="checkout-wrap pt-30">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="billing-info-wrap mr-50">
+                        <h3>@_localizer["detajetFaturimit"]</h3>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-20">
+                                    <label>@_localizer["emri"] <abbr class="required" title="required">*</abbr></label>
+                                    <input type="text" asp-for="ShipName" value="@customer?.Name">
+                                    <span asp-validation-for="ShipName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-20">
+                                    <label>@_localizer["mbiemri"] <abbr class="required" title="required">*</abbr></label>
+                                    <input type="text" asp-for="ShipSurname" value="@customer?.Surname">
+                                    <span asp-validation-for="ShipSurname" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="billing-info mb-20">
+                                    <label>@_localizer["adresa"] <abbr class="required" title="required">*</abbr></label>
+                                    <input class="billing-address" asp-for="ShipAddress" value="@customer?.Address" placeholder="House number and street name" type="text">
+                                    <span asp-validation-for="ShipAddress" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="billing-info mb-20">
+                                    <label>@_localizer["shteti"] <abbr class="required" title="required">*</abbr></label>
+                                    <input type="text" asp-for="ShipCountry" value="@customer?.Country">
+                                    <span asp-validation-for="ShipCountry" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="billing-info mb-20">
+                                    <label>@_localizer["qyteti"] <abbr class="required" title="required">*</abbr></label>
+                                    <input type="text" asp-for="ShipCity" value="@customer?.City">
+                                    <span asp-validation-for="ShipCity" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="billing-info mb-20">
+                                    <label>@_localizer["kodiPostal"] <abbr class="required" title="required">*</abbr></label>
+                                    <input type="text" asp-for="ShipPostalCode" value="@customer?.PostalCode">
+                                    <span asp-validation-for="ShipPostalCode" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="billing-info mb-20">
+                                    <label>@_localizer["telefoni"] <abbr class="required" title="required">*</abbr></label>
+                                    <input type="text" asp-for="ShipPhone" value="@customer?.Phone">
+                                    <span asp-validation-for="ShipPhone" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="billing-info mb-20">
+                                    <label>@_localizer["emaili"] <abbr class="required" title="required">*</abbr></label>
+                                    <input type="text" asp-for="ShipEmail" value="@customer?.Email">
+                                    <span asp-validation-for="ShipEmail" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="additional-info-wrap">
+                            <label>@_localizer["shenimePerPorosi"]</label>
+                            <textarea asp-for="OrderNotes" placeholder="@_localizer["shenimePerPorosiPlace"]"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="your-order-area">
+                        <h3>@_localizer["porosiaJuaj"]</h3>
+                        <div class="your-order-wrap gray-bg-4">
+                            <div class="your-order-info-wrap">
+                                <div class="your-order-info">
+                                    <ul>
+                                        <li>@_localizer["produktet"] <span>@_localizer["totali"]</span></li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-middle">
+                                    <ul>
+                                        @if (Context.Session.GetObjectFromJson<List<Cart>>("cart") != null)
+                                        {
+                                            foreach (var product in Context.Session.GetObjectFromJson<List<Cart>>("cart"))
+                                            {
+                                                <li>@product.Product.Name[..30]... X @product.Quantity <span>@product.Product.Price.ToString("#,##0.00") €</span></li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="your-order-info order-subtotal">
+                                    @{
+                                        var cart = Context.Session.GetObjectFromJson<List<Cart>>("cart");
+                                        decimal subtot = 0;
+                                        if (cart != null)
+                                        {
+                                            subtot = cart.Sum(x => x.Product.Price * x.Quantity);
+                                        }
+                                    }
+                                    <ul>
+                                        <li>@_localizer["subtotali"] <span>@subtot.ToString("#,##0.00") €</span></li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-info order-shipping">
+                                    <ul>
+                                        <li>@_localizer["transporti"] (Standart) <p>5 € </p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-info order-total">
+                                    <ul>
+                                        @{
+                                            var totali = subtot + 5;
+                                        }
+                                        <li>@_localizer["totali"] <span>@totali.ToString("#,##0.00") €</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="payment-method">
+                                <div class="pay-top sin-payment">
+                                    <input id="payment_method_1" class="input-radio" asp-for="PaymentMethod" type="radio" value="0" checked="checked">
+                                    <label for="payment_method_1"> @_localizer["paymentMethod1"] </label>
+                                    <div class="payment-box payment_method_bacs">
+                                        <p>@_localizer["paymentMethod1Desc"]</p>
+                                    </div>
+                                </div>
+                                <div class="pay-top sin-payment">
+                                    <input id="payment-method-2" class="input-radio" asp-for="PaymentMethod" type="radio" value="1">
+                                    <label for="payment-method-2"> @_localizer["paymentMethod2"] </label>
+                                    <div id="card-payment" class="payment-box payment_method_bacs">
+                                        <p>@_localizer["paymentMethod2Desc"]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="Place-order mt-40">
+                                <button type="submit">@_localizer["konfirmoPorosine"]</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>

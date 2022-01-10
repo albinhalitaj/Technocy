@@ -1,0 +1,56 @@
+@model PaymentModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer _localizer
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@_localizer["title"]</title>
+    <link rel="stylesheet" href="~/Client/assets/css/vendor/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/Client/assets/css/payment.css"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-12">
+            <div class="card mx-auto">
+                <p class="heading">@_localizer["detajetPageses"]</p>
+                <form class="card-details" asp-action="ProccessPayment">
+                    <div class="form-group mb-0">
+                        <p class="text-warning mb-0">@_localizer["numriKartes"]</p> 
+                        <input type="text" asp-for="CardNumber" placeholder="1234 5678 9012 3457" size="17" id="cno" minlength="16" maxlength="16">
+                        <span asp-validation-for="CardNumber" class="text-danger"></span>
+                        <img src="https://img.icons8.com/color/48/000000/visa.png" width="64px" height="60px" alt="visa"/>
+                    </div>
+                    <div class="form-group">
+                        <p class="text-warning mb-0">@_localizer["cardholder"]</p> 
+                        <input type="text" asp-for="Cardholder" placeholder="emriPlote" size="17">
+                        <span asp-validation-for="Cardholder" class="text-danger"></span>
+                    </div>
+                    <div class="form-group pt-2">
+                        <div class="row d-flex">
+                            <div class="col-sm-4">
+                                <p class="text-warning mb-0">@_localizer["skadimi"]</p>
+                                <input type="text" asp-for="Expiration" placeholder="MM/YYYY" size="7" id="exp" minlength="7" maxlength="7">
+                                <span asp-validation-for="Expiration" class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-3">
+                                <p class="text-warning mb-0">@_localizer["cvv"]</p> 
+                                <input type="password" asp-for="CVV" placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3">
+                                <span asp-validation-for="CVV" class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-5 pt-0">
+                                 <button type="submit" class="btn btn-primary">@_localizer["vazhdo"]</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://use.fontawesome.com/releases/v5.7.2/css/all.css"></script>
+</body>
+</html>

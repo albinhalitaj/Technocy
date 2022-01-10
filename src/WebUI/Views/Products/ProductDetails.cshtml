@@ -1,0 +1,374 @@
+﻿@model ProductDetailsViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer _localizer
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+    decimal discount = 0;
+    decimal zbritjaEu = 0;
+    if (Model.Product.OldPrice > 0)
+    {
+        zbritjaEu = Model.Product.OldPrice - Model.Product.Price;
+        discount = (zbritjaEu / Model.Product.OldPrice) * 100;
+    } 
+}
+
+<style>
+    .sold-out {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        background-color: rgba(255,255,255,.5);
+    }
+</style>
+
+<div class="product-details-area pt-90 pb-90">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="product-details-img">
+                <div class="zoompro-border zoompro-span">
+                    @if (Model.Product.Stock < 1)
+                    {
+                        <div class="sold-out">
+                            <h1>@_localizer["eshitur"]</h1>
+                        </div>
+                    }
+                    <img class="zoompro" src="@Model.Product.ProductGalleries.FirstOrDefault()?.URL" style="object-fit: contain;width: 500px;height: 500px" alt=""/>
+                    @if (discount > 0)
+                    {
+                        <span>-@Math.Round(discount)%</span>
+                    }
+                    @if (Model.Product.ProductCategories.Count(x => x.Category.Name == "Çka ka t're?") == 1)
+                    {
+                        <img style="position: absolute;top: 0;right: 0;margin-right: 10px;width: 50px;height: 50px"
+                             src="~/Client/assets/images/new-icon.svg" alt="Produkt i sapo ardhur"/>
+                    }
+                </div>
+                <div id="gallery" class="mt-70 product-dec-slider">
+                    @foreach (var image in Model.Product.ProductGalleries)
+                    {
+                        <a data-image="@image.URL" style="width: 70px !important;" data-zoom-image="@image.URL">
+                            <img class="small-img" style="object-fit: contain;width: 70px;height: 70px" src="@image.URL" alt="">
+                        </a>
+                    }
+                </div> 
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="product-details-content pro-details-content-modify">
+                @foreach (var category in Model.Product.ProductCategories)
+                {
+                    <span>@category.Category.Name / </span>
+                }
+                <h2>@Model.Product.Name</h2>
+                <div class="product-ratting-review">
+                    <div class="product-ratting">
+                        <i class="la la-star"></i>
+                        <i class="la la-star"></i>
+                        <i class="la la-star"></i>
+                        <i class="la la-star"></i>
+                        <i class="la la-star-half-o"></i>
+                    </div>
+                    <div class="product-review">
+                        <span>40+ @_localizer["shikime"]</span>
+                    </div>
+                </div>
+                @if (Model.Product.OldPrice > 0)
+                {
+                    <div>
+                        <p style="font-size: 20px;font-weight: bold;color: red;padding-bottom: 20px">@_localizer["saving"]: @zbritjaEu.ToString("#.00") €</p>
+                    </div>
+                }
+                <div class="pro-details-price-wrap">
+                    <br>
+                    <div class="product-price">
+                        <span>@Model.Product.Price.ToString("#,##0.00")€</span>
+                        @if (Model.Product.OldPrice > 0)
+                        {
+                            <span class="old">@Model.Product.OldPrice.ToString("#,##0.00")€</span>
+                        }
+                    </div>
+                    @if (discount > 0)
+                    {
+                        <div class="dec-rang"><span>- @Math.Round(discount)%</span></div>
+                    }
+                </div>
+                <div class="pro-details-quality">
+                    <div class="cart-plus-minus">
+                        <input class="cart-plus-minus-box" type="number" name="qtybutton" min="1" value="1" max="@Model.Product.Stock">
+                    </div>
+                </div>
+                <div class="pro-details-compare-wishlist">
+                    <div class="pro-details-compare">
+                        <a title="Add To Compare" href="#"><i class="la la-retweet"></i> @_localizer["krahaso"]</a>
+                    </div>
+                    @if (!ViewBag.IsInWishList)
+                    {
+                        <div class="pro-details-wishlist">
+                            <a title="@_localizer["shtoNeListeneDeshirave"]" 
+                               onclick="addToWishList('@Model.Product.ProductId','@Model.Product.Stock','@Model.Product.Price')">
+                                <i class="la la-heart-o"></i> @_localizer["shtoNeListeneDeshirave"]
+                            </a>
+                        </div>
+                    }
+                </div>
+                <div class="pro-details-buy-now btn-hover btn-hover-radious">
+                    <a onclick="addToCart('@Model.Product.ProductId')">@_localizer["shtoNeShporte"]</a>
+                </div>
+                <div style="margin-top: 30px">
+                    <p style="font-weight: bold">@_localizer["mundesitePagesave"] </p>
+                    <img src="~/Client/assets/images/payments_all.png" style="height: 30px;width: 100%" alt="all_payments" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="description-review-wrapper pb-90">
+<div class="container">
+    <div class="row">
+        <div class="ms-auto me-auto col-lg-10">
+            <div class="dec-review-topbar nav mb-40">
+                <a class="active" data-bs-toggle="tab" href="#des-details1">@_localizer["pershkrimi"]</a>
+                <a data-bs-toggle="tab" href="#des-details2">@_localizer["detajet"]</a>
+                <a data-bs-toggle="tab" href="#des-details3">@_localizer["vleresimet"]</a>
+                <a href="#tengjashme">@_localizer["tengjashme"]</a>
+            </div>
+            <div class="tab-content dec-review-bottom">
+                <div id="des-details1" class="tab-pane active">
+                    <div class="description-wrap">
+                        <h4>@_localizer["pershkrimiProduktit"]</h4>
+                        <br/>
+                        <p>@Model.Product.Summary</p>
+                    </div>
+                </div>
+                <div id="des-details2" class="tab-pane">
+                    <div class="specification-wrap table-responsive">
+                        @Html.Raw(Model.Product.Description)
+                    </div>
+                </div>
+                <div id="des-details3" class="tab-pane">
+                    <div class="dec-review-wrap mb-50">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-4 col-md-5">
+                                <div class="dec-review-img-wrap">
+                                    <div class="dec-review-img">
+                                        <img src="~/Client/assets/images/product-details/review-1.png" alt="review">
+                                    </div>
+                                    <div class="dec-client-name">
+                                        <h4>Jonathon Doe</h4>
+                                        <div class="dec-client-rating">
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star-half-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-8 col-md-7">
+                                <div class="dec-review-content">
+                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                                    <div class="review-content-bottom">
+                                        <div class="review-like">
+                                            <span><i class="la la-heart-o"></i> 24 Likes</span>
+                                        </div>
+                                        <div class="review-date">
+                                            <span>25 Jun 2019</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dec-review-wrap mb-50">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-4 col-md-5">
+                                <div class="dec-review-img-wrap">
+                                    <div class="dec-review-img">
+                                        <img src="~/Client/assets/images/product-details/review-2.png" alt="review">
+                                    </div>
+                                    <div class="dec-client-name">
+                                        <h4>Jonathon Doe</h4>
+                                        <div class="dec-client-rating">
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star-half-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-8 col-md-7">
+                                <div class="dec-review-content">
+                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                                    <div class="review-content-bottom">
+                                        <div class="review-like">
+                                            <span><i class="la la-heart-o"></i> 24 Likes</span>
+                                        </div>
+                                        <div class="review-date">
+                                            <span>25 Jun 2019</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dec-review-wrap">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-4 col-md-5">
+                                <div class="dec-review-img-wrap">
+                                    <div class="dec-review-img">
+                                        <img src="~/Client/assets/images/product-details/review-3.png" alt="review">
+                                    </div>
+                                    <div class="dec-client-name">
+                                        <h4>Jonathon Doe</h4>
+                                        <div class="dec-client-rating">
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star"></i>
+                                            <i class="la la-star-half-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-8 col-md-7">
+                                <div class="dec-review-content">
+                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
+                                    <div class="review-content-bottom">
+                                        <div class="review-like">
+                                            <span><i class="la la-heart-o"></i> 24 Likes</span>
+                                        </div>
+                                        <div class="review-date">
+                                            <span>25 Jun 2019</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div id="tengjashme" class="product-area pb-85">
+<div class="container">
+    <div class="section-title-6 mb-50 text-center">
+        <h2>@_localizer["tengjashme"]</h2>
+    </div>
+    @if (!Model.RelatedProducts.Any())
+    {
+        <div class="text-center d-flex justify-content-center align-items-center">
+            <h4 class="alert alert-info" style="width: 500px">@_localizer["asnjeProdukt"]</h4>
+        </div>
+    }
+    <div class="product-slider-active owl-carousel">
+    @if(Model.RelatedProducts.Any())
+    {
+        foreach (var product in Model.RelatedProducts)
+        {
+                <div class="product-wrap">
+                    <div class="product-img mb-15">
+                        <a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault()?.URL" style="width: 200px;height: 240px;object-fit: contain" alt="product"></a>
+                        <div class="product-action">
+                            <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Shikim i shpejtë" href="#"><i class="la la-plus"></i></a>
+                            <a title="Shto në listën e dëshirave" href="#"><i class="la la-heart-o"></i></a>
+                            <a title="Krahaso" href="#"><i class="la la-retweet"></i></a>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h4><a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug">@(product.Name[..30])...</a></h4>
+                        <div class="price-addtocart">
+                            <div class="product-price">
+                                <span>@Model.Product.Price.ToString("#,##0.00")€</span>
+                            </div>
+                            <div class="product-addtocart">
+                                <a title="Shto në shportë" onclick="addToCart('@product.ProductId')">+ @_localizer["shtoNeShporte"]</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        } 
+    }
+    </div>
+</div>
+</div>
+
+<script src="~/Client/assets/js/plugins/zoomsl.js"></script>
+<script src="~/Client/assets/js/cart.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+   $('.small-img').click(function() {
+     $('.zoompro').attr('src',$(this).attr('src'));
+   })
+  $('.zoompro').imagezoomsl({
+    magnifycursor:'crosshair',
+    stepzoom: 0.5,
+    zoomrange: [2, 2],
+    zoomstart: 2,
+  }) 
+})
+
+function addToWishList(productId,stock,price) {
+      $.ajax({
+        type: "POST",
+        url: "/Wishlist/Add/",
+        data: {"ProductId":productId,"Stock":stock > 0,"Price":price},
+        success: async function(resp) {
+          if (resp.success){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-right',
+                iconColor: 'red',
+                customClass: {
+                  popup: 'colored-toast'
+                },
+                showConfirmButton: false,
+                timer: 2500,
+                timerProgressBar: true
+              })
+              await Toast.fire({
+                icon: 'success',
+                title: 'Product Added To Wishlist'
+              })
+          }else if (!resp.success && resp.error === "User is not authenticated") {
+              location.href = "/account/login/";
+          }
+          else {
+              const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-right',
+                  iconColor: 'red',
+                  customClass: {
+                    popup: 'colored-toast'
+                  },
+                  showConfirmButton: false,
+                  timer: 2500,
+                  timerProgressBar: true
+                })
+                await Toast.fire({
+                  icon: 'error',
+                  title: 'Product is already in wishlist'
+                })
+          }
+        },
+        error: function(err) {
+          location.href="/account/login";
+        }
+      })
+     }
+</script>
+
+
+

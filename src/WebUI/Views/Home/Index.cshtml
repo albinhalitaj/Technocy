@@ -1,4 +1,5 @@
 ﻿@model HomeViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer _localizer
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -36,10 +37,10 @@
         <div class="row align-items-center">
             <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="slider-content-6">
-                    <h1 class="wow fadeInUp">iPhone 13</h1>
-                    <p class="wow fadeInUp">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
+                    <h1 class="wow fadeInUp">iPhone 13 Pro</h1>
+                    <p class="wow fadeInUp">@_localizer["HeroText"]</p>
                     <div class="slider-btn-6 default-btn btn-hover">
-                        <a class="wow fadeInUp white-color" href="product-details.html">Blej Tani</a>
+                        <a class="wow fadeInUp white-color" href="product-details.html">@_localizer["BlejTani"]</a>
                     </div>
                 </div>
             </div>
@@ -82,13 +83,13 @@
     <div class="container">
         <div class="product-tab-list-3 nav">
             <a class="active" href="#product-1" data-bs-toggle="tab">
-                <h5>Të gjitha</h5>
+                <h5>@_localizer["tegjitha"]</h5>
             </a>
             <a href="#product-6" data-bs-toggle="tab">
-                <h5>Zbritje </h5>
+                <h5>@_localizer["zbritje"]</h5>
             </a>
             <a href="#product-7" data-bs-toggle="tab">
-                <h5>Risi</h5>
+                <h5>@_localizer["risi"]</h5>
             </a>
         </div>
         <div class="tab-content jump">
@@ -99,11 +100,11 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12" style="max-height: 450px;">
                             <div class="product-wrap product-border-2 pro-hover-shadow mb-40">
                                 <div class="product-img mb-15">
-                                    <a href="product-details.html"><img src="@product.ProductGalleries.FirstOrDefault().URL" style="width: 200px;height: 240px;object-fit: contain;padding-left: 50px"  alt="product"></a>
+                                    <a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault()?.URL" style="padding-top: 20px;width: 200px;height: 240px;object-fit: contain;padding-left: 50px"  alt="product"></a>
                                     @if (product.Stock < 1)
                                     {
                                         <div class="sold-out">
-                                            <h4>Nuk ka në stok</h4>
+                                            <h4>@_localizer["jashteStokut"]</h4>
                                         </div>
                                     }
                                     @if (product.OldPrice > 0)
@@ -119,20 +120,23 @@
                                         <img style="position: absolute;top: 0;right: 0;margin-right: 10px;width: 50px;height: 50px"
                                              src="Client/assets/images/new-icon.svg" alt="Produkt i sapo ardhur"/>
                                     }
-                                    <div class="product-action-3">
-                                        <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-arrows"></i></a>
-                                        <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a title="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
-                                    </div>
+                                    @if (product.Stock > 0)
+                                    {
+                                        <div class="product-action-3">
+                                            <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-arrows"></i></a>
+                                            <a title="Wishlist" onclick="addToWishList('@product.ProductId','@product.Stock','@product.Price')"><i class="la la-heart-o"></i></a>
+                                            <a title="Add To Cart" onclick="addToCart('@product.ProductId')"><i class="la la-cart-plus"></i></a>
+                                        </div>
+                                    }
                                 </div>
                                 <div class="product-content-2 max-h-5x">
-                                    <h4><a href="product-details.html">@(product.Name[..30])...</a></h4>
-                                    <span>Përfshirë TVSH-në</span>
+                                    <h4><a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug">@(product.Name[..30])...</a></h4>
+                                    <span>@_localizer["tvsh"]</span>
                                     <div class="pro-price-2 mt-50">
-                                        <span>@product.Price.ToString("#.00")€</span>
+                                        <span>@product.Price.ToString("#,##0.00")€</span>
                                         @if (product.OldPrice > 0)
                                         {
-                                            <span class="old-price">@product.OldPrice.ToString("#.00")€</span>
+                                            <span class="old-price">@product.OldPrice.ToString("#,##0.00")€</span>
                                         }
                                     </div>
                                 </div>
@@ -148,7 +152,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12" style="max-height: 450px;">
                             <div class="product-wrap product-border-2 pro-hover-shadow mb-40">
                                 <div class="product-img mb-15">
-                                    <a href="product-details.html"><img src="@product.ProductGalleries.FirstOrDefault().URL" style="width: 200px;height: 240px;object-fit: contain;padding-left: 50px"  alt="product"></a>
+                                    <a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault()?.URL" style="padding-top: 20px;width: 200px !important;height: 240px !important;object-fit: contain;padding-left: 50px"  alt="product"></a>
                                     @if (product.OldPrice > 0)
                                     {
                                         var zbritjaEu = product.OldPrice - product.Price;
@@ -157,20 +161,25 @@
                                             -@Math.Round(discount)%
                                         </span>
                                     }
+                                    @if (product.ProductCategories.Count(x => x.Category.Name == "Çka ka t're?") == 1)
+                                    {
+                                        <img style="position: absolute;top: 0;right: 0;margin-right: 10px;width: 50px;height: 50px"
+                                             src="~/Client/assets/images/new-icon.svg" alt="Produkt i sapo ardhur"/>
+                                    }
                                     <div class="product-action-3">
                                         <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-arrows"></i></a>
                                         <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a title="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
+                                        <a title="Add To Cart" onclick="addToCart('@product.ProductId')"><i class="la la-cart-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="product-content-2 max-h-5x">
-                                    <h4><a href="product-details.html">@(product.Name[..30])...</a></h4>
-                                    <span>Përfshirë TVSH-në</span>
+                                    <h4><a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug">@(product.Name[..30])...</a></h4>
+                                    <span>@_localizer["tvsh"]</span>
                                     <div class="pro-price-2 mt-50">
-                                        <span>@product.Price.ToString("#.00")€</span>
+                                        <span>@product.Price.ToString("#,##0.00")€</span>
                                         @if (product.OldPrice > 0)
                                         {
-                                            <span class="old-price">@product.OldPrice.ToString("#.00")€</span>
+                                            <span class="old-price">@product.OldPrice.ToString("#,##0.00")€</span>
                                         }
                                     </div>
                                 </div>
@@ -186,7 +195,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12" style="max-height: 450px;">
                             <div class="product-wrap product-border-2 pro-hover-shadow mb-40">
                                 <div class="product-img mb-15">
-                                    <a href="product-details.html"><img src="@product.ProductGalleries.FirstOrDefault().URL" style="width: 200px;height: 240px;object-fit: contain;padding-left: 50px"  alt="product"></a>
+                                    <a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault()?.URL" style="padding-top: 20px;width: 200px;height: 240px;object-fit: contain;padding-left: 50px"  alt="product"></a>
                                     @if (product.OldPrice > 0)
                                     {
                                         var zbritjaEu = product.OldPrice - product.Price;
@@ -203,17 +212,17 @@
                                     <div class="product-action-3">
                                         <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="Quick View" href="#"><i class="la la-arrows"></i></a>
                                         <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
-                                        <a title="Add To Cart" href="#"><i class="la la-cart-plus"></i></a>
+                                        <a title="Add To Cart" onclick="addToCart('@product.ProductId')"><i class="la la-cart-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="product-content-2 max-h-5x">
-                                    <h4><a href="product-details.html">@(product.Name[..30])...</a></h4>
-                                    <span>Përfshirë TVSH-në</span>
+                                    <h4><a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug">@(product.Name[..30])...</a></h4>
+                                    <span>@_localizer["tvsh"]</span>
                                     <div class="pro-price-2 mt-50">
-                                        <span>@product.Price.ToString("#.00")€</span>
+                                        <span>@product.Price.ToString("#,##0.00")€</span>
                                         @if (product.OldPrice > 0)
                                         {
-                                            <span class="old-price">@product.OldPrice.ToString("#.00")€</span>
+                                            <span class="old-price">@product.OldPrice.ToString("#,##0.00")€</span>
                                         }
                                     </div>
                                 </div>
@@ -257,16 +266,16 @@
             <div class="row">
                 <div class="col-lg-6 ms-auto me-auto">
                     <div class="subscribe-content-3 text-center">
-                        <h2>Regjistrohu dhe merr të gjitha përditësimet.</h2>
+                        <h2>@_localizer["regjistrohu"]</h2>
                         <div id="mc_embed_signup" class="subscribe-form-3 mt-20">
                             <form id="mc-embedded-subscribe-form" class="validate subscribe-form-style" novalidate="" target="_blank" name="mc-embedded-subscribe-form" method="post" action="https://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef">
                                 <div id="mc_embed_signup_scroll" class="mc-form">
-                                    <input class="email" type="email" required="" placeholder="Shënoni email adresën tuaj..." name="EMAIL" value="">
+                                    <input class="email" type="email" required="" placeholder="@_localizer["yourEmail"]" name="email" value="">
                                     <div class="mc-news" aria-hidden="true">
                                         <input type="text" value="" tabindex="-1" name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef">
                                     </div>
                                     <div class="clear">
-                                        <input id="mc-embedded-subscribe" class="button" type="submit" name="Abonohu" value="">
+                                        <input id="mc-embedded-subscribe" class="button" type="submit" name="@_localizer["abonohu"]" value="">
                                     </div>
                                 </div>
                             </form>
@@ -277,3 +286,57 @@
         </div>
     </div>
 </div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/Client/assets/js/cart.js"></script>
+<script type="text/javascript">
+    function addToWishList(productId,stock,price) {
+      $.ajax({
+        type: "POST",
+        url: "/Wishlist/Add/",
+        data: {"ProductId":productId,"Stock":stock > 0,"Price":price},
+        success: async function(resp) {
+          if (resp.success){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-right',
+                iconColor: 'red',
+                customClass: {
+                  popup: 'colored-toast'
+                },
+                showConfirmButton: false,
+                timer: 2500,
+                timerProgressBar: true
+              })
+              await Toast.fire({
+                icon: 'success',
+                title: '@_localizer["wishlistSuccess"]'
+              })
+          }else if (!resp.success && resp.error === "User is not authenticated") {
+              location.href = "/account/login/";
+          }
+          else {
+              const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-right',
+                  iconColor: 'red',
+                  customClass: {
+                    popup: 'colored-toast'
+                  },
+                  showConfirmButton: false,
+                  timer: 2500,
+                  timerProgressBar: true
+                })
+                await Toast.fire({
+                  icon: 'error',
+                  title: '@_localizer["wishlistError"]'
+                })
+          }
+        },
+        error: function(err) {
+          location.href="/account/login";
+        }
+      })
+    }
+
+</script>

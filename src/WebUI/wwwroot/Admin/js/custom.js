@@ -116,7 +116,7 @@
     /*
     // Analytics chart
     */
-    (function() {
+    /*(function() {
         const chartCanvas = document.getElementById('example-chart-js-analytics');
 
         if (!chartCanvas) {
@@ -134,8 +134,8 @@
                         borderWidth: 0,
                         fill: 'origin',
                         data: [
-                            (10 / 240) * 1200,
-                            (26 / 240) * 1200,
+                            120,
+                            10,
                             (105 / 240) * 1200,
                             (57 / 240) * 1200,
                             (94 / 240) * 1200,
@@ -191,7 +191,7 @@
                 },
             },
         });
-    }());
+    }());*/
 
     /*
     // Widget chart (.saw-chart)

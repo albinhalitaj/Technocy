@@ -1,0 +1,25 @@
+﻿@model Domain.Entities.Order
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer _localization
+@{
+    ViewBag.Title = "Confirmation";
+    Layout = "_Layout";
+}
+
+<section class="section-pagetop bg mtb-100">
+    <div class="container text-center">
+        <h1 class="title-page text-success mb-40">
+            <img src="~/Client/assets/images/icon-img/payment-successful.png" style="width: 100px;height: 100px" alt="payment-successful">
+        </h1>
+        <h1 class="title-page">
+             @_localization["thankyou"]
+        </h1>
+        <h5 class="text-muted">
+            @_localization["thankOrder"]
+        </h5>
+
+        <br />
+
+        <a class="btn btn-primary" asp-controller="Profile" asp-action="Index"> @_localization["shikoPorosite"] </a>
+        <a class="btn btn-outline-primary-light" asp-controller="Home" asp-action="Index"> @_localization["return"] </a>
+    </div>
+</section>

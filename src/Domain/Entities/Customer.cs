@@ -11,9 +11,11 @@ namespace Domain.Entities
             WishlistItems = new HashSet<Wishlist>();
         }
         
-        public Guid CusomterId { get; set; }
+        public int CustomerId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+
+        public string FullName => Name + " " + Surname;
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public DateTime Birthdate { get; set; }
@@ -24,6 +26,7 @@ namespace Domain.Entities
         public string Phone { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime LastUpdatedDate { get; set; }
+        public decimal? Total { get; set; }
         
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Wishlist> WishlistItems { get; set; }

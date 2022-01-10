@@ -1,5 +1,7 @@
-﻿// A reference to Stripe.js initialized with a fake API key.
-const stripe = Stripe("pk_test_51JsEIUIlJsyPbmS7m5ObvCtxGKedBFnNlPYo2KPXaF6n0Arux9mV6diqxP4l7tNVDJ4imvIUkfCFbjkBdgd1wTUs00mJ5emOnA");
+﻿// This is a public sample test API key.
+// To avoid exposing it, don't submit any personally identifiable information through requests with this API key.
+// Sign in to see your own test API key embedded in code samples.
+const stripe = Stripe("pk_test_qblFNYngBkEdjEZ16jxxoWSM");
 
 // The items the customer wants to buy
 const items = [{ id: "xl-tshirt" }];
@@ -39,7 +41,7 @@ async function handleSubmit(e) {
         elements,
         confirmParams: {
             // Make sure to change this to your payment completion page
-            return_url: "http://localhost:4242/checkout.html",
+            return_url: "http://localhost:5001/",
         },
     });
 

@@ -1,0 +1,154 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer _localizer
+@{
+    ViewBag.Title = "Shporta";
+    Layout = "_Layout";
+    var cart = ViewBag.Cart as List<Cart>;
+}
+
+
+@if (cart == null || !cart!.Any())
+{
+    <div class="text-center d-flex justify-content-center align-items-center mtb-100">
+        <h4 class="alert alert-info" style="width: 500px">@_localizer["shportaZbrazet"]</h4>
+    </div>
+}
+else
+{
+<div class="cart-main-area pt-85 pb-90">
+    <div class="container">
+        <h3 class="cart-page-title">@_localizer["artikujtShportes"]</h3>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="table-content table-responsive cart-table-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>@_localizer["foto"]</th>
+                                <th>@_localizer["emriProduktit"]</th>
+                                <th>@_localizer["cmimi"]</th>
+                                <th>@_localizer["sasia"]</th>
+                                <th>@_localizer["subtotali"]</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in cart)
+                            {
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        <a asp-controller="Products" asp-action="Product" asp-route-slug="@item.Product.Slug">
+                                            <img src="@item.Product.ProductGalleries.FirstOrDefault()?.URL" style="width: 80px;height: 80px;object-fit: contain" alt="product">
+                                        </a>
+                                    </td>
+                                    <td class="product-name">
+                                        <a asp-controller="Products" asp-action="Product" asp-route-slug="@item.Product.Slug">@(item.Product.Name[..30])...</a>
+                                    </td>
+                                    <td class="product-price-cart">
+                                        <span class="amount">@item.Product.Price.ToString("#,##0.00") €</span>
+                                    </td>
+                                    <td class="product-quantity">
+                                        <div class="cart-plus-minus">
+                                            <input readonly="readonly" class="cart-plus-minus-box" type="text" name="qtybutton" value="@item.Quantity">
+                                        </div>
+                                    </td>
+                                    @{
+                                        var subtotal = item.Product.Price * item.Quantity;
+                                    }
+                                    <td class="product-subtotal">@subtotal.ToString("#,##0.00") €</td>
+                                    <td class="product-remove">
+                                        <form id="delete-product" asp-controller="Cart" asp-action="Remove" asp-route-id="@item.Product.ProductId">
+                                            <a onclick='document.getElementById("delete-product").submit();'><i class="la la-close"></i></a>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="cart-shiping-update-wrapper">
+                            <div class="cart-shiping-update">
+                                <a asp-controller="Home" asp-action="Index">@_localizer["vazhdoniBlerje"]</a>
+                            </div>
+                            <div class="cart-clear">
+                                <button>@_localizer["perditsoShporten"]</button>
+                                <a asp-action="Clear">@_localizer["pastroShporten"]</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="cart-tax">
+                            <div class="title-wrap">
+                                <h4 class="cart-bottom-title section-bg-gray">@_localizer["vleresimiTransportit"]</h4>
+                            </div>
+                            <div class="tax-wrapper">
+                                <p>@_localizer["destinacioni"]</p>
+                                <div class="tax-select-wrapper">
+                                    <div class="tax-select">
+                                        <label>
+                                            * @_localizer["shteti"]
+                                        </label>
+                                        <select class="email s-email s-wid">
+                                            <option>Kosovë</option>
+                                            <option>Shqipëri</option>
+                                            <option>Maqedoni</option>
+                                            <option>Diasporë</option>
+                                        </select>
+                                    </div>
+                                    <div class="tax-select">
+                                        <label>
+                                            * @_localizer["kodiPostal"]
+                                        </label>
+                                        <input type="text">
+                                    </div>
+                                    <button class="cart-btn-2" type="submit">@_localizer["kalkulo"]</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="discount-code-wrapper">
+                            <div class="title-wrap">
+                                <h4 class="cart-bottom-title section-bg-gray">@_localizer["perdorKodin"]</h4>
+                            </div>
+                            <div class="discount-code">
+                                <p>@_localizer["futKodin"]</p>
+                                <form>
+                                    <input type="text" required="" name="name">
+                                    <button class="cart-btn-2" type="submit">@_localizer["aplikoKodin"]</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <div class="grand-totall">
+                            <div class="title-wrap">
+                                <h4 class="cart-bottom-title section-bg-gary-cart">@_localizer["totali"]</h4>
+                            </div>
+                            @{
+                                var subtot = cart.Sum(x => x.Product.Price * x.Quantity);
+                                var tot = subtot + 5;
+                            }
+                            <h5>@_localizer["totalProdukte"] <span>@subtot.ToString("#,##0.00") €</span></h5>
+                            <div class="total-shipping">
+                                <h5>@_localizer["totalTransporti"]</h5>
+                                <ul>
+                                    <li><input type="radio" checked="checked" name="shipping"> Standart <span>5 €</span></li>
+                                </ul>
+                            </div>
+                            <h4 class="grand-totall-title">Totali <span>@tot.ToString("#,##0.00") €</span></h4>
+                            <a asp-controller="Checkout">@_localizer["vazhdo"]</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+
+

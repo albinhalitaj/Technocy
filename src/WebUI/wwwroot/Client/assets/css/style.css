@@ -14050,6 +14050,21 @@ h3.cart-page-title {
   padding: 0 15px;
   color: #010225;
 }
+
+.form-input {
+    background-color: transparent;
+    border: 1px solid #ebebeb;
+    font-size: 14px;
+    height: 50px;
+    margin-bottom: 30px;
+    padding: 0 15px;
+    color: #010225; 
+}
+
+.terms-conditions {
+    margin-bottom: 20px;
+}
+
 .login-register-wrapper .login-form-container .login-register-form form input[type=checkbox] {
   height: 15px;
   margin: 0;
@@ -14721,13 +14736,32 @@ h3.cart-page-title {
   cursor: pointer;
   padding: 16px 50px 17px;
   text-transform: uppercase;
-  font-weight: 700;
   width: 100%;
   color: #fff;
   font-size: 14px;
   font-weight: 600;
   text-align: center;
+    border: none;
 }
+
+.pay-button {
+    background-color: #ff5151;
+    display: block;
+    cursor: pointer;
+    padding: 16px 50px 17px;
+    text-transform: uppercase;
+    width: 100%;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+}
+
+.pay-button:hover {
+    background-color: #333;
+}
+
 .your-order-area .Place-order button:hover {
   background-color: #333;
 }
