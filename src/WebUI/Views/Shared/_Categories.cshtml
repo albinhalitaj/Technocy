@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Domain.Entities.Category>
+<nav>
+    
+    <ul>
+        @foreach (var category in Model)
+        {
+            <li class="angle-shape" style="margin-right: 50px"><a style="line-height: 82px;" href="/products/@category.Slug">@category.Name</a></li>
+        }
+    </ul>
+</nav>

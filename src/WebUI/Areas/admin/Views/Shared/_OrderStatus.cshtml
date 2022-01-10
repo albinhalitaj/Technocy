@@ -1,0 +1,23 @@
+﻿@using Domain.Enums
+@model dynamic
+
+@switch (Model.Status)
+{
+    case OrderStatus.ManualVerificationNeeded:
+        <span class="badge badge-sa-warning me-2">Verifikimi manual i nevojshëm</span> 
+        break;
+    case OrderStatus.Confirmed:
+        <span class="badge badge-sa-success me-2">Konfirmuar</span>
+        break;
+    case OrderStatus.Completed:
+        <span class="badge badge-sa-success me-2">Kompletuar</span>
+        break;
+    case OrderStatus.Shipped:
+        <span class="badge badge-sa-success me-2">E nisur</span>
+        break;
+    case OrderStatus.Cancelled:
+        <span class="badge badge-sa-danger me-2">Anuluar</span>
+        break;
+    default:
+        throw new ArgumentOutOfRangeException();
+}

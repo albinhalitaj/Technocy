@@ -1,0 +1,122 @@
+﻿@using Application.admin
+@model IEnumerable<Domain.Entities.Product>
+@inject CategoryManager _categoryManager
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer _localizer
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<div class="shop-area pt-90 pb-90">
+    <div class="container">
+        <div class="row flex-row-reverse">
+            <div class="col-lg-9">
+                <div class="shop-topbar-wrapper">
+                    <div class="shop-topbar-left">
+                        <div class="view-mode nav">
+                            <a class="active" href="#shop-1" data-bs-toggle="tab"><i class="la la-th"></i></a>
+                            <a href="#shop-2" data-bs-toggle="tab"><i class="la la-list-ul"></i></a>
+                        </div>
+                        <p>@_localizer["dukeTreguar"] @ViewBag.Produktet @_localizer["nga"] @ViewBag.TotalProdukte @_localizer["produkte"] </p>
+                    </div>
+                    <div class="product-sorting-wrapper">
+                        <div class="product-show shorting-style">
+                            <select>
+                                <option name="type" value="rev">@_localizer["renditSipasRevelences"]</option>
+                                <option name="type" value="asc">@_localizer["renditSipasUletLarte"]</option>
+                                <option name="type" value="desc">@_localizer["renditSipasLarteUlet"]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="shop-bottom-area">
+                    <div class="tab-content jump">
+                        <div id="shop-1" class="tab-pane active">
+                            <div class="row">
+                                @if (!Model.Any())
+                                {
+                                    <div class="alert alert-info">
+                                        <p>@_localizer["asnjeProdukt"]</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    foreach (var product in Model)
+                                    {
+                                        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+                                            <div class="product-wrap mb-35">
+                                                <div class="product-img mb-15">
+                                                    <a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug"><img src="@product.ProductGalleries.FirstOrDefault()?.URL" style="width: 200px;height: 240px;object-fit: contain;padding-left: 50px" alt="product"></a>
+                                                    @if (product.OldPrice > 0)
+                                                    {
+                                                        var zbritjaEu = product.OldPrice - product.Price;
+                                                        var discount = (zbritjaEu / product.OldPrice) * 100;
+                                                        <span class="price-dec" style="position: absolute;top: 0;left: 0;margin-left: 10px;margin-top: 10px">
+                                                            -@Math.Round(discount)%
+                                                        </span>
+                                                    }
+                                                    @if (product.ProductCategories.Count(x => x.Category.Name == "Çka ka t're?") == 1)
+                                                    {
+                                                        <img style="position: absolute;top: 0;right: 0;margin-right: 10px;width: 50px;height: 50px"
+                                                             src="Client/assets/images/new-icon.svg" alt="Produkt i sapo ardhur"/>
+                                                    }
+                                                    <div class="product-action">
+                                                        <a title="Wishlist" href="#"><i class="la la-heart-o"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content">
+                                                    <h4><a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug">@(product.Name[..30])...</a></h4>
+                                                    <div class="price-addtocart">
+                                                        <div class="product-price">
+                                                            <span>@product.Price.ToString("#,##0.00")€</span>
+                                                            @if (product.OldPrice > 0)
+                                                            {
+                                                                <span class="old">@product.OldPrice.ToString("#,##0.00")€</span>
+                                                            }
+                                                        </div>
+                                                        <div class="product-addtocart">
+                                                            <a onclick="addToCart('@product.ProductId')" title="Add To Cart">+ @_localizer["shtoNeShporte"]</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    } 
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="sidebar-wrapper">
+                    <div class="sidebar-widget">
+                        <h4 class="sidebar-title">@_localizer["kerko"] </h4>
+                        <div class="sidebar-search mb-40 mt-20">
+                            <form class="sidebar-search-form" action="#">
+                                <input type="text" placeholder="@_localizer["kerkoKetu"]">
+                                <button>
+                                    <i class="la la-search"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="sidebar-widget shop-sidebar-border pt-40">
+                        <h4 class="sidebar-title">@_localizer["filtroMeKategori"]</h4>
+                        <div class="shop-catigory mt-20">
+                            <ul id="faq">
+                                @foreach (var category in _categoryManager.GetCategories().Where(x=>x.Visibility))
+                                {
+                                    <li> <a href="/products/@category.Slug">@category.Name</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Client/assets/js/cart.js"></script>

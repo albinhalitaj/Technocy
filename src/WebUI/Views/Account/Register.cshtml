@@ -1,0 +1,148 @@
+﻿@model RegisterModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer _localizer
+@{
+    ViewBag.Title = "Regjistrohu";
+    Layout = "_Layout";
+}
+
+<div class="login-register-area pt-85 pb-90">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 ms-auto me-auto">
+                <div class="login-register-wrapper">
+                    <div class="login-register-tab-list nav">
+                        <a class="active" data-bs-toggle="tab" href="#lg2">
+                            <h4> @_localizer["regjistrohu"] </h4>
+                        </a>
+                    </div>
+                    <div id="lg2" class="tab-pane active">
+                        <div class="login-form-container">
+                            <div class="login-register-form">
+                                <form asp-controller="Account" asp-action="Register">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                    <input type="text" asp-for="Email" placeholder="@_localizer["emaili"]">
+                                    <span asp-validation-for="Fjalekalimi" class="text-danger"></span>
+                                    <input type="password" asp-for="Fjalekalimi" placeholder="@_localizer["fjalekalimi"]">
+                                    <span asp-validation-for="KonfirmoFjalekalimin" class="text-danger"></span>
+                                    <input type="password" asp-for="KonfirmoFjalekalimin" placeholder="@_localizer["konfirmoFjalekalimin"]">
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                    <input type="text" asp-for="Name" placeholder="@_localizer["emri"]">
+                                    <span asp-validation-for="Surname" class="text-danger"></span>
+                                    <input type="text" asp-for="Surname" placeholder="@_localizer["mbiemri"]">
+                                    <select asp-for="Gender" class="form-input">
+                                        <option>@_localizer["gjinia"]</option>
+                                        <option value="1">@_localizer["mashkull"]</option>
+                                        <option value="2">@_localizer["femer"]</option>
+                                    </select>
+                                    <span asp-validation-for="Gender" class="text-danger"></span>
+                                    <div style="display: flex;">
+                                        <span asp-validation-for="Country" class="text-danger"></span>
+                                        <select id="Country" asp-for="Country" style="flex:1;margin-right: 10px" class="form-input">
+                                            <option value="Kosovë">@_localizer["kosove"]</option>
+                                            <option value="Shqipëri">@_localizer["shqiperi"]</option>
+                                            <option value="Maqedoni">@_localizer["maqedoni"]</option>
+                                            <option value="Diasporë">@_localizer["diaspore"]</option>
+                                        </select>
+                                        <span asp-validation-for="City" class="text-danger"></span>
+                                        <div id="cityDiv" style="flex: 1">
+                                            <select id="cityDropDown" asp-for="City" class="form-input">
+                                                <option value="Prishtinë">Prishtinë</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex;flex: 3">
+                                        <select style="flex: 1;margin-right: 10px" asp-for="DitaLindjes" class="form-input">
+                                            <option>@_localizer["ditaLindjes"]</option>
+                                            @for (var i = 1; i <= 31; i++)
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        </select>
+                                        <span asp-validation-for="DitaLindjes" class="text-danger"></span>
+                                        <select style="flex: 1;margin-right: 10px" asp-for="MuajiLindjes" class="form-input">
+                                            <option>@_localizer["muajiLindjes"]</option>
+                                            @for (var i = 1; i <= 12; i++)
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        </select>
+                                        <span asp-validation-for="MuajiLindjes" class="text-danger"></span>
+                                        <select style="flex: 1" asp-for="VitiLindjes" class="form-input">
+                                            <option>@_localizer["vitiLindjes"]</option>
+                                            @for (var i = DateTime.Now.Year; i >= 1994; i--)
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        </select>
+                                        <span asp-validation-for="VitiLindjes" class="text-danger"></span>
+                                    </div>
+                                    <div class="terms-conditions">
+                                        <label><input style="margin-right: 5px" type="checkbox">@_localizer["pranojKushtet"]</label>
+                                    </div>
+                                    <div class="button-box">
+                                        <button type="submit" style="width: 100%;height: 50px">@_localizer["regjistrohu"]</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div style="margin-top: 10px;text-align: center;font-size: 17px">
+                                <a asp-action="Login">@_localizer["keniLlogari"]</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        let selectedValue = "Kosovë";
+       $.ajax({
+           type: "POST",
+           dataType: "json",
+           url: "/account/GetCitiesByCountry/",
+           data: { country: selectedValue },
+           success: 
+               function(resp) {
+                 let mark = "";
+                 for (let i = 0;i < resp.data.length; i++){
+                     mark += "<option value="+ resp.data[i] +">"+ resp.data[i] +" </option>"
+                 }
+                 $('#cityDropDown').html(mark);
+               },
+           error: 
+               function (err) {
+                   console.error(err);
+               }
+       }) 
+    })
+    $('#Country').change(function() {
+        let selectedValue = $(this).val();
+        if (selectedValue === "Diasporë"){
+            let inp = "<input type='text' id='Qyteti' name='Qyteti' placeholder='Shteti'>"
+            $('#cityDiv').html(inp)
+        }else{
+             $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "/account/GetCitiesByCountry/",
+                data: { country: selectedValue },
+                success: 
+                    function(resp) {
+                      let mark = "";
+                      for (let i = 0;i < resp.data.length; i++){
+                          mark += "<option value="+ resp.data[i] +">"+ resp.data[i] +" </option>"
+                      }
+                      let div = "<select id='cityDropDown' name='City' class='form-input'></select>";
+                      $('#cityDiv').html(div);
+                      $('#cityDropDown').html(mark);
+                    },
+                error: 
+                    function (err) {
+                        console.error(err);
+                    }
+            })        
+        }
+    })
+</script>

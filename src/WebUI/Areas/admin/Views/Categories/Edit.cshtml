@@ -1,0 +1,102 @@
+﻿@model Application.Models.InsertCategoryModel
+@{
+    ViewBag.Title = "Edito Kategori";
+    Layout = "_AdminLayout";
+}
+
+<div id="top" class="sa-app__body">
+   <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
+      <div class="container container--max--xl">
+         <form asp-action="Edit">
+         <div class="py-5">
+            <div class="row g-4 align-items-center">
+               <div class="col">
+                  <nav class="mb-2" aria-label="breadcrumb">
+                     <ol class="breadcrumb breadcrumb-sa-simple">
+                        <li class=""><a asp-controller="Dashboard" asp-action="Index">Ballina / </a></li>
+                        <li class=""><a asp-controller="Categories" asp-action="Index"> Kategoritë </a></li>
+                        <li class="breadcrumb-item active" aria-current="page"> - Edito Kategorinë </li>
+                     </ol>
+                  </nav>
+                  <h1 class="h3 m-0">Edito Kategorinë</h1>
+               </div>
+               <div class="col-auto d-flex">
+                  <a asp-controller="Categories" asp-action="Index" class="btn btn-secondary me-3">Kthehu</a>
+                  <button type="submit" class="btn btn-primary">Ruaj</button>
+               </div>
+            </div>
+         </div>
+         <div class="sa-entity-layout" data-sa-container-query="{&quot;920&quot;:&quot;sa-entity-layout--size--md&quot;,&quot;1100&quot;:&quot;sa-entity-layout--size--lg&quot;}">
+            <div class="sa-entity-layout__body">
+               <div class="sa-entity-layout__main">
+                  <div class="card">
+                     <div class="card-body p-5">
+                        <div class="mb-5">
+                           <h2 class="mb-0 fs-exact-18">Informatat themelore</h2>
+                        </div>
+                        <div class="mb-4">
+                           <label for="form-category/name" class="form-label">Emërtimi</label>
+                           <input asp-for="Name" type="text" class="form-control" id="form-category/name"/>
+                           <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="mb-4">
+                           <label for="form-category/slug" class="form-label">Slug</label>
+                           <div class="input-group input-group--sa-slug">
+                              <span class="input-group-text" id="form-category/slug-addon">https://technocy.com/produktet/</span>
+                              <input asp-for="Slug" type="text" class="form-control" id="form-category/slug" aria-describedby="form-category/slug-addon form-category/slug-help"/>
+                              <span asp-validation-for="Slug" class="text-danger"></span>
+                           </div>
+                           <div id="form-category/slug-help" class="form-text">Identifikues unik i kategorisë i lexueshëm nga njeriu. Jo më shumë se 255 karaktere.</div>
+                        </div>
+                        <div class="mb-4">
+                           <label for="form-category/description" class="form-label">Përshkrimi</label>
+                           <textarea asp-for="Description" id="form-category/description" class="sa-quill-control form-control" rows="8">
+                           </textarea>
+                           <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="card mt-5">
+                     <div class="card-body p-5">
+                        <div class="mb-5">
+                           <h2 class="mb-0 fs-exact-18">Optimizimi i motorit të kërkimit</h2>
+                           <div class="mt-3 text-muted">Jepni informacion që do të ndihmojë në përmirësimin e fragmentit dhe për ta sjellë kategorinë tuaj në krye të motorëve të kërkimit.</div>
+                        </div>
+                        <div class="mb-4">
+                           <label for="form-category/seo-title" class="form-label">Titulli i faqes</label>
+                           <input asp-for="MetaTitle" type="text" class="form-control" id="form-category/seo-title"/>
+                           <span asp-validation-for="MetaTitle" class="text-danger"></span>
+                        </div>
+                        <div>
+                           <label for="form-category/seo-description" class="form-label">Përshkrimi meta</label>
+                           <textarea asp-for="MetaDescription" id="form-category/seo-description" class="form-control" rows="2"></textarea>
+                           <span asp-validation-for="MetaDescription" class="text-danger"></span>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="sa-entity-layout__sidebar">
+                  <div class="card w-100">
+                     <div class="card-body p-5">
+                        <div class="mb-5">
+                           <h2 class="mb-0 fs-exact-18">Dukshmëria</h2>
+                        </div>
+                        <div class="mb-4">
+                           <label class="form-check">
+                              <input asp-for="Visibility" type="radio" class="form-check-input" value="true"/>
+                              <span class="form-check-label">Publikuar</span>
+                           </label>
+                           <label class="form-check mb-0">
+                              <input asp-for="Visibility" type="radio" class="form-check-input" value="false"/>
+                              <span class="form-check-label">I fshehur</span>
+                           </label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         </form>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,150 @@
+@using Domain.Enums
+@model IEnumerable<Domain.Entities.Order>
+
+@{
+    ViewBag.Title = "Orders";
+    Layout = "_AdminLayout";
+}
+
+<div id="top" class="sa-app__body">
+   <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
+      <div class="container">
+         <div class="py-5">
+            <div class="row g-4 align-items-center">
+               <div class="col">
+                  <nav class="mb-2" aria-label="breadcrumb">
+                     <ol class="breadcrumb breadcrumb-sa-simple">
+                        <li>
+                           <a style="margin-right: 10px" asp-controller="Dashboard" asp-action="Index">Ballina</a>
+                        </li>
+                        <li aria-current="page">Porositë</li>
+                     </ol>
+                  </nav>
+                  <h1 class="h3 m-0">Porositë</h1>
+               </div>
+            </div>
+         </div>
+         <div class="card">
+            <div class="p-4"><input type="text" placeholder="Filloni të shkruani për të kërkuar porosi" class="form-control form-control--search mx-auto" id="table-search"/></div>
+            <div class="sa-divider"></div>
+            <table class="sa-datatables-init text-nowrap" data-order="[[ 1, &quot;desc&quot; ]]" data-sa-search-input="#table-search">
+               <thead>
+                  <tr>
+                     <th class="w-min" data-orderable="false"><input type="checkbox" class="form-check-input m-0 fs-exact-16 d-block" aria-label="..."/></th>
+                     <th>Numri i Porosisë</th>
+                     <th>Data</th>
+                     <th>Konsumatori</th>
+                     <th>Paguar</th>
+                     <th>Statusi</th>
+                     <th>Produkte</th>
+                     <th>Totali</th>
+                     <th class="w-min" data-orderable="false"></th>
+                  </tr>
+               </thead>
+               <tbody>
+                  @foreach (var order in Model)
+                  {
+                     <tr>
+                     <td><input type="checkbox" class="form-check-input m-0 fs-exact-16 d-block" aria-label="..."/></td>
+                     <td><a asp-action="Details" asp-route-orderNumber="@order.OrderNumber" class="text-reset">#@order.OrderNumber</a></td>
+                     <td>@order.OrderDate</td>
+                     <td><a asp-controller="Customers" asp-action="Details" asp-route-customerId="@order.CustomerId" class="text-reset">@order.ShipName @order.ShipSurname</a></td>
+                     <td>
+                        <div class="d-flex fs-6">
+                           @if (order.PaymentStatus == PaymentStatus.Paid)
+                           {
+                              <div class="badge badge-sa-success">Po</div>
+                           }
+                           else
+                           {
+                              <div class="badge badge-sa-danger">Jo</div>
+                           }
+                        </div>
+                     </td>
+                     <td>
+                        <div class="d-flex fs-6">
+                           @{
+                              await Html.RenderPartialAsync("_OrderStatus", new {order.Status});
+                           }
+                        </div>
+                     </td>
+                     <td>@order.Products produkte</td>
+                     <td>
+                        <div class="sa-price"><span class="sa-price__symbol">$</span><span class="sa-price__integer">@order.Total.ToString("#,##0.00")</span></div>
+                     </td>
+                     <td>
+                        <div class="dropdown">
+                           <button class="btn btn-sa-muted btn-sm" type="button" id="order-context-menu-0" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="3" height="13" fill="currentColor">
+                                 <path d="M1.5,8C0.7,8,0,7.3,0,6.5S0.7,5,1.5,5S3,5.7,3,6.5S2.3,8,1.5,8z M1.5,3C0.7,3,0,2.3,0,1.5S0.7,0,1.5,0 S3,0.7,3,1.5S2.3,3,1.5,3z M1.5,10C2.3,10,3,10.7,3,11.5S2.3,13,1.5,13S0,12.3,0,11.5S0.7,10,1.5,10z"></path>
+                              </svg>
+                           </button>
+                           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="order-context-menu-0">
+                              @switch (order.Status)
+                              {
+                                 case OrderStatus.ManualVerificationNeeded:
+                                    <li>
+                                       <a id="confirm" onclick="changeOrderStatus('@order.OrderNumber',1)" class="dropdown-item">Konfirmo</a>
+                                    </li>
+                                    <li>
+                                       <a id="cancel" onclick="changeOrderStatus('@order.OrderNumber',4)" class="dropdown-item">Anulo</a>
+                                    </li>
+                                    break;
+                                 case OrderStatus.Confirmed:
+                                    <li>
+                                       <a id="ship" onclick="changeOrderStatus('@order.OrderNumber',3)" class="dropdown-item">E Nisur</a>
+                                    </li>
+                                    <li>
+                                       <a id="cancel" onclick="changeOrderStatus('@order.OrderNumber',4)" class="dropdown-item">Anulo</a>
+                                    </li>
+                                    break;
+                                 case OrderStatus.Completed:
+                                    break;
+                                 case OrderStatus.Shipped:
+                                    <li>
+                                       <a id="complete" onclick="changeOrderStatus('@order.OrderNumber',2)" class="dropdown-item">Kompleto</a>
+                                    </li>
+                                    <li>
+                                       <a id="cancel" onclick="changeOrderStatus('@order.OrderNumber',4)" class="dropdown-item">Anulo</a>
+                                    </li>
+                                    break;
+                                 case OrderStatus.Cancelled:
+                                    break;
+                                 default:
+                                    throw new ArgumentOutOfRangeException();
+                              }
+                              <li>
+                                 <hr class="dropdown-divider"/>
+                              </li>
+                              <li>
+                                 <a class="dropdown-item" target="_blank" asp-controller="Orders" asp-action="Print" asp-route-orderNumber="@order.OrderNumber">Printo</a>
+                              </li>
+                           </ul>
+                        </div>
+                     </td>
+                  </tr>
+                  }
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script type="text/javascript">
+
+function changeOrderStatus(s, number) {
+   console.log(s, number);
+   $.ajax({
+     type: "POST",
+     url: "@Url.Action("ChangeOrderStatus", "Orders")",
+     data: {"orderNumber": s,"orderStatus": number}, 
+     success: function(resp) {
+       if (resp){
+          location.reload();
+       }
+     }
+ })
+}
+
+</script>

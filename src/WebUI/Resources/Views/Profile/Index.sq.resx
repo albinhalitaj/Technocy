@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="profili" xml:space="preserve">
+        <value>Profili</value>
+    </data>
+    <data name="porosite" xml:space="preserve">
+        <value>Porositë</value>
+    </data>
+    <data name="menyratPageses" xml:space="preserve">
+        <value>Mënyrat e pagesës</value>
+    </data>
+    <data name="adresa" xml:space="preserve">
+        <value>Adresa</value>
+    </data>
+    <data name="detajetLlogarise" xml:space="preserve">
+        <value>Detajet e llogarisë</value>
+    </data>
+    <data name="ndryshoFjalekalimin" xml:space="preserve">
+        <value>Ndrysho fjalëkalimin</value>
+    </data>
+    <data name="dil" xml:space="preserve">
+        <value>Dil</value>
+    </data>
+    <data name="dashboard" xml:space="preserve">
+        <value>Ballina</value>
+    </data>
+    <data name="hi" xml:space="preserve">
+        <value>Përshëndetje,</value>
+    </data>
+    <data name="nukJeni" xml:space="preserve">
+        <value>Nëse nuk jeni</value>
+    </data>
+    <data name="profileDetails" xml:space="preserve">
+        <value>Nga profili i llogarisë suaj mund të kontrolloni dhe shikoni lehtësisht porositë tuaja më të fundit, të menaxhoni adresat tuaja të transportit dhe faturimit dhe të modifikoni fjalëkalimin dhe detajet e llogarisë tuaj.</value>
+    </data>
+    <data name="nukKeniPorosiTeKryera" xml:space="preserve">
+        <value>Ju nuk keni ende porosi të kryera.</value>
+    </data>
+    <data name="porosia" xml:space="preserve">
+        <value>Porosia</value>
+    </data>
+    <data name="data" xml:space="preserve">
+        <value>Data</value>
+    </data>
+    <data name="statusi" xml:space="preserve">
+        <value>Statusi</value>
+    </data>
+    <data name="totali" xml:space="preserve">
+        <value>Totali</value>
+    </data>
+    <data name="verifikimManual" xml:space="preserve">
+        <value>Verifikimi manual i nevojshëm</value>
+    </data>
+    <data name="konfirmuar" xml:space="preserve">
+        <value>Konfirmuar</value>
+    </data>
+    <data name="kompletuar" xml:space="preserve">
+        <value>Kompletuar</value>
+    </data>
+    <data name="eNisur" xml:space="preserve">
+        <value>E Nisur</value>
+    </data>
+    <data name="anuluar" xml:space="preserve">
+        <value>Anuluar</value>
+    </data>
+    <data name="shiko" xml:space="preserve">
+        <value>Shiko</value>
+    </data>
+    <data name="menyratPagesesMsg" xml:space="preserve">
+        <value>Nuk mund ta ruani ende mënyrën tuaj të pagesës.</value>
+    </data>
+    <data name="ndryshoAdresen" xml:space="preserve">
+        <value>Ndrysho adresën</value>
+    </data>
+    <data name="emri" xml:space="preserve">
+        <value>Emri</value>
+    </data>
+    <data name="mbiemri" xml:space="preserve">
+        <value>Mbiemri</value>
+    </data>
+    <data name="emaili" xml:space="preserve">
+        <value>Emaili</value>
+    </data>
+    <data name="kodiPostal" xml:space="preserve">
+        <value>Kodi Postal</value>
+    </data>
+    <data name="telefoni" xml:space="preserve">
+        <value>Telefoni</value>
+    </data>
+    <data name="ruajNdryshimet" xml:space="preserve">
+        <value>Ruaj Ndryshimet</value>
+    </data>
+    <data name="fjalekalimiAktual" xml:space="preserve">
+        <value>Fjalëkalimi aktual</value>
+    </data>
+    <data name="fjalekalimiRi" xml:space="preserve">
+        <value>Fjalëkalimi i ri</value>
+    </data>
+    <data name="konfirmoFjalekaliminRi" xml:space="preserve">
+        <value>Konfirmo fjalëkalimin e ri</value>
+    </data>
+</root>

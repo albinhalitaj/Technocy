@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Domain.Entities.Category>
+<nav>
+    <ul class="mobile-menu">
+        @foreach (var category in Model)
+        {
+            <li class="menu-item-has-children"><a href="/products/@category.Slug">@category.Name</a></li>
+        }
+    </ul>
+</nav>

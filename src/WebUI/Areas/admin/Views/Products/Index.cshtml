@@ -1,0 +1,274 @@
+﻿@model Application.Models.ProductListViewModel
+
+@{
+    ViewBag.Title = "Produktet";
+    Layout = "_AdminLayout";
+}
+
+<div id="top" class="sa-app__body">
+   <div class="mx-xxl-3 px-4 px-sm-5">
+      <div class="py-5">
+         <div class="row g-4 align-items-center">
+            <div class="col">
+               <nav class="mb-2" aria-label="breadcrumb">
+                  <ol class="breadcrumb breadcrumb-sa-simple">
+                     <li class=""><a asp-controller="Dashboard" asp-action="Index">Ballina  /</a></li>
+                     <li class="active" aria-current="page">Produktet</li>
+                  </ol>
+               </nav>
+               <h1 class="h3 m-0">Produktet</h1>
+            </div>
+            <div class="col-auto d-flex">
+               <a href="#" class="btn btn-secondary me-3">Importo</a>
+               <a asp-controller="Products" asp-action="New" class="btn btn-primary">Produkt i ri</a>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="mx-xxl-3 px-4 px-sm-5 pb-6">
+      <div class="sa-layout">
+         <div class="sa-layout__backdrop" data-sa-layout-sidebar-close=""></div>
+         <div class="sa-layout__sidebar">
+            <div class="sa-layout__sidebar-header">
+               <div class="sa-layout__sidebar-title">Filterat</div>
+               <button type="button" class="sa-close sa-layout__sidebar-close" aria-label="Close" data-sa-layout-sidebar-close=""></button>
+            </div>
+            <form asp-controller="Products" asp-action="Filtro">
+               <div class="sa-layout__sidebar-body sa-filters">
+                  <ul class="sa-filters__list">
+                     <li class="sa-filters__item">
+                        <div class="sa-filters__item-title">Çmimet</div>
+                        <div class="sa-filters__item-body">
+                           <div class="sa-filter-range" data-min="0" data-max="2000" data-from="0" data-to="2000">
+                              <div class="sa-filter-range__slider"></div>
+                              <input type="hidden" value="0" name="startingPrice" class="sa-filter-range__input-from"/>
+                              <input type="hidden" value="2000" name="endingPrice" class="sa-filter-range__input-to"/>
+                           </div>
+                        </div>
+                     </li>
+                     <li class="sa-filters__item">
+                        <div class="sa-filters__item-title">Kategoritë</div>
+                        <div class="sa-filters__item-body">
+                           <ul class="list-unstyled m-0 mt-n2">
+                              @foreach (var category in Model.Categories)
+                              {
+                                 <li>
+                                    <label class="d-flex align-items-center pt-2">
+                                       <input name="categories" value="@category.CategoryId" type="checkbox" class="form-check-input m-0 me-3 fs-exact-16"/>@category.Name
+                                    </label>
+                                 </li>
+                              }
+                           </ul>
+                        </div>
+                     </li>
+                     <li class="sa-filters__item">
+                        <div class="sa-filters__item-title">Dukshmëria</div>
+                        <div class="sa-filters__item-body">
+                           <ul class="list-unstyled m-0 mt-n2">
+                              <li>
+                                 <label class="d-flex align-items-center pt-2">
+                                    <input type="radio" value="true" class="form-check-input m-0 me-3 fs-exact-16" checked="" name="visibility"/>Publikuar
+                                 </label>
+                              </li>
+                              <li><label class="d-flex align-items-center pt-2">
+                                 <input type="radio" value="false" class="form-check-input m-0 me-3 fs-exact-16" name="visibility"/>Fshehur
+                              </label>
+                                 </li>
+                           </ul>
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+               <div class="m-3">
+                  <button type="submit" class="btn btn-primary">Filtro</button>  
+                  <button asp-controller="Products" asp-action="Index" class="btn btn-secondary">Rifresko</button>  
+               </div>
+            </form>
+         </div>
+         <div class="sa-layout__content">
+            <div class="card">
+               <div class="p-4">
+                  <div class="row g-4">
+                     <div class="col-auto sa-layout__filters-button">
+                        <button class="btn btn-sa-muted btn-sa-icon fs-exact-16" data-sa-layout-sidebar-open="">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor">
+                              <path d="M7,14v-2h9v2H7z M14,7h2v2h-2V7z M12.5,6C12.8,6,13,6.2,13,6.5v3c0,0.3-0.2,0.5-0.5,0.5h-2 C10.2,10,10,9.8,10,9.5v-3C10,6.2,10.2,6,10.5,6H12.5z M7,2h9v2H7V2z M5.5,5h-2C3.2,5,3,4.8,3,4.5v-3C3,1.2,3.2,1,3.5,1h2 C5.8,1,6,1.2,6,1.5v3C6,4.8,5.8,5,5.5,5z M0,2h2v2H0V2z M9,9H0V7h9V9z M2,14H0v-2h2V14z M3.5,11h2C5.8,11,6,11.2,6,11.5v3 C6,14.8,5.8,15,5.5,15h-2C3.2,15,3,14.8,3,14.5v-3C3,11.2,3.2,11,3.5,11z"></path>
+                           </svg>
+                        </button>
+                     </div>
+                     <div class="col"><input type="text" placeholder="Filloni të shkruani për të kërkuar produkte" class="form-control form-control--search mx-auto" id="table-search"/></div>
+                  </div>
+               </div>
+               <div class="sa-divider"></div>
+               <table class="sa-datatables-init" data-order="[[ 1, &quot;asc&quot; ]]" data-sa-search-input="#table-search">
+                  <thead>
+                     <tr>
+                        <th class="w-min" data-orderable="false"><input type="checkbox" class="form-check-input m-0 fs-exact-16 d-block" aria-label="..."/></th>
+                        <th class="min-w-20x">Produkti</th>
+                        <th>Kategoria/të</th>
+                        <th>Stoku</th>
+                        <th>Çmimi</th>
+                        <th class="w-min" data-orderable="false"></th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @foreach (var product in Model.Products)
+                     {
+                        <tr>
+                           <td><input type="checkbox" class="form-check-input m-0 fs-exact-16 d-block" aria-label="..."/></td>
+                           <td>
+                              <div class="d-flex align-items-center">
+                                 <a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug" class="me-4">
+                                    <div class="sa-symbol sa-symbol--shape--rounded sa-symbol--size--lg"><img src="@product.ProductGalleries.FirstOrDefault()?.URL" style="width: 100%;height: 100%;object-fit: contain" height="40" alt=""/></div>
+                                 </a>
+                                 <div>
+                                    @if (product.Name.Length > 65)
+                                    {
+                                       <a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug" class="text-reset">@(product.Name[..65])...</a>
+                                    }
+                                    else
+                                    {
+                                       <a asp-controller="Products" asp-action="Product" asp-route-slug="@product.Slug" class="text-reset">@product.Name</a>
+                                    }
+                                    <div class="sa-meta mt-0">
+                                       <ul class="sa-meta__list">
+                                          <li class="sa-meta__item">ID: <span title="Click to copy product ID" class="st-copy">@product.ProductId</span></li>
+                                          <li class="sa-meta__item">SKU: <span title="Click to copy product SKU" class="st-copy">@product.SKU</span></li>
+                                       </ul>
+                                    </div>
+                                 </div>
+                              </div>
+                           </td>
+                           <td><a class="text-reset">
+                              @foreach (var pcategory in product.ProductCategories)
+                              {
+                                 <p>@pcategory.Category.Name</p>
+                              }
+                           </a></td>
+                           <td>
+                              @if (product.Stock > 0)
+                              {
+                                 <div class="badge badge-sa-success">@product.Stock Në Stok</div>   
+                              }
+                              else
+                              {
+                                 <div class="badge badge-sa-danger">Nuk ka në Stok</div>
+                              }
+                           </td>
+                           <td>
+                              <div class="sa-price" style="text-align: right"><span class="sa-price__integer">@product.Price.ToString("#,##0.00") €</span></div>
+                           </td>
+                           <td>
+                              <div class="dropdown">
+                                 <button class="btn btn-sa-muted btn-sm" type="button" id="product-context-menu-0" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="3" height="13" fill="currentColor">
+                                       <path d="M1.5,8C0.7,8,0,7.3,0,6.5S0.7,5,1.5,5S3,5.7,3,6.5S2.3,8,1.5,8z M1.5,3C0.7,3,0,2.3,0,1.5S0.7,0,1.5,0 S3,0.7,3,1.5S2.3,3,1.5,3z M1.5,10C2.3,10,3,10.7,3,11.5S2.3,13,1.5,13S0,12.3,0,11.5S0.7,10,1.5,10z"></path>
+                                    </svg>
+                                 </button>
+                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="product-context-menu-0">
+                                    <li><a class="dropdown-item" asp-controller="Products" asp-action="Edit" asp-route-id="@product.ProductId">Edito</a></li>
+                                    <li>
+                                       <hr class="dropdown-divider"/>
+                                    </li>
+                                    <li><a class="dropdown-item text-danger" onclick="showPopUp('@User.Claims.ElementAt(2).Value','@product.ProductId')">Fshi</a></li>
+                                 </ul>
+                              </div>
+                           </td>
+                        </tr>
+                     }
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<script type="text/javascript">
+function showPopUp(username,productId) {
+        window.Swal.fire({
+            title: 'A jeni i sigurtë?',
+            text: "Nuk mund ta ktheni këtë hap!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Po, fshije!',
+            cancelButtonText: 'Anulo'
+        }).then((result) => {
+           if (result.isConfirmed) {
+               Swal.fire({
+                  title: 'Shkruani fjalëkalimin tuaj',
+                  input: 'password',
+                  inputAttributes: {
+                    autocapitalize: 'off'
+                  },
+                  showCancelButton: true,
+                  confirmButtonText: 'Fshij',
+                  cancelButtonText: 'Anulo',
+                  showLoaderOnConfirm: true,
+                  allowOutsideClick: () => !Swal.isLoading()
+               }).then((result) => {
+                  if(result.isConfirmed){
+                        $.ajax({
+                           type: 'POST',
+                           url: '/admin/products/confirmpass/' + username + "/" + result.value,
+                           data: {
+                              username,
+                              pass: result.value
+                           },
+                           contentType: "application/json; charset=utf-8",
+                           dataType: "json",
+                           success: function (response){
+                              if (response === false){
+                                 window.Swal.fire({
+                                     icon: 'error',
+                                     title: 'Oops...',
+                                     text: 'Fjalëkalimi është gabim!',
+                                     footer: '<a href="">Kontakto administratorin?</a>'
+                                   })   
+                              } else {
+                                 $.ajax({
+                                      type: "POST",
+                                      url: "/admin/products/delete/" + productId,
+                                      data: productId,
+                                      contentType: "application/json; charset=utf-8",
+                                      dataType: "json",
+                                      success: function (data) {
+                                         console.log(data)
+                                          if (data) {
+                                              window.Swal.fire(
+                                                  'U Fshi!',
+                                                  'Produkti është fshirë me sukses.',
+                                                  'success'
+                                              ).then((result) => {
+                                                  if (result.isConfirmed) {
+                                                      location.reload();
+                                                  }
+                                              });
+                                          }
+                                          if (!data){
+                                              window.Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Oops...',
+                                                    text: 'Ky produkt nuk mundë të fshihet',
+                                                    footer: '<a href="">Pse është ky gabim?</a>'
+                                                  })
+                                          }
+                                      },
+                                  }) 
+                              }
+                             
+                           },
+                           error: function (err){
+                              console.error(err)   
+                           }
+                        })
+                     }  
+                  }
+               )
+           }
+        })
+    }
+</script>
