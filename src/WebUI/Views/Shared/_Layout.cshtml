@@ -1,6 +1,7 @@
 ﻿@using WebUI.Helpers
 @using Application.admin
 @inject CategoryManager _categoryManager
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer _localizer
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
@@ -37,24 +38,24 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="welcome">
-                                    <p>Mirësevini në dyqanin tonë</p>
+                                    <p>@_localizer["welcome"]</p>
                                 </div>
                             </div>
                             <div class="col-lg-8">
                                 <div class="setting-wrap-2">
                                     <div class="setting-content2-left">
-                                        <a href="#">EUR </a>
+                                        <partial name="_Culture" />
                                     </div>
                                     <div class="setting-content2-right">
                                         @if (User.Identity is {IsAuthenticated: true})
                                         {
-                                            <a asp-controller="Wishlist" asp-action="Index">Lista e dëshirave</a>    
+                                            <a asp-controller="Wishlist" asp-action="Index">@_localizer["listaDeshirave"]</a>    
                                             <a asp-controller="Profile" asp-action="Index">@User.Identity.Name?.ToUpper()</a>
-                                            <a asp-controller="Account" asp-action="LogOff">Çkyçu</a>
+                                            <a asp-controller="Account" asp-action="LogOff">@_localizer["ckycu"]</a>
                                         }
                                         else
                                         {
-                                            <a asp-controller="Account" asp-action="Login">Kyçu</a>
+                                            <a asp-controller="Account" asp-action="Login">@_localizer["kycu"]</a>
                                         }
                                     </div>
                                 </div>
@@ -83,7 +84,7 @@
                                     <div class="search-style-3">
                                         <form>
                                             <div class="form-search-3">
-                                                <input id="search" class="input-text" value="" placeholder="Kërkoni këtu" type="search">
+                                                <input id="search" class="input-text" value="" placeholder="@_localizer["kerkoHome"]" type="search">
                                                 <button>
                                                     <i class="la la-search"></i>
                                                 </button>
@@ -101,7 +102,7 @@
                                     </button>
                                     <div class="shopping-cart-content">
                                         <div class="shopping-cart-top">
-                                            <h4>Shporta juaj</h4>
+                                            <h4>@_localizer["shportaJuaj"]</h4>
                                             <a class="cart-close" href="#"><i class="la la-close"></i></a>
                                         </div>
                                         <ul>
@@ -130,7 +131,7 @@
                                             }
                                             else
                                             {
-                                                <h4>Shporta juaj është e zbrazët.</h4>
+                                                <h4>@_localizer["shportaZbrazet"]</h4>
                                             }
                                         </ul>
                                         <div class="shopping-cart-bottom">
@@ -142,10 +143,10 @@
                                                         subtotali = cart.Sum(item => item.Product.Price * item.Quantity);
                                                     }
                                                 }
-                                                <h4>Subtotali <span class="shop-total">@subtotali.ToString("#,##0.00")€</span></h4>
+                                                <h4>@_localizer["subtotali"] <span class="shop-total">@subtotali.ToString("#,##0.00")€</span></h4>
                                             </div>
                                             <div class="shopping-cart-btn btn-hover default-btn text-center">
-                                                <a class="black-color" asp-controller="Checkout" asp-action="Index">Vazhdo me pagesë</a>
+                                                <a class="black-color" asp-controller="Checkout" asp-action="Index">@_localizer["vazhdoPagese"]</a>
                                             </div>
                                         </div>
                                     </div>
@@ -185,11 +186,11 @@
                                 <div class="cart-wrap common-style">
                                     <button class="cart-active">
                                         <i class="la la-shopping-cart"></i>
-                                        <span class="count-style">@cart?.Count Produkte</span>
+                                        <span class="count-style">@cart?.Count @_localizer["produkte"]</span>
                                     </button>
                                     <div class="shopping-cart-content">
                                         <div class="shopping-cart-top">
-                                            <h4>Shporta juaj</h4>
+                                            <h4>@_localizer["shportaJuaj"]</h4>
                                             <a class="cart-close" href="#"><i class="la la-close"></i></a>
                                         </div>
                                         <ul>
@@ -220,7 +221,7 @@
                                             else
                                             {
                                                 <div>
-                                                    Shporta juaj është e zbrazët.
+                                                    @_localizer["shportaZbrazet"]
                                                 </div>
                                             }
                                         </ul>
@@ -229,7 +230,7 @@
                                                 <h4>Subtotali <span class="shop-total">@subtotali.ToString("#,##0.00") €</span></h4>
                                             </div>
                                             <div class="shopping-cart-btn btn-hover default-btn text-center">
-                                                <a class="black-color" asp-controller="Checkout">Vazhdo me pagesë</a>
+                                                <a class="black-color" asp-controller="Checkout">@_localizer["vazhdoPagese"]</a>
                                             </div>
                                         </div>
                                     </div>
@@ -250,7 +251,7 @@
             <div class="header-mobile-aside-wrap">
                 <div class="mobile-search">
                     <form class="search-form" action="#">
-                        <input type="text" placeholder="Kërkoni produkte...">
+                        <input type="text" placeholder="@_localizer["kerkoniProdukte"]">
                         <button class="button-search"><i class="la la-search"></i></button>
                     </form>
                 </div>
@@ -263,7 +264,7 @@
                 </div>
                 <div class="mobile-curr-lang-wrap">
                     <div class="single-mobile-curr-lang">
-                        <a class="mobile-language-active" href="#">Gjuha <i class="la la-angle-down"></i></a>
+                        <a class="mobile-language-active" href="#">@_localizer["gjuha"] <i class="la la-angle-down"></i></a>
                         <div class="lang-curr-dropdown lang-dropdown-active">
                             <ul>
                                 <li><a href="#">Shqip (SQ)</a></li>
@@ -272,7 +273,7 @@
                         </div>
                     </div>
                     <div class="single-mobile-curr-lang">
-                        <a class="mobile-currency-active" href="#">Monedha <i class="la la-angle-down"></i></a>
+                        <a class="mobile-currency-active" href="#">@_localizer["monedha"] <i class="la la-angle-down"></i></a>
                         <div class="lang-curr-dropdown curr-dropdown-active">
                             <ul>
                                 <li><a href="#">EUR</a></li>
@@ -280,12 +281,12 @@
                         </div>
                     </div>
                     <div class="single-mobile-curr-lang">
-                        <a class="mobile-account-active" asp-controller="Profile" asp-action="Index">Llogaria ime <i class="la la-angle-down"></i></a>
+                        <a class="mobile-account-active" asp-controller="Profile" asp-action="Index">@_localizer["llogariaIme"] <i class="la la-angle-down"></i></a>
                         <div class="lang-curr-dropdown account-dropdown-active">
                             <ul>
-                                <li><a asp-controller="Account" asp-action="Login">Kyqu</a></li>
-                                <li><a asp-controller="Account" asp-action="Register">Regjistrohu</a></li>
-                                <li><a asp-controller="Profile" asp-action="Index">Llogaria ime</a></li>
+                                <li><a asp-controller="Account" asp-action="Login">@_localizer["kycu"]</a></li>
+                                <li><a asp-controller="Account" asp-action="Register">@_localizer["regjistrohu"]</a></li>
+                                <li><a asp-controller="Profile" asp-action="Index">@_localizer["llogariaIme"]</a></li>
                             </ul>
                         </div>
                     </div>
@@ -310,17 +311,17 @@
                             <div class="footer-widget footer-contact-wrap-2 mb-40">
                                 <a href="#"><object data="~/Client/assets/images/logo.svg" width="185" height="64"></object></a>
                                 <div class="footer-contact-content-2">
-                                    <h5>Informata për kontakt:</h5>
+                                    <h5>@_localizer["infoKontakt"]</h5>
                                     <div class="footer-info-hm5">
-                                        <span>Phone</span>
+                                        <span>@_localizer["telefoni"]</span>
                                         <p>+880-123 445 555</p>
                                     </div>
                                     <div class="footer-info-hm5">
-                                        <span>E-Mail</span>
+                                        <span>@_localizer["email"]</span>
                                         <p><a href="#">contact@technocy.com</a></p>
                                     </div>
                                     <div class="footer-social-hm5">
-                                        <span>Na ndiqni</span>
+                                        <span>@_localizer["naNdiqni"]</span>
                                         <ul>
                                             <li><a href="#">Facebok</a></li>
                                             <li><a href="#">Twitter</a></li>
@@ -334,15 +335,15 @@
                         <div class="col-lg-2 col-md-6 col-12 col-sm-6">
                             <div class="footer-widget mb-40 ml-55 mrg-md-footer">
                                 <div class="footer-title-4">
-                                    <h3>Linqet e dyqanit</h3>
+                                    <h3>@_localizer["linqet"]</h3>
                                 </div>
                                 <div class="footer-list-4">
                                     <ul>
-                                        <li><a href="wishlist.html">Lista e dëshirave</a></li>
-                                        <li><a href="checkout.html">Pagesa</a></li>
-                                        <li><a href="cart.html">Shporta</a></li>
-                                        <li><a href="checkout.html">Arka</a></li>
-                                        <li><a href="#">Transporti</a></li>
+                                        <li><a asp-controller="Wishlist" asp-action="Index">@_localizer["listaDeshirave"]</a></li>
+                                        <li><a asp-controller="Checkout" asp-action="Index">@_localizer["pagesa"]</a></li>
+                                        <li><a asp-controller="Cart" asp-action="Index">@_localizer["shporta"]</a></li>
+                                        <li><a asp-controller="Checkout" asp-action="Index">@_localizer["arka"]</a></li>
+                                        <li><a href="#">@_localizer["transporti"]</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -350,15 +351,15 @@
                         <div class="col-lg-3 col-md-6 col-12 col-sm-6">
                             <div class="footer-widget mb-40 ml-200">
                                 <div class="footer-title-4">
-                                    <h3>Mbështetja</h3>
+                                    <h3>@_localizer["mbeshtetja"]</h3>
                                 </div>
                                 <div class="footer-list-4">
                                     <ul>
-                                        <li><a href="#">Mbështetja ndaj konsumatorit</a></li>
-                                        <li><a href="#">Shipping Policy</a></li>
-                                        <li><a href="#">Kthimet</a></li>
-                                        <li><a href="#">Statusi porosisë</a></li>
-                                        <li><a href="contact.html">Kontakti</a></li>
+                                        <li><a href="#">@_localizer["mbeshtetjaKonsumatorit"]</a></li>
+                                        <li><a href="#">@_localizer["politikatTransportit"]</a></li>
+                                        <li><a href="#">@_localizer["kthimet"]</a></li>
+                                        <li><a href="#">@_localizer["statusiPorosise"]</a></li>
+                                        <li><a href="contact.html">@_localizer["kontakti"]</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -366,14 +367,14 @@
                         <div class="col-lg-3 col-md-6 col-12 col-sm-6">
                             <div class="footer-widget mb-40 f-right">
                                 <div class="footer-title-4">
-                                    <h3>Rreth Nesh</h3>
+                                    <h3>@_localizer["rrethNesh"]</h3>
                                 </div>
                                 <div class="footer-list-4">
                                     <ul>
                                         <li><a href="#">Technocy</a></li>
-                                        <li><a href="#">Privatësia</a></li>
-                                        <li><a href="#">Termat dhe kushtet</a></li>
-                                        <li><a href="#">Pse Technocy?</a></li>
+                                        <li><a href="#">@_localizer["privatesia"]</a></li>
+                                        <li><a href="#">@_localizer["terms"]</a></li>
+                                        <li><a href="#">@_localizer["whyUs"]</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -386,7 +387,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="copyright-5">
-                                <p>Copyright © <a href="#">Technocy</a>. Të gjitha të drejtat e rezervuara.</p>
+                                <p>Copyright © <a href="#">Technocy</a>. @_localizer["rights"]</p>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">

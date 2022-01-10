@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="artikujtShportes">
+        <value>Items in your cart</value>
+    </data>
+    <data name="foto">
+        <value>Photo</value>
+    </data>
+    <data name="emriProduktit">
+        <value>Product</value>
+    </data>
+    <data name="cmimi">
+        <value>Price</value>
+    </data>
+    <data name="sasia">
+        <value>Quantity</value>
+    </data>
+    <data name="subtotali">
+        <value>Subtotal</value>
+    </data>
+    <data name="vazhdoniBlerje">
+        <value>Continue to checkout</value>
+    </data>
+    <data name="perditsoShporten">
+        <value>Update Shopping Cart</value>
+    </data>
+    <data name="pastroShporten">
+        <value>Clear Shopping Cart</value>
+    </data>
+    <data name="vleresimiTransportit">
+        <value>Estimate Shipping And Tax</value>
+    </data>
+    <data name="destinacioni">
+        <value>Enter your destination to get a shipping estimate.</value>
+    </data>
+    <data name="shteti">
+        <value>Country</value>
+    </data>
+    <data name="kodiPostal">
+        <value>Postal Code</value>
+    </data>
+    <data name="kalkulo">
+        <value>Get A Quote</value>
+    </data>
+    <data name="perdorKodin">
+        <value>Use Coupon Code</value>
+    </data>
+    <data name="futKodin">
+        <value>Enter your coupon code if you have one.</value>
+    </data>
+    <data name="aplikoKodin">
+        <value>Apply Coupon</value>
+    </data>
+    <data name="totali">
+        <value>Cart Total</value>
+    </data>
+    <data name="totalProdukte">
+        <value>Total products</value>
+    </data>
+    <data name="totalTransporti">
+        <value>Total shipping</value>
+    </data>
+    <data name="vazhdo">
+        <value>Proceed to Checkout</value>
+    </data>
+    <data name="shportaZbrazet">
+        <value>Your cart is empty.</value>
+    </data>
+</root>

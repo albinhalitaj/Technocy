@@ -1,6 +1,7 @@
 ﻿@using Application.admin
 @model IEnumerable<Domain.Entities.Product>
 @inject CategoryManager _categoryManager
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer _localizer
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
@@ -17,14 +18,14 @@
                             <a class="active" href="#shop-1" data-bs-toggle="tab"><i class="la la-th"></i></a>
                             <a href="#shop-2" data-bs-toggle="tab"><i class="la la-list-ul"></i></a>
                         </div>
-                        <p>Duke treguar @ViewBag.Produktet nga @ViewBag.TotalProdukte produkte </p>
+                        <p>@_localizer["dukeTreguar"] @ViewBag.Produktet @_localizer["nga"] @ViewBag.TotalProdukte @_localizer["produkte"] </p>
                     </div>
                     <div class="product-sorting-wrapper">
                         <div class="product-show shorting-style">
                             <select>
-                                <option name="type" value="rev">Rendit sipas revelencës</option>
-                                <option name="type" value="asc"> Rendit sipas çmimit: të Ulët deri tek të Lartë</option>
-                                <option name="type" value="desc"> Rendit sipas çmimit: të Lartë deri tek të Ulët </option>
+                                <option name="type" value="rev">@_localizer["renditSipasRevelences"]</option>
+                                <option name="type" value="asc">@_localizer["renditSipasUletLarte"]</option>
+                                <option name="type" value="desc">@_localizer["renditSipasLarteUlet"]</option>
                             </select>
                         </div>
                     </div>
@@ -36,7 +37,7 @@
                                 @if (!Model.Any())
                                 {
                                     <div class="alert alert-info">
-                                        <p>Asnjë produkt i gjetur.</p>
+                                        <p>@_localizer["asnjeProdukt"]</p>
                                     </div>
                                 }
                                 else
@@ -75,7 +76,7 @@
                                                             }
                                                         </div>
                                                         <div class="product-addtocart">
-                                                            <a onclick="addToCart('@product.ProductId')" title="Add To Cart">+ Shto ne shporte</a>
+                                                            <a onclick="addToCart('@product.ProductId')" title="Add To Cart">+ @_localizer["shtoNeShporte"]</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -91,10 +92,10 @@
             <div class="col-lg-3">
                 <div class="sidebar-wrapper">
                     <div class="sidebar-widget">
-                        <h4 class="sidebar-title">Kërko </h4>
+                        <h4 class="sidebar-title">@_localizer["kerko"] </h4>
                         <div class="sidebar-search mb-40 mt-20">
                             <form class="sidebar-search-form" action="#">
-                                <input type="text" placeholder="Kërko këtu...">
+                                <input type="text" placeholder="@_localizer["kerkoKetu"]">
                                 <button>
                                     <i class="la la-search"></i>
                                 </button>
@@ -102,7 +103,7 @@
                         </div>
                     </div>
                     <div class="sidebar-widget shop-sidebar-border pt-40">
-                        <h4 class="sidebar-title">Filtro me kategori</h4>
+                        <h4 class="sidebar-title">@_localizer["filtroMeKategori"]</h4>
                         <div class="shop-catigory mt-20">
                             <ul id="faq">
                                 @foreach (var category in _categoryManager.GetCategories().Where(x=>x.Visibility))

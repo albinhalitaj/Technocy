@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="artikujtShportes">
+        <value>Artikujt e shportës suaj</value>
+    </data>
+    <data name="foto">
+        <value>Foto</value>
+    </data>
+    <data name="emriProduktit">
+        <value>Emri i produktit</value>
+    </data>
+    <data name="cmimi">
+        <value>Cmimi</value>
+    </data>
+    <data name="sasia">
+        <value>Sasia</value>
+    </data>
+    <data name="subtotali">
+        <value>Subtotali</value>
+    </data>
+    <data name="vazhdoniBlerje">
+        <value>Vazhdoni me blerje</value>
+    </data>
+    <data name="perditsoShporten">
+        <value>Përditso Shportën</value>
+    </data>
+    <data name="pastroShporten">
+        <value>Pastroni shportën</value>
+    </data>
+    <data name="vleresimiTransportit">
+        <value>Vlerësimi i transportit dhe taksave</value>
+    </data>
+    <data name="destinacioni">
+        <value>Shkruani destinacionin tuaj për të marrë një vlerësim të transportit.</value>
+    </data>
+    <data name="shteti">
+        <value>Shteti</value>
+    </data>
+    <data name="kodiPostal">
+        <value>Kodi Postal</value>
+    </data>
+    <data name="kalkulo">
+        <value>Kalkulo</value>
+    </data>
+    <data name="perdorKodin">
+        <value>Përdorni kodin e kuponit</value>
+    </data>
+    <data name="futKodin">
+        <value>Futni kodin tuaj të kuponit nëse keni një të tillë.</value>
+    </data>
+    <data name="aplikoKodin">
+        <value>Aplikoni kuponin</value>
+    </data>
+    <data name="totali">
+        <value>Totali i shportës</value>
+    </data>
+    <data name="totalProdukte">
+        <value>Total produkte</value>
+    </data>
+    <data name="totalTransporti">
+        <value>Totali i transportit</value>
+    </data>
+    <data name="vazhdo">
+        <value>Vazhdoni me pagesë</value>
+    </data>
+    <data name="shportaZbrazet">
+        <value>Shporta juaj është e zbrazët.</value>
+    </data>
+</root>

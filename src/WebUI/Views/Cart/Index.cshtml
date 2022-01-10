@@ -1,3 +1,4 @@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer _localizer
 @{
     ViewBag.Title = "Shporta";
     Layout = "_Layout";
@@ -8,25 +9,25 @@
 @if (cart == null || !cart!.Any())
 {
     <div class="text-center d-flex justify-content-center align-items-center mtb-100">
-        <h4 class="alert alert-info" style="width: 500px">Shporta juaj është e zbrazët.</h4>
+        <h4 class="alert alert-info" style="width: 500px">@_localizer["shportaZbrazet"]</h4>
     </div>
 }
 else
 {
 <div class="cart-main-area pt-85 pb-90">
     <div class="container">
-        <h3 class="cart-page-title">Artikujt e shportës suaj</h3>
+        <h3 class="cart-page-title">@_localizer["artikujtShportes"]</h3>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="table-content table-responsive cart-table-content">
                     <table>
                         <thead>
                             <tr>
-                                <th>Foto</th>
-                                <th>Emri i produktit</th>
-                                <th>Cmimi</th>
-                                <th>Sasia</th>
-                                <th>Subtotali</th>
+                                <th>@_localizer["foto"]</th>
+                                <th>@_localizer["emriProduktit"]</th>
+                                <th>@_localizer["cmimi"]</th>
+                                <th>@_localizer["sasia"]</th>
+                                <th>@_localizer["subtotali"]</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -68,11 +69,11 @@ else
                     <div class="col-lg-12">
                         <div class="cart-shiping-update-wrapper">
                             <div class="cart-shiping-update">
-                                <a asp-controller="Home" asp-action="Index">Vazhdoni me blerje</a>
+                                <a asp-controller="Home" asp-action="Index">@_localizer["vazhdoniBlerje"]</a>
                             </div>
                             <div class="cart-clear">
-                                <button>Përditësoni shportën tuaj</button>
-                                <a asp-action="Clear">Pastroni shportën</a>
+                                <button>@_localizer["perditsoShporten"]</button>
+                                <a asp-action="Clear">@_localizer["pastroShporten"]</a>
                             </div>
                         </div>
                     </div>
@@ -81,14 +82,14 @@ else
                     <div class="col-lg-4 col-md-6">
                         <div class="cart-tax">
                             <div class="title-wrap">
-                                <h4 class="cart-bottom-title section-bg-gray">Vlerësimi i transportit dhe taksave</h4>
+                                <h4 class="cart-bottom-title section-bg-gray">@_localizer["vleresimiTransportit"]</h4>
                             </div>
                             <div class="tax-wrapper">
-                                <p>Shkruani destinacionin tuaj për të marrë një vlerësim të transportit.</p>
+                                <p>@_localizer["destinacioni"]</p>
                                 <div class="tax-select-wrapper">
                                     <div class="tax-select">
                                         <label>
-                                            * Shteti
+                                            * @_localizer["shteti"]
                                         </label>
                                         <select class="email s-email s-wid">
                                             <option>Kosovë</option>
@@ -99,11 +100,11 @@ else
                                     </div>
                                     <div class="tax-select">
                                         <label>
-                                            * Kodi Postal
+                                            * @_localizer["kodiPostal"]
                                         </label>
                                         <input type="text">
                                     </div>
-                                    <button class="cart-btn-2" type="submit">Kalkulo</button>
+                                    <button class="cart-btn-2" type="submit">@_localizer["kalkulo"]</button>
                                 </div>
                             </div>
                         </div>
@@ -111,13 +112,13 @@ else
                     <div class="col-lg-4 col-md-6">
                         <div class="discount-code-wrapper">
                             <div class="title-wrap">
-                                <h4 class="cart-bottom-title section-bg-gray">Përdorni kodin e kuponit</h4>
+                                <h4 class="cart-bottom-title section-bg-gray">@_localizer["perdorKodin"]</h4>
                             </div>
                             <div class="discount-code">
-                                <p>Futni kodin tuaj të kuponit nëse keni një të tillë.</p>
+                                <p>@_localizer["futKodin"]</p>
                                 <form>
                                     <input type="text" required="" name="name">
-                                    <button class="cart-btn-2" type="submit">Aplikoni kuponin</button>
+                                    <button class="cart-btn-2" type="submit">@_localizer["aplikoKodin"]</button>
                                 </form>
                             </div>
                         </div>
@@ -125,21 +126,21 @@ else
                     <div class="col-lg-4 col-md-12">
                         <div class="grand-totall">
                             <div class="title-wrap">
-                                <h4 class="cart-bottom-title section-bg-gary-cart">Totali i shportës</h4>
+                                <h4 class="cart-bottom-title section-bg-gary-cart">@_localizer["totali"]</h4>
                             </div>
                             @{
                                 var subtot = cart.Sum(x => x.Product.Price * x.Quantity);
                                 var tot = subtot + 5;
                             }
-                            <h5>Total produkte <span>@subtot.ToString("#,##0.00") €</span></h5>
+                            <h5>@_localizer["totalProdukte"] <span>@subtot.ToString("#,##0.00") €</span></h5>
                             <div class="total-shipping">
-                                <h5>Totali i transportit</h5>
+                                <h5>@_localizer["totalTransporti"]</h5>
                                 <ul>
                                     <li><input type="radio" checked="checked" name="shipping"> Standart <span>5 €</span></li>
                                 </ul>
                             </div>
                             <h4 class="grand-totall-title">Totali <span>@tot.ToString("#,##0.00") €</span></h4>
-                            <a asp-controller="Checkout">Vazhdoni me pagesë</a>
+                            <a asp-controller="Checkout">@_localizer["vazhdo"]</a>
                         </div>
                     </div>
                 </div>

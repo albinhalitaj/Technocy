@@ -1,5 +1,6 @@
 @using Domain.Enums
 @model ProfileViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer _localizer
 @{
     ViewBag.Title = "Profile";
     Layout = "_Layout";
@@ -15,14 +16,16 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-4">
                             <div class="myaccount-tab-menu nav" role="tablist">
-                                <a href="#dashboad" class="active" data-bs-toggle="tab"><i class="fa fa-dashboard"></i>
-                                    Profili</a>
-                                <a href="#orders" data-bs-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Porositë</a>
-                                <a href="#payment-method" data-bs-toggle="tab"><i class="fa fa-credit-card"></i> Mënyrat e pagesës</a>
-                                <a href="#address-edit" data-bs-toggle="tab"><i class="fa fa-map-marker"></i> Adresa</a>
-                                <a href="#account-info" data-bs-toggle="tab"><i class="fa fa-user"></i> Detajet e llogarisë</a>
-                                <a href="#change-pass" data-bs-toggle="tab"><i class="fa fa-user"></i> Ndrysho fjalekalimin</a>
-                                <a asp-controller="Account" asp-action="LogOff"><i class="fa fa-sign-out"></i> Dil</a>
+                                <a href="#dashboad" class="active" data-bs-toggle="tab">
+                                    <i class="fa fa-dashboard"></i>
+                                    @_localizer["profili"]
+                                </a>
+                                <a href="#orders" data-bs-toggle="tab"><i class="fa fa-cart-arrow-down"></i> @_localizer["porosite"]</a>
+                                <a href="#payment-method" data-bs-toggle="tab"><i class="fa fa-credit-card"></i> @_localizer["menyratPageses"]</a>
+                                <a href="#address-edit" data-bs-toggle="tab"><i class="fa fa-map-marker"></i> @_localizer["adresa"]</a>
+                                <a href="#account-info" data-bs-toggle="tab"><i class="fa fa-user"></i> @_localizer["detajetLlogarise"]</a>
+                                <a href="#change-pass" data-bs-toggle="tab"><i class="fa fa-user"></i> @_localizer["ndryshoFjalekalimin"]</a>
+                                <a asp-controller="Account" asp-action="LogOff"><i class="fa fa-sign-out"></i> @_localizer["dil"]</a>
                             </div>
                         </div>
                         <!-- My Account Tab Menu End -->
@@ -32,34 +35,34 @@
                                 <!-- Single Tab Content Start -->
                                 <div class="tab-pane fade show active" id="dashboad" role="tabpanel">
                                     <div class="myaccount-content">
-                                        <h3>Dashboard</h3>
+                                        <h3>@_localizer["dashboard"]</h3>
                                         <div class="welcome">
-                                            <p>Përshëndetje, <strong>@User.Identity?.Name</strong> (Nëse nuk jeni <strong>@User.Identity?.Name !</strong><a asp-controller="Account" asp-action="LogOff" class="logout"> Dil</a>)</p>
+                                            <p>@_localizer["hi"] <strong>@User.Identity?.Name</strong> (@_localizer["nukJeni"] <strong>@User.Identity?.Name !</strong><a asp-controller="Account" asp-action="LogOff" class="logout"> @_localizer["dil"]</a>)</p>
                                         </div>
 
-                                        <p class="mb-0">Nga profili i llogarisë tuaj ju mund të kontrolloni dhe shikoni me lehtësi porositë tuaja të fundit, të menaxhoni adresat tuaja të transportit dhe faturimit dhe të modifikoni fjalëkalimin dhe detajet e llogarisë tuaj.</p>
+                                        <p class="mb-0">@_localizer["profileDetails"]</p>
                                     </div>
                                 </div>
                                 <!-- Single Tab Content End -->
                                 <!-- Single Tab Content Start -->
                                 <div class="tab-pane fade" id="orders" role="tabpanel">
                                     <div class="myaccount-content">
-                                        <h3>Porositë</h3>
+                                        <h3>@_localizer["porosite"]</h3>
                                         <div class="myaccount-table table-responsive text-center">
                                             @if (!Model.Orders.Any())
                                             {
-                                                <h4>Ju nuk keni ende porosi të kryera.</h4>
+                                                <h4>@_localizer["nukKeniPorosiTeKryera"]</h4>
                                             }
                                             else
                                             {
                                                 <table class="table table-bordered">
                                                     <thead class="thead-light">
                                                     <tr>
-                                                        <th>Porosia</th>
-                                                        <th>Data</th>
-                                                        <th>Statusi</th>
-                                                        <th>Totali</th>
-                                                        <th>Action</th>
+                                                        <th>@_localizer["porosia"]</th>
+                                                        <th>@_localizer["data"]</th>
+                                                        <th>@_localizer["statusi"]</th>
+                                                        <th>@_localizer["totali"]</th>
+                                                        <th></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -71,25 +74,25 @@
                                                             @switch (order.Status)
                                                             {
                                                                 case OrderStatus.ManualVerificationNeeded:
-                                                                    <td>Verifikimi manual i nevojshëm</td>
+                                                                    <td>@_localizer["verifikimManual"]</td>
                                                                     break;
                                                                 case OrderStatus.Confirmed:
-                                                                    <td>Konfirmuar</td>
+                                                                    <td>@_localizer["konfirmuar"]</td>
                                                                     break;
                                                                 case OrderStatus.Completed:
-                                                                    <td>Kompletuar</td>
+                                                                    <td>@_localizer["kompletuar"]</td>
                                                                     break;
                                                                 case OrderStatus.Shipped:
-                                                                    <td>E Nisur</td>
+                                                                    <td>@_localizer["eNisur"]</td>
                                                                     break;
                                                                 case OrderStatus.Cancelled:
-                                                                    <td>Anuluar</td>
+                                                                    <td>@_localizer["anuluar"]</td>
                                                                     break;
                                                                 default:
                                                                     throw new ArgumentOutOfRangeException();
                                                             }
                                                             <td>@order.Total.ToString("#,##0.00") €</td>
-                                                            <td><a href="cart.html" class="check-btn sqr-btn ">Shiko</a></td>
+                                                            <td><a href="cart.html" class="check-btn sqr-btn ">@_localizer["shiko"]</a></td>
                                                         </tr>
                                                     }
                                                     </tbody>
@@ -102,69 +105,69 @@
                                 <!-- Single Tab Content Start -->
                                 <div class="tab-pane fade" id="payment-method" role="tabpanel">
                                     <div class="myaccount-content">
-                                        <h3>Mënyrat e pagesës</h3>
-                                        <p class="saved-message">Nuk mund ta ruani ende mënyrën tuaj të pagesës.</p>
+                                        <h3>@_localizer["menyratPageses"]</h3>
+                                        <p class="saved-message">@_localizer["menyratPagesesMsg"]</p>
                                     </div>
                                 </div>
                                 <!-- Single Tab Content End -->
                                 <!-- Single Tab Content Start -->
                                 <div class="tab-pane fade" id="address-edit" role="tabpanel">
                                     <div class="myaccount-content">
-                                        <h3>Adresa</h3>
+                                        <h3>@_localizer["adresa"]</h3>
                                         <address>
                                             <p><strong>@User.Identity?.Name</strong></p>
                                             <p>1355 Market St, Suite 900 <br>
                                             San Francisco, CA 94103</p>
                                             <p>Mobile: (123) 456-7890</p>
                                         </address>
-                                        <a href="#" class="check-btn sqr-btn "><i class="fa fa-edit"></i> Ndrysho adresën</a>
+                                        <a href="#" class="check-btn sqr-btn "><i class="fa fa-edit"></i> @_localizer["ndryshoAdresen"]</a>
                                     </div>
                                 </div>
                                 <!-- Single Tab Content End -->
                                 <!-- Single Tab Content Start -->
                                 <div class="tab-pane fade" id="account-info" role="tabpanel">
                                     <div class="myaccount-content">
-                                        <h3>Detajet e llogarisë</h3>
+                                        <h3>@_localizer["detajetLlogarise"]</h3>
                                         <div class="account-details-form">
                                             <form action="#">
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
-                                                            <label for="first-name" class="required">Emri</label>
+                                                            <label for="first-name" class="required">@_localizer["emri"]</label>
                                                             <input asp-for="Customer.Name" id="first-name" />
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
-                                                            <label for="last-name" class="required">Mbiemri</label>
+                                                            <label for="last-name" class="required">@_localizer["mbiemri"]</label>
                                                             <input asp-for="Customer.Surname" id="last-name" />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="single-input-item">
-                                                    <label for="email" class="required">Emaili</label>
+                                                    <label for="email" class="required">@_localizer["emaili"]</label>
                                                     <input asp-for="Customer.Email" id="email" />
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
-                                                            <label for="address" class="required">Adresa</label>
+                                                            <label for="address" class="required">@_localizer["adresa"]</label>
                                                             <input asp-for="Customer.Address" id="address" />
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
-                                                            <label for="postal-code" class="required">Kodi Postal</label>
+                                                            <label for="postal-code" class="required">@_localizer["kodiPostal"]</label>
                                                             <input asp-for="Customer.PostalCode" id="postal-code" />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="single-input-item">
-                                                    <label for="phone" class="required">Telefoni</label>
+                                                    <label for="phone" class="required">@_localizer["telefoni"]</label>
                                                     <input asp-for="Customer.PostalCode" id="phone" />
                                                 </div>
                                                 <div class="single-input-item">
-                                                    <button class="check-btn sqr-btn ">Ruaj ndryshimet</button>
+                                                    <button class="check-btn sqr-btn ">@_localizer["ruajNdryshimet"]</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -172,29 +175,29 @@
                                 </div> <!-- Single Tab Content End -->
                                 <div class="tab-pane fade" id="change-pass" role="tabpanel">
                                     <div class="myaccount-content">
-                                        <h3>Ndrysho fjalekalimin</h3>
+                                        <h3>@_localizer["ndryshoFjalekalimin"]</h3>
                                         <div class="account-details-form">
                                             <form action="#">
                                                 <div class="single-input-item">
-                                                    <label for="current-pwd" class="required">Fjalëkalimi aktual</label>
+                                                    <label for="current-pwd" class="required">@_localizer["fjalekalimiAktual"]</label>
                                                     <input type="password" id="current-pwd" />
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
-                                                            <label for="new-pwd" class="required">Fjalëkalimi i ri</label>
+                                                            <label for="new-pwd" class="required">@_localizer["fjalekalimiRi"]</label>
                                                             <input type="password" id="new-pwd" />
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
-                                                            <label for="confirm-pwd" class="required">Konfirmo fjalëkalimin e ri</label>
+                                                            <label for="confirm-pwd" class="required">@_localizer["konfirmoFjalekaliminRi"]</label>
                                                             <input type="password" id="confirm-pwd" />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="single-input-item">
-                                                    <button class="check-btn sqr-btn ">Ruaj ndryshimet</button>
+                                                    <button class="check-btn sqr-btn ">@_localizer["ruajNdryshimet"]</button>
                                                 </div>
                                             </form>
                                         </div>
