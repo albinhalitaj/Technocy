@@ -84,9 +84,6 @@
     <data name="shiko" xml:space="preserve">
         <value>Shiko</value>
     </data>
-    <data name="menyratPageses" xml:space="preserve">
-        <value>Mënyrat e pagesës</value>
-    </data>
     <data name="menyratPagesesMsg" xml:space="preserve">
         <value>Nuk mund ta ruani ende mënyrën tuaj të pagesës.</value>
     </data>
