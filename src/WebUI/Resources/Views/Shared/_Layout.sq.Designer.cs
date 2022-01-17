@@ -124,15 +124,6 @@ namespace WebUI.Resources.Views.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kontakti.
-        /// </summary>
-        internal static string kontakti {
-            get {
-                return ResourceManager.GetString("kontakti", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Kthimet.
         /// </summary>
         internal static string kthimet {
@@ -210,6 +201,15 @@ namespace WebUI.Resources.Views.Shared {
         internal static string naNdiqni {
             get {
                 return ResourceManager.GetString("naNdiqni", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manuali Perdorimit.
+        /// </summary>
+        internal static string ndihma {
+            get {
+                return ResourceManager.GetString("ndihma", resourceCulture);
             }
         }
         

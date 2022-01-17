@@ -78,7 +78,14 @@
    </div>
 </div>
 
-
+   <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+   $(document).ready(function() {
+     shortcut.add("F1",function(){
+       window.open("https://docs.google.com/document/d/13kGWizcKfGNYb30MbHUIfOyu5JFzlSF9FWhYgTieV3o/edit#heading=h.6f25459rlo2i","_blank");
+     }) 
+   })
+</script>
 <script type="text/javascript">
 function showPopUp(categoryId) {
         window.Swal.fire({

@@ -105,8 +105,8 @@
     <data name="statusiPorosise" xml:space="preserve">
         <value>Order Status</value>
     </data>
-    <data name="kontakti" xml:space="preserve">
-        <value>Contact</value>
+    <data name="ndihma" xml:space="preserve">
+        <value>User Manual</value>
     </data>
     <data name="rrethNesh" xml:space="preserve">
         <value>About Us</value>

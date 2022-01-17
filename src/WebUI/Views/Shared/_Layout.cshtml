@@ -359,7 +359,7 @@
                                         <li><a href="#">@_localizer["politikatTransportit"]</a></li>
                                         <li><a href="#">@_localizer["kthimet"]</a></li>
                                         <li><a href="#">@_localizer["statusiPorosise"]</a></li>
-                                        <li><a href="contact.html">@_localizer["kontakti"]</a></li>
+                                        <li><a href="https://docs.google.com/document/d/13kGWizcKfGNYb30MbHUIfOyu5JFzlSF9FWhYgTieV3o/edit?usp=sharing" target="_blank">@_localizer["ndihma"]</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -430,12 +430,14 @@
 
     <!-- Main JS -->
 <script src="~/Client/assets/js/main.js"></script>
+<script src="~/Client/assets/js/shortcut.js"></script>
 @await Component.InvokeAsync("Notyf")
 </body>
 </html>
 
 <script>
 $(document).ready(function (){
+    
         $.ajax({
             type: "GET",
             url: "/cart/cartdetails",

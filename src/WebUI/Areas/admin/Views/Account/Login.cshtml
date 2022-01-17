@@ -57,6 +57,15 @@
    <script src="~/Admin/js/stroyka.js"></script>
    <script src="~/Admin/js/custom.js"></script>
    <script src="~/Admin/js/demo.js"></script>
+   <script src="~/Client/assets/js/shortcut.js"></script>
+   
+   <script>
+    $(document).ready(function() {
+      shortcut.add("F1",function(){
+        window.open("https://docs.google.com/document/d/13kGWizcKfGNYb30MbHUIfOyu5JFzlSF9FWhYgTieV3o/edit#heading=h.3ug90xg9guud","_blank");
+      }) 
+    })
+   </script>
    @await Component.InvokeAsync("Notyf")
    </body>
 </html>

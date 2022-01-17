@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group">
                         <p class="text-warning mb-0">@_localizer["cardholder"]</p> 
-                        <input type="text" asp-for="Cardholder" placeholder="emriPlote" size="17">
+                        <input type="text" asp-for="Cardholder" placeholder="@_localizer["emriPlote"]" size="17">
                         <span asp-validation-for="Cardholder" class="text-danger"></span>
                     </div>
                     <div class="form-group pt-2">
@@ -52,5 +52,14 @@
     </div>
 </div>
 <script src="https://use.fontawesome.com/releases/v5.7.2/css/all.css"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/Client/assets/js/shortcut.js"></script>
+<script>
+    $(document).ready(function(){
+     shortcut.add("F1",function(){
+         window.open("https://docs.google.com/document/d/13kGWizcKfGNYb30MbHUIfOyu5JFzlSF9FWhYgTieV3o/edit#heading=h.7m3ogtqa504w","_blank");
+     }) 
+     })
+</script>
 </body>
 </html>
